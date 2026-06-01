@@ -21,6 +21,10 @@ The environment you work in dictates the quality of your work.
 *   **Visual Palettes:** Shift the entire interface from `Lunar Mode` to `Noir Mode` with a single click.
 *   **Particle Systems:** Add subtle, non-distracting motion (like floating dust or falling embers) to keep your screen feeling "alive" without breaking your concentration.
 
+### 3. The Minimalist Planner & Scribes
+*   **Daily Tallies:** Track Pomodoros, water intake, or reps with a clean `+/-` tally system.
+*   **Focus Timer:** A built-in timer that doesn't just flash when it ends—it triggers a gentle, synthesized audio chime through the Web Audio API to pull you out of your deep work peacefully.
+*   **SomniaScribes (The Codex):** A private, beautifully formatted journal. Log timestamped entries into an archive that feels like an ancient, digital grimoire.
 
 ---
 
