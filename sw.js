@@ -1,7 +1,7 @@
 const CACHE_NAME = 'somniascheds-v1';
 const assets = [
   'index.html',
-  'thewilds.png',
+  'the_wilds(1).png',
   'fire.mp3',
   'thumbnail1.jpg',
   'manifest.json'
