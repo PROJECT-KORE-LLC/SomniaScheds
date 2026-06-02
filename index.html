@@ -3,27 +3,43 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>SOMNIASCHEDS // THE DIGITAL SANCTUARY</title>
+    <meta name="description" content="SOMNIASCHEDS // A private, offline-first digital scheduler and AI assistant.">
+    <meta name="theme-color" content="#020204">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <title>SOMNIASCHEDS // COZY VIBE ENGINE</title>
+    
+    <link rel="manifest" href="manifest.json">
+
     <style>
         /* ============================================================
-           SOMNIASCHEDS — THE DIGITAL SANCTUARY
-           Luxurious • Calm • Local-First • Focus-Driven
+           SOMNIASCHEDS — COZY CHAOS ENVIRONMENT
+           Responsive • Soft • Expensive Glassmorphism • Hardware Accelerated
            ============================================================ */
 
         *, *::before, *::after { box-sizing: border-box; }
 
-        :root {
-            --glass: rgba(10, 15, 25, 0.7);
-            --text-muted: #a09ba5;
-            --bg-zoom: 1; --bg-bright: 0.85; --glow-opac: 0.3; --anim-speed: 10s;
-            --primary: #e0e7ff; --primary-glow: rgba(224, 231, 255, 0.4);
-            --accent: #a5b4fc; --glass-border: rgba(199, 210, 254, 0.2);
+        :root, html {
+            --glass: rgba(15, 20, 30, 0.45);
+            --text-muted: #b5b0bb;
+            
+            --bg-zoom: 1;
+            --bg-bright: 0.85;
+            --glow-opac: 0.3;
+            --anim-speed: 10s;
+
+            --primary: #e0e7ff; 
+            --primary-glow: rgba(224, 231, 255, 0.5);
+            --accent: #a5b4fc; 
+            --glass-border: rgba(255, 255, 255, 0.12);
             --text-main: #fdfbf7;
-            --particle-color: var(--primary); --glow-color: var(--primary-glow);
+
+            --particle-color: var(--primary);
+            --glow-color: var(--primary-glow);
         }
 
-        /* PALETTES */
-        .lunar-mode { --primary: #e0e7ff; --accent: #a5b4fc; --primary-glow: rgba(224,231,255,0.4); --glass-border: rgba(199,210,254,0.2); --text-main: #fdfbf7; }
+        /* 20 Color Palettes applied to the root! */
+        .lunar-mode { --primary: #e0e7ff; --accent: #a5b4fc; --primary-glow: rgba(224,231,255,0.4); --glass-border: rgba(255,255,255,0.15); --text-main: #fdfbf7; }
         .noir-mode { --primary: #D4AF37; --accent: #f59e0b; --primary-glow: rgba(212,175,55,0.4); --glass-border: rgba(212,175,55,0.2); --text-main: #F4EBD0; }
         .vellum-mode { --primary: #C2B280; --accent: #d97706; --primary-glow: rgba(194,178,128,0.4); --glass-border: rgba(194,178,128,0.2); --text-main: #fefce8; }
         .amethyst-mode { --primary: #d8b4e2; --accent: #2dd4bf; --primary-glow: rgba(216,180,226,0.4); --glass-border: rgba(216,180,226,0.2); --text-main: #e9d5ff; }
@@ -33,15 +49,80 @@
         .void-mode { --primary: #ec4899; --accent: #8b5cf6; --primary-glow: rgba(236,72,153,0.4); --glass-border: rgba(236,72,153,0.2); --text-main: #fbcfe8; }
         .obsidian-mode { --primary: #9ca3af; --accent: #4b5563; --primary-glow: rgba(156,163,175,0.4); --glass-border: rgba(156,163,175,0.2); --text-main: #f3f4f6; }
         .ghost-mode { --primary: #f8fafc; --accent: #cbd5e1; --primary-glow: rgba(248,250,252,0.4); --glass-border: rgba(248,250,252,0.2); --text-main: #ffffff; }
+        .gothic-mode { --primary: #881337; --accent: #4c0519; --primary-glow: rgba(136,19,55,0.4); --glass-border: rgba(136,19,55,0.2); --text-main: #e5e5e5; }
+        .library-mode { --primary: #78350f; --accent: #b45309; --primary-glow: rgba(120,53,15,0.4); --glass-border: rgba(120,53,15,0.2); --text-main: #fef3c7; }
+        .y2k-mode { --primary: #22d3ee; --accent: #e879f9; --primary-glow: rgba(34,211,238,0.4); --glass-border: rgba(232,121,249,0.2); --text-main: #cffafe; }
+        .vintage-mode { --primary: #57534e; --accent: #7f1d1d; --primary-glow: rgba(87,83,78,0.4); --glass-border: rgba(87,83,78,0.2); --text-main: #d6d3d1; }
+        .cyber-mode { --primary: #84cc16; --accent: #166534; --primary-glow: rgba(132,204,22,0.4); --glass-border: rgba(132,204,22,0.2); --text-main: #ecfccb; }
+        .twilight-mode { --primary: #312e81; --accent: #4c1d95; --primary-glow: rgba(49,46,129,0.4); --glass-border: rgba(49,46,129,0.2); --text-main: #e0e7ff; }
+        .autumn-mode { --primary: #ea580c; --accent: #9a3412; --primary-glow: rgba(234,88,12,0.4); --glass-border: rgba(234,88,12,0.2); --text-main: #ffedd5; }
+        .abyss-mode { --primary: #0891b2; --accent: #0f766e; --primary-glow: rgba(8,145,178,0.4); --glass-border: rgba(8,145,178,0.2); --text-main: #cffafe; }
+        .sepia-mode { --primary: #b45309; --accent: #78350f; --primary-glow: rgba(180,83,9,0.4); --glass-border: rgba(180,83,9,0.2); --text-main: #fef3c7; }
+        .frost-mode { --primary: #bae6fd; --accent: #38bdf8; --primary-glow: rgba(186,230,253,0.4); --glass-border: rgba(186,230,253,0.2); --text-main: #f0f9ff; }
 
-        body, html { margin: 0; padding: 0; background: #000; overflow: hidden; font-family: 'Georgia', serif; height: 100vh; width: 100vw; color: var(--text-main); -webkit-font-smoothing: antialiased; user-select: none; }
+        body, html {
+            margin: 0; padding: 0; background: #050508;
+            overflow: hidden; font-family: 'Georgia', serif;
+            height: 100dvh; width: 100vw; color: var(--text-main);
+            -webkit-font-smoothing: antialiased; user-select: none;
+        }
+
         input, textarea, select { user-select: auto; font-family: inherit; }
 
-        /* --- VISUAL CANVAS --- */
-        #bg-anchor { position: fixed; inset: 0; background: #020204 no-repeat center center; background-size: cover; z-index: 1; transform: scale(var(--bg-zoom)); filter: brightness(var(--bg-bright)); transition: background 1.5s ease, filter 0.3s ease, transform 0.3s ease; }
-        #glow-layer { position: fixed; inset: 0; background: radial-gradient(circle at 50% 50%, var(--glow-color) 0%, transparent 70%); z-index: 2; opacity: var(--glow-opac); pointer-events: none; transition: opacity 0.3s ease, background 1s ease; }
-        #particleCanvas { position: fixed; inset: 0; z-index: 3; pointer-events: none; opacity: var(--glow-opac); transition: opacity 0.3s ease; mix-blend-mode: screen; }
+        /* --- STUNNING BOOT SCREEN --- */
+        #boot-screen {
+            position: fixed; inset: 0; z-index: 9999;
+            background: rgba(10, 10, 15, 0.9); backdrop-filter: blur(40px);
+            display: flex; flex-direction: column; align-items: center; justify-content: center;
+            transition: opacity 1.5s ease-in-out;
+        }
+        
+        .kore-orb {
+            position: absolute; width: 350px; height: 350px;
+            background: radial-gradient(circle, var(--primary-glow) 0%, transparent 70%);
+            animation: orb-breathe 5s infinite alternate ease-in-out;
+            z-index: -1; pointer-events: none;
+            transform: translateZ(0);
+        }
+        @keyframes orb-breathe { 0% { transform: scale(0.8); opacity: 0.4; filter: hue-rotate(0deg); } 100% { transform: scale(1.3); opacity: 0.9; filter: hue-rotate(15deg); } }
 
+        .boot-content {
+            max-width: 90%; width: 650px; padding: 50px; text-align: center;
+            border: 1px solid var(--glass-border); border-radius: 40px;
+            background: rgba(255,255,255,0.03); box-shadow: 0 40px 80px rgba(0,0,0,0.6);
+            position: relative; z-index: 10; backdrop-filter: blur(20px);
+        }
+        .boot-title {
+            color: var(--primary); font-size: clamp(1.8rem, 5vw, 2.8rem); letter-spacing: 12px; margin: 0 0 20px 0;
+            text-shadow: 0 0 30px var(--primary-glow); text-transform: uppercase; font-family: 'Times New Roman', serif;
+        }
+        .boot-disclaimer {
+            color: var(--text-main); font-size: 1.05rem; line-height: 1.8; letter-spacing: 1px;
+            margin-bottom: 35px; font-family: 'Georgia', serif; font-style: italic; opacity: 0.9;
+        }
+
+        /* --- VISUAL CANVAS --- */
+        #bg-anchor {
+            position: fixed; inset: 0; 
+            background: linear-gradient(135deg, #0f172a 0%, #000000 100%);
+            background-image: url('SomniaScheds.png'); /* Set default Background Image */
+            background-size: cover; 
+            background-position: center center;
+            background-repeat: no-repeat;
+            z-index: 1; transform: scale(var(--bg-zoom)) translateZ(0);
+            filter: brightness(var(--bg-bright));
+            transition: background 1.5s ease, filter 0.5s ease, transform 0.5s ease;
+        }
+
+        #glow-layer {
+            position: fixed; inset: 0;
+            background: radial-gradient(circle at 50% 50%, var(--glow-color) 0%, transparent 70%);
+            z-index: 2; opacity: var(--glow-opac); pointer-events: none;
+            transition: opacity 0.5s ease, background 1.5s ease;
+            transform: translateZ(0);
+        }
+
+        /* 20 GLOWS */
         .glow-pulse { animation: g-pulse var(--anim-speed) infinite alternate ease-in-out; }
         .glow-breathe { animation: g-breathe var(--anim-speed) infinite alternate ease-in-out; }
         .glow-strobe { animation: g-strobe var(--anim-speed) infinite alternate linear; }
@@ -49,7 +130,19 @@
         .glow-wave { animation: g-wave var(--anim-speed) infinite alternate linear; }
         .glow-flicker { animation: g-flicker calc(var(--anim-speed) / 4) infinite alternate ease-in-out; }
         .glow-aurora { background: linear-gradient(45deg, var(--primary-glow), transparent); animation: g-pulse var(--anim-speed) infinite alternate ease-in-out; }
+        .glow-radar { background: conic-gradient(from 0deg, transparent, var(--primary-glow), transparent); animation: g-wave var(--anim-speed) infinite linear; }
+        .glow-static { animation: none; }
         .glow-none { opacity: 0 !important; }
+        .glow-heartbeat { animation: g-heartbeat calc(var(--anim-speed) / 3) infinite alternate cubic-bezier(0.4, 0, 0.6, 1); }
+        .glow-shimmer { animation: g-shimmer calc(var(--anim-speed) / 2) infinite alternate linear; background: linear-gradient(135deg, transparent, var(--glow-color), transparent); }
+        .glow-glitch { animation: g-glitch calc(var(--anim-speed) / 5) infinite linear; }
+        .glow-scanner { background: linear-gradient(to bottom, transparent, var(--glow-color), transparent); animation: g-scanner var(--anim-speed) infinite linear; }
+        .glow-nebula { background: radial-gradient(ellipse at center, var(--glow-color) 0%, transparent 80%); animation: g-nebula var(--anim-speed) infinite alternate ease-in-out; }
+        .glow-vortex { background: conic-gradient(from 180deg, var(--glow-color), transparent); animation: g-wave calc(var(--anim-speed) * 1.5) infinite linear reverse; }
+        .glow-ripple { animation: g-ripple var(--anim-speed) infinite ease-out; }
+        .glow-halo { background: radial-gradient(circle, transparent 40%, var(--glow-color) 60%, transparent 80%); animation: g-pulse var(--anim-speed) infinite alternate ease-in-out; }
+        .glow-eclipse { background: radial-gradient(circle, #000 30%, var(--glow-color) 70%, transparent 100%); animation: g-breathe var(--anim-speed) infinite alternate ease-in-out; }
+        .glow-inferno { background: radial-gradient(circle at bottom, var(--glow-color) 0%, transparent 70%); animation: g-flicker calc(var(--anim-speed) / 3) infinite alternate ease-in-out; }
 
         @keyframes g-pulse { 0% { transform: scale(1); opacity: calc(var(--glow-opac) * 0.5); } 100% { transform: scale(1.1); opacity: var(--glow-opac); } }
         @keyframes g-breathe { 0%, 100% { filter: brightness(0.8); } 50% { filter: brightness(1.2); } }
@@ -57,351 +150,518 @@
         @keyframes g-phantom { 0% { transform: translateY(-5%); opacity: 0; } 50% { opacity: var(--glow-opac); } 100% { transform: translateY(5%); opacity: 0; } }
         @keyframes g-wave { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
         @keyframes g-flicker { 0%, 100% { opacity: var(--glow-opac); } 33% { opacity: calc(var(--glow-opac) * 0.3); } 66% { opacity: calc(var(--glow-opac) * 0.8); } }
+        @keyframes g-heartbeat { 0%, 100% { transform: scale(1); opacity: calc(var(--glow-opac) * 0.6); } 10%, 30% { transform: scale(1.05); opacity: var(--glow-opac); } 20% { transform: scale(1); opacity: calc(var(--glow-opac) * 0.8); } }
+        @keyframes g-shimmer { 0% { transform: translateX(-50%); } 100% { transform: translateX(50%); } }
+        @keyframes g-glitch { 0%, 100% { transform: translate(0, 0); opacity: var(--glow-opac); } 10% { transform: translate(-5px, 5px); opacity: calc(var(--glow-opac) * 0.5); } 20% { transform: translate(5px, -5px); opacity: var(--glow-opac); } }
+        @keyframes g-scanner { 0% { transform: translateY(-100%); } 100% { transform: translateY(100%); } }
+        @keyframes g-nebula { 0% { filter: hue-rotate(0deg); transform: scale(1); } 100% { filter: hue-rotate(45deg); transform: scale(1.2); } }
+        @keyframes g-ripple { 0% { transform: scale(0.5); opacity: var(--glow-opac); } 100% { transform: scale(2); opacity: 0; } }
 
-        /* --- UI LAYOUT --- */
-        #ui-wrapper { position: relative; z-index: 100; height: 100vh; width: 100vw; display: flex; flex-direction: column; align-items: center; transition: opacity 0.8s ease; }
+        #particleCanvas { position: fixed; inset: 0; z-index: 3; pointer-events: none; opacity: var(--glow-opac); transition: opacity 0.5s ease; transform: translateZ(0); }
+
+        /* --- UI LAYOUT & WIDGETS --- */
+        #ui-wrapper {
+            position: relative; z-index: 100; height: 100dvh; width: 100vw;
+            transition: opacity 0.8s ease; 
+        }
         body.cloaked #ui-wrapper { opacity: 0; pointer-events: none; }
-        #top-nav { display: flex; gap: 10px; padding: 20px; width: 100%; justify-content: center; flex-wrap: wrap; }
-        .nav-logo { font-size: 1.5rem; letter-spacing: 8px; color: var(--primary); text-transform: uppercase; text-shadow: 0 0 15px var(--primary-glow); margin-top: auto; margin-bottom: 20px; text-align: center; }
 
-        .artifact-btn { background: rgba(0,0,0,0.4); backdrop-filter: blur(10px); border: 1px solid var(--glass-border); color: var(--primary); padding: 10px 20px; border-radius: 30px; cursor: pointer; font-size: 0.65rem; letter-spacing: 2px; text-transform: uppercase; transition: 0.4s ease; font-family: monospace; }
-        .artifact-btn:hover { border-color: var(--accent); color: #fff; box-shadow: 0 0 15px var(--primary-glow); }
+        .nav-logo { 
+            font-size: 1.3rem; letter-spacing: 6px; color: var(--primary); 
+            text-transform: uppercase; text-shadow: 0 0 20px var(--primary-glow); 
+            font-family: 'Times New Roman', serif; position: absolute; top: 30px; left: 35px; z-index: 200;
+        }
+
+        #top-nav { position: absolute; top: 25px; right: 35px; display: flex; gap: 15px; align-items: center; z-index: 200; flex-wrap: wrap; justify-content: flex-end;}
+
+        .artifact-btn {
+            background: rgba(0,0,0,0.3); backdrop-filter: blur(15px);
+            border: 1px solid var(--glass-border); color: var(--primary);
+            padding: 10px 22px; border-radius: 50px; cursor: pointer;
+            font-size: 0.7rem; letter-spacing: 2px; text-transform: uppercase;
+            transition: all 0.4s ease; font-family: monospace; box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+        }
+        .artifact-btn:hover { border-color: var(--accent); color: #fff; box-shadow: 0 0 20px var(--primary-glow); transform: translateY(-2px); background: rgba(255,255,255,0.05); }
+
+        /* GORGEOUS WIDGETS */
+        .widget-dock {
+            position: absolute; top: 120px; right: 35px; display: flex; flex-direction: column; gap: 20px; z-index: 90;
+        }
+        .gorgeous-widget {
+            background: rgba(10, 15, 25, 0.5); backdrop-filter: blur(25px);
+            border: 1px solid var(--glass-border); border-radius: 30px;
+            padding: 30px; text-align: center; box-shadow: 0 20px 50px rgba(0,0,0,0.5);
+            min-width: 280px; position: relative; overflow: hidden;
+        }
+        .gorgeous-widget::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px; background: linear-gradient(90deg, transparent, var(--primary), transparent); opacity: 0.5; }
+        .time-display { font-size: 4rem; font-weight: bold; letter-spacing: 5px; color: var(--primary); text-shadow: 0 0 25px var(--primary-glow); line-height: 1; margin-bottom: 5px; font-family: 'Times New Roman', serif;}
+        .date-display { font-size: 1rem; font-family: monospace; color: var(--text-muted); text-transform: uppercase; letter-spacing: 4px; }
+        .weather-display { font-size: 3rem; color: var(--accent); margin-bottom: 5px; text-shadow: 0 0 20px var(--primary-glow); }
+        .weather-desc { font-size: 1rem; font-family: monospace; color: var(--text-main); text-transform: uppercase; letter-spacing: 2px; }
 
         /* --- THE MAKER PANEL --- */
-        #maker-panel { width: 95%; max-width: 600px; margin-bottom: 40px; background: var(--glass); backdrop-filter: blur(25px); border: 1px solid var(--glass-border); border-radius: 20px; box-shadow: 0 20px 60px rgba(0,0,0,0.8); display: flex; flex-direction: column; overflow: hidden; }
-        .tab-bar { display: flex; border-bottom: 1px solid var(--glass-border); background: rgba(0,0,0,0.3); flex-wrap: wrap;}
-        .tab-btn { flex: 1; background: transparent; border: none; color: var(--text-muted); padding: 16px 0; font-size: 0.7rem; letter-spacing: 2px; text-transform: uppercase; cursor: pointer; transition: 0.3s; font-family: monospace; border-bottom: 2px solid transparent; }
-        .tab-btn.active { color: var(--accent); border-bottom-color: var(--accent); background: rgba(255,255,255,0.02); font-weight: bold;}
-        .tab-content { display: none; padding: 20px; max-height: 55vh; overflow-y: auto; }
+        #maker-panel {
+            position: absolute; left: 35px; top: 90px; bottom: 35px; width: 420px;
+            background: var(--glass); backdrop-filter: blur(35px);
+            border: 1px solid var(--glass-border); border-radius: 30px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.5);
+            display: flex; flex-direction: column; overflow: hidden; z-index: 100;
+        }
+
+        .tab-bar { display: flex; border-bottom: 1px solid var(--glass-border); background: rgba(0,0,0,0.2); flex-wrap: wrap; flex-shrink: 0; }
+        .tab-btn {
+            flex: 1; min-width: 60px; background: transparent; border: none; color: var(--text-muted);
+            padding: 15px 5px; font-size: 0.65rem; letter-spacing: 2px; text-transform: uppercase;
+            cursor: pointer; transition: 0.3s; font-family: monospace; border-bottom: 2px solid transparent;
+        }
+        .tab-btn.active { color: var(--accent); border-bottom-color: var(--accent); background: rgba(255,255,255,0.03); font-weight: bold; }
+        
+        .tab-content { display: none; padding: 25px; overflow-y: auto; flex: 1; }
         .tab-content.active { display: flex; flex-direction: column; gap: 15px; }
         .tab-content::-webkit-scrollbar { width: 4px; }
-        .tab-content::-webkit-scrollbar-thumb { background: var(--primary); border-radius: 2px; }
+        .tab-content::-webkit-scrollbar-thumb { background: var(--primary); border-radius: 50px; }
 
         /* --- CONTROLS --- */
-        .upload-zone { border: 1px dashed var(--glass-border); padding: 15px; text-align: center; border-radius: 10px; cursor: pointer; color: var(--text-muted); font-size: 0.7rem; text-transform: uppercase; letter-spacing: 2px; transition: 0.3s; background: rgba(0,0,0,0.2); display: block; width: 100%; font-family: monospace;}
-        .upload-zone:hover { background: rgba(255,255,255,0.05); color: var(--primary); border-color: var(--primary); }
+        .upload-zone {
+            border: 1px dashed var(--glass-border); padding: 18px; text-align: center;
+            border-radius: 20px; cursor: pointer; color: var(--text-muted); font-size: 0.75rem;
+            text-transform: uppercase; letter-spacing: 2px; transition: 0.3s; background: rgba(0,0,0,0.1);
+            display: block; width: 100%; font-family: monospace;
+        }
+        .upload-zone:hover { background: rgba(255,255,255,0.08); color: var(--primary); border-color: var(--primary); transform: translateY(-2px); }
         .upload-zone input { display: none; }
-        .btn-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(80px, 1fr)); gap: 8px; }
-        
-        .toy-btn { background: rgba(0,0,0,0.4); border: 1px solid var(--glass-border); color: var(--text-main); padding: 10px; border-radius: 8px; cursor: pointer; font-size: 0.65rem; letter-spacing: 1px; text-transform: uppercase; transition: 0.3s; font-family: monospace; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;}
-        .toy-btn:hover, .toy-btn.active { border-color: var(--accent); background: rgba(255,255,255,0.1); color: var(--text-main); box-shadow: 0 4px 10px rgba(0,0,0,0.2); }
-        h4.section-title { margin: 0 0 5px 0; font-size: 0.7rem; color: var(--primary); letter-spacing: 2px; text-transform: uppercase; opacity: 0.8; font-family: monospace;}
 
-        /* --- AUDIO MIXER PRO --- */
-        .mixer-card { display: flex; align-items: center; justify-content: space-between; padding: 10px 14px; background: rgba(255,255,255,0.02); border: 1px solid rgba(255,255,255,0.05); border-radius: 10px; gap: 10px; }
-        .mixer-card.playing { border-color: var(--accent); background: rgba(45, 212, 191, 0.05); }
-        .mixer-btn { background: none; border: none; color: var(--text-muted); font-size: 0.8rem; text-align: left; cursor: pointer; font-family: 'Georgia', serif; flex: 1; padding: 0; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-        .mixer-card.playing .mixer-btn { color: var(--accent); text-shadow: 0 0 10px rgba(45, 212, 191, 0.5); font-style: italic;}
-        .mixer-slider { -webkit-appearance: none; width: 80px; height: 3px; background: rgba(255,255,255,0.1); outline: none; border-radius: 2px; }
-        .mixer-slider::-webkit-slider-thumb { -webkit-appearance: none; width: 14px; height: 14px; background: var(--accent); border-radius: 50%; cursor: pointer; box-shadow: 0 0 8px var(--primary-glow); }
+        .btn-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(80px, 1fr)); gap: 10px; }
         
-        .ctrl-row { display: flex; align-items: center; justify-content: space-between; gap: 10px; background: rgba(0,0,0,0.2); padding: 8px 12px; border-radius: 8px; }
-        .ctrl-row label { font-size: 0.65rem; color: var(--text-muted); text-transform: uppercase; width: 80px; font-family: monospace;}
-        .ctrl-slider { flex: 1; -webkit-appearance: none; height: 3px; background: rgba(255,255,255,0.1); outline: none; border-radius: 2px; accent-color: var(--primary); }
+        .toy-btn {
+            background: rgba(0,0,0,0.3); border: 1px solid var(--glass-border);
+            color: var(--text-main); padding: 12px; border-radius: 30px; cursor: pointer;
+            font-size: 0.65rem; letter-spacing: 1px; text-transform: uppercase;
+            transition: all 0.3s ease; font-family: monospace; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+        }
+        .toy-btn:hover { border-color: var(--accent); background: rgba(255,255,255,0.1); color: var(--text-main); box-shadow: 0 4px 10px rgba(0,0,0,0.2); }
+        .toy-btn.active { border-color: var(--primary); background: var(--primary); color: #000; font-weight: bold; box-shadow: 0 0 15px var(--primary-glow); }
 
-        /* --- MODALS (Dialogs, Cast) --- */
-        .modal-overlay { position: fixed; inset: 0; z-index: 200; display: none; background: rgba(0,0,0,0.7); backdrop-filter: blur(15px); align-items: center; justify-content: center; padding: 20px; animation: fadeIn 0.3s ease; }
+        h4.section-title { margin: 0 0 8px 0; font-size: 0.7rem; color: var(--primary); letter-spacing: 3px; text-transform: uppercase; opacity: 0.8; font-family: monospace; }
+
+        /* --- AUDIO MIXER --- */
+        .mixer-card {
+            display: flex; align-items: center; justify-content: space-between;
+            padding: 12px 18px; background: rgba(255,255,255,0.03);
+            border: 1px solid var(--glass-border); border-radius: 50px; gap: 8px;
+            transition: all 0.3s ease;
+        }
+        .mixer-card:hover { background: rgba(255,255,255,0.06); }
+        .mixer-card.playing { border-color: var(--accent); background: rgba(255,255,255,0.1); box-shadow: 0 0 15px rgba(0,0,0,0.2); }
+        .mixer-btn { background: none; border: none; color: var(--text-muted); font-size: 0.85rem; text-align: left; cursor: pointer; font-family: 'Georgia', serif; flex: 1; padding: 0; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; transition: 0.3s; }
+        .mixer-card.playing .mixer-btn { color: var(--primary); text-shadow: 0 0 10px var(--primary-glow); font-style: italic; }
+        .mixer-slider { -webkit-appearance: none; width: 60px; height: 4px; background: rgba(255,255,255,0.15); outline: none; border-radius: 50px; }
+        .mixer-slider::-webkit-slider-thumb { -webkit-appearance: none; width: 14px; height: 14px; background: var(--primary); border-radius: 50%; cursor: pointer; box-shadow: 0 0 10px var(--primary-glow); transition: 0.2s; }
+        .mixer-slider::-webkit-slider-thumb:hover { transform: scale(1.2); }
+
+        .ctrl-row { display: flex; align-items: center; justify-content: space-between; gap: 15px; background: rgba(0,0,0,0.2); padding: 10px 15px; border-radius: 50px; border: 1px solid transparent; transition: 0.3s; }
+        .ctrl-row:hover { border-color: var(--glass-border); }
+        .ctrl-row label { font-size: 0.65rem; color: var(--text-muted); text-transform: uppercase; font-family: monospace; letter-spacing: 1px; width: 80px; }
+        .ctrl-slider { flex: 1; -webkit-appearance: none; height: 4px; background: rgba(255,255,255,0.15); outline: none; border-radius: 50px; accent-color: var(--primary); }
+        .ctrl-slider::-webkit-slider-thumb { -webkit-appearance: none; width: 14px; height: 14px; background: var(--primary); border-radius: 50%; cursor: pointer; }
+
+        /* --- MODALS --- */
+        .modal-overlay {
+            position: fixed; inset: 0; z-index: 200; display: none;
+            background: rgba(0,0,0,0.6); backdrop-filter: blur(15px);
+            align-items: center; justify-content: center; padding: 20px;
+            animation: fadeIn 0.3s ease;
+        }
         @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
         .modal-overlay.active { display: flex; }
-        .cast-box { width: 100%; max-width: 450px; background: var(--glass); border: 1px solid var(--glass-border); border-radius: 20px; padding: 30px; box-shadow: 0 20px 50px rgba(0,0,0,0.8); text-align: center; }
         
+        .cast-box {
+            width: 100%; max-width: 450px; background: var(--glass);
+            border: 1px solid var(--glass-border); border-radius: 30px;
+            padding: 40px; box-shadow: 0 40px 80px rgba(0,0,0,0.7); text-align: center;
+            display: flex; flex-direction: column; align-items: center;
+        }
+
         #somnia-dialog { z-index: 10000; }
-        #somnia-dialog .cast-box { max-width: 400px; }
-        .core-input { width: 100%; background: rgba(0,0,0,0.4); border: 1px solid var(--glass-border); color: var(--primary); padding: 12px; border-radius: 10px; outline: none; font-family: monospace; margin-bottom: 20px; transition: 0.3s; text-align: center; }
-        .core-input:focus { border-color: var(--accent); box-shadow: 0 0 15px var(--primary-glow); }
+        #somnia-dialog .cast-box { padding: 35px; max-width: 400px; }
+        .core-input {
+            width: 100%; background: rgba(0,0,0,0.3); border: 1px solid var(--glass-border);
+            color: var(--primary); padding: 15px; border-radius: 50px; outline: none; font-family: monospace;
+            margin-bottom: 20px; transition: 0.3s; text-align: center;
+        }
+        .core-input:focus { border-color: var(--accent); box-shadow: 0 0 15px var(--primary-glow); background: rgba(0,0,0,0.5); }
 
-        /* --- SOMNIASCHEDS (Planner / Calendar / Timer) --- */
-        .sched-card { background: rgba(0,0,0,0.35); border: 1px solid var(--glass-border); border-radius: 14px; padding: 15px; display: flex; flex-direction: column; gap: 10px; }
-        .sched-header-row { display: flex; justify-content: space-between; align-items: center; gap: 10px; font-size: 0.7rem; color: var(--text-muted); font-family: monospace;}
-        .sched-header-main { font-size: 0.9rem; letter-spacing: 2px; text-transform: uppercase; color: var(--primary); font-weight: bold; }
-        .sched-calendar-nav { display: flex; justify-content: space-between; align-items: center; gap: 8px; font-size: 0.75rem; font-family: monospace;}
-        .sched-calendar-month { text-align: center; flex: 1; letter-spacing: 2px; text-transform: uppercase; }
-        .sched-calendar-grid { display: grid; grid-template-columns: repeat(7, 1fr); gap: 4px; margin-top: 6px; font-size: 0.65rem; font-family: monospace;}
-        .sched-day-label { text-align: center; opacity: 0.6; font-size: 0.6rem; text-transform: uppercase; letter-spacing: 1px; }
-        .sched-day { aspect-ratio: 1 / 1; display: flex; align-items: center; justify-content: center; border-radius: 6px; border: 1px solid rgba(255,255,255,0.05); cursor: pointer; transition: 0.2s; }
-        .sched-day:hover { border-color: var(--accent); }
-        .sched-day.today { border-color: var(--accent); box-shadow: inset 0 0 10px rgba(255,255,255,0.1); font-weight: bold; }
-        .sched-day.has-event { background: rgba(255,255,255,0.04); border-color: var(--primary); }
-        .sched-day.selected { background: var(--primary); color: #000; font-weight: bold; }
-        .sched-section-title { font-size: 0.75rem; text-transform: uppercase; letter-spacing: 2px; color: var(--primary); opacity: 0.9; font-family: monospace;}
-        .sched-subtext { font-size: 0.65rem; color: var(--text-muted); font-family: monospace;}
+        /* --- THE ATRIUM (PLANNER MODAL) --- */
+        .planner-bubble {
+            width: 100%; max-width: 1200px; height: 85dvh;
+            background: var(--glass); border: 1px solid var(--glass-border);
+            border-radius: 40px; padding: 35px; box-shadow: 0 30px 80px rgba(0,0,0,0.8);
+            display: flex; gap: 20px; overflow: hidden;
+            backdrop-filter: blur(40px);
+        }
         
-        .sched-input-row { display: flex; gap: 6px; align-items: center; }
-        .sched-input, .sched-textarea, .sched-time { background: rgba(0,0,0,0.5); border: 1px solid rgba(255,255,255,0.08); border-radius: 8px; color: var(--text-main); font-family: 'Georgia', serif; font-size: 0.85rem; padding: 10px; outline: none; }
-        .sched-input:focus, .sched-textarea:focus, .sched-time:focus { border-color: var(--accent); box-shadow: inset 0 0 5px rgba(0,0,0,0.5); }
-        .sched-time { font-family: monospace; font-size: 0.75rem; }
-        .sched-textarea { resize: vertical; min-height: 60px; width: 100%; }
-        
-        .sched-pill-btn { background: rgba(0,0,0,0.6); border-radius: 999px; border: 1px solid var(--glass-border); color: var(--primary); font-size: 0.65rem; letter-spacing: 1px; text-transform: uppercase; padding: 8px 14px; cursor: pointer; transition: 0.2s; white-space: nowrap; font-family: monospace;}
-        .sched-pill-btn:hover { border-color: var(--accent); color: var(--accent); }
-        
-        .sched-list { display: flex; flex-direction: column; gap: 6px; max-height: 150px; overflow-y: auto; padding-right: 5px; }
-        .sched-list::-webkit-scrollbar { width: 2px; }
-        .sched-list::-webkit-scrollbar-thumb { background: var(--primary); }
-        .sched-list-item { display: flex; justify-content: space-between; align-items: center; gap: 6px; font-size: 0.85rem; background: rgba(0,0,0,0.5); border-radius: 8px; padding: 10px; border: 1px solid rgba(255,255,255,0.06); }
-        .sched-list-item span { flex: 1; }
-        .sched-delete-btn { background: none; border: none; color: #fb7185; cursor: pointer; font-size: 0.8rem; }
-        
-        /* Tally Tracker */
-        .tally-row { display: flex; justify-content: space-between; align-items: center; background: rgba(0,0,0,0.4); padding: 8px 12px; border-radius: 8px; border: 1px solid rgba(255,255,255,0.05); }
-        .tally-name { background: transparent; border: none; color: var(--primary); font-size: 0.75rem; font-family: monospace; outline: none; width: 100px; text-transform: uppercase; letter-spacing: 1px;}
-        .tally-val { font-size: 1.2rem; font-weight: bold; font-family: monospace; color: var(--text-main); min-width: 30px; text-align: center; }
-        .tally-ctrls { display: flex; gap: 5px; }
+        .cal-panel { flex: 2; background: rgba(0,0,0,0.3); border: 1px solid var(--glass-border); border-radius: 25px; padding: 25px; display: flex; flex-direction: column; box-shadow: inset 0 0 50px rgba(0,0,0,0.5);}
+        .side-panel { flex: 1; display: flex; flex-direction: column; gap: 20px; overflow-y: auto; padding-right: 5px;}
+        .side-panel::-webkit-scrollbar { width: 4px; }
+        .side-panel::-webkit-scrollbar-thumb { background: var(--primary); border-radius: 50px; }
 
-        .sched-timer-display { font-size: 2.5rem; letter-spacing: 4px; font-family: monospace; color: var(--primary); text-shadow: 0 0 15px var(--primary-glow); text-align: center; margin: 10px 0; transition: 0.3s;}
-        .sched-timer-controls { display: flex; gap: 8px; flex-wrap: wrap; justify-content: center; }
-        .timer-flash { animation: pulseAlert 1s infinite alternate; color: #fb7185 !important; text-shadow: 0 0 20px #fb7185 !important; }
-        @keyframes pulseAlert { from { transform: scale(1); } to { transform: scale(1.05); } }
+        .view-toggles { display: flex; gap: 10px; margin-bottom: 20px; border-bottom: 1px solid var(--glass-border); padding-bottom: 15px; }
+        .view-btn { flex: 1; background: transparent; border: none; color: var(--text-muted); font-size: 0.8rem; font-family: monospace; text-transform: uppercase; letter-spacing: 2px; cursor: pointer; padding: 10px; transition: 0.3s; }
+        .view-btn.active { color: var(--primary); font-weight: bold; background: rgba(255,255,255,0.05); border-radius: 12px; box-shadow: inset 0 0 10px var(--primary-glow);}
 
-        /* --- SCRIBE MODAL (SomniaScribes) --- */
-        .scribes-bubble { width: 100%; max-width: 750px; max-height: 85vh; background: rgba(6, 6, 8, 0.98); border: 1px solid var(--glass-border); border-radius: 20px; padding: 25px; box-shadow: 0 20px 60px rgba(0,0,0,0.8); display: flex; flex-direction: column; gap: 15px; overflow: hidden; }
-        .archive-vault { width: 100%; flex: 1; background: rgba(0,0,0,0.8); border: 1px solid var(--glass-border); border-radius: 12px; padding: 20px; box-sizing: border-box; display: flex; flex-direction: column; gap: 15px; box-shadow: inset 0 0 30px rgba(0,0,0,0.5); }
-        .vault-header { border-bottom: 1px solid var(--glass-border); padding-bottom: 10px; display: flex; justify-content: space-between; align-items: flex-end; flex-wrap: wrap; gap: 10px; }
-        .vault-header h2 { margin: 0; font-size: 1.2rem; letter-spacing: 6px; text-transform: uppercase; color: var(--primary); text-shadow: 0 0 10px var(--primary-glow); font-family: 'Times New Roman', serif;}
-        #search-annals { background: rgba(0,0,0,0.5); border: none; border-bottom: 1px solid var(--primary); color: var(--primary); font-family: monospace; font-size: 0.8rem; padding: 5px; outline: none; width: 180px; text-transform: uppercase; letter-spacing: 2px; }
-        .annals-body { flex: 1; overflow-y: auto; padding-right: 5px; scrollbar-width: none; }
-        .annals-body::-webkit-scrollbar { display: none; }
-        .lore-entry { position: relative; margin-bottom: 15px; border-bottom: 1px solid rgba(255,255,255,0.05); padding-bottom: 10px; }
-        .entry-meta { font-size: 0.6rem; color: var(--primary); opacity: 0.5; letter-spacing: 2px; margin-bottom: 6px; font-family: monospace; }
-        .shred-btn { position: absolute; top: 0; right: 0; background: transparent; border: none; color: var(--text-muted); font-size: 1rem; cursor: pointer; opacity: 0.4; transition: 0.3s; }
-        .shred-btn:hover { opacity: 1; color: #fb7185; }
-        .lore-input { background: rgba(0,0,0,0.6); border: none; border-left: 2px solid var(--primary); color: var(--text-main); padding: 12px; outline: none; resize: none; font-family: 'Georgia', serif; font-size: 0.95rem; line-height: 1.5; border-radius: 0 8px 8px 0;}
+        .cal-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; }
+        .cal-title { font-size: 1.5rem; color: var(--primary); text-transform: uppercase; letter-spacing: 3px; font-weight: bold; text-shadow: 0 0 10px var(--primary-glow); font-family: 'Times New Roman', serif;}
         
-        .command-array { display: flex; gap: 10px; flex-wrap: wrap; width: 100%; border-top: 1px solid var(--glass-border); padding-top: 15px;}
-        .lux-btn { background: rgba(0,0,0,0.5); border: 1px solid var(--glass-border); color: var(--primary); padding: 10px; border-radius: 8px; cursor: pointer; font-size: 0.65rem; text-transform: uppercase; letter-spacing: 2px; flex: 1; text-align: center; transition: 0.3s; font-family: monospace;}
-        .lux-btn:hover { background: rgba(255,255,255,0.05); border-color: var(--accent); }
+        .grid-month { display: grid; grid-template-columns: repeat(7, 1fr); gap: 8px; flex: 1;}
+        .grid-week { display: grid; grid-template-columns: repeat(7, 1fr); gap: 10px; overflow-y: auto; flex: 1;}
+        .grid-day { display: flex; flex-direction: column; gap: 10px; overflow-y: auto; flex: 1;}
+
+        .day-label { text-align: center; font-family: monospace; font-size: 0.75rem; color: var(--text-muted); text-transform: uppercase; letter-spacing: 1px; padding-bottom: 10px;}
+        .cal-cell { aspect-ratio: 1; background: rgba(0,0,0,0.4); border: 1px solid rgba(255,255,255,0.05); border-radius: 12px; padding: 8px; cursor: pointer; transition: 0.2s; position: relative; font-family: monospace; font-size: 0.9rem;}
+        .cal-cell:hover, .cal-cell:focus { border-color: var(--accent); background: rgba(255,255,255,0.1); transform: translateY(-2px); box-shadow: 0 5px 15px rgba(0,0,0,0.5);}
+        .cal-cell.today { border-color: var(--primary); box-shadow: inset 0 0 15px rgba(255,255,255,0.1); font-weight: bold; color: var(--primary);}
+        .cal-cell.selected { background: var(--primary); color: #000; font-weight: bold;}
+
+        .event-dot-container { position: absolute; bottom: 5px; left: 5px; right: 5px; display: flex; gap: 3px; flex-wrap: wrap; justify-content: center; }
+        .event-indicator { width: 6px; height: 6px; border-radius: 50%; }
+        .event-indicator.work { background: #60a5fa; box-shadow: 0 0 5px #60a5fa; }
+        .event-indicator.gym { background: #34d399; box-shadow: 0 0 5px #34d399; }
+        .event-indicator.medical { background: #c084fc; box-shadow: 0 0 5px #c084fc; }
+        .event-indicator.personal { background: #fcd34d; box-shadow: 0 0 5px #fcd34d; }
+
+        /* Event Lists */
+        .event-card { background: rgba(0,0,0,0.5); border-left: 4px solid var(--primary); padding: 15px; border-radius: 12px; display: flex; justify-content: space-between; align-items: center; border-right: 1px solid rgba(255,255,255,0.05); border-top: 1px solid rgba(255,255,255,0.05); border-bottom: 1px solid rgba(255,255,255,0.05); transition: 0.2s;}
+        .event-card:hover { background: rgba(255,255,255,0.05); }
+        .event-time { font-family: monospace; font-size: 0.85rem; color: var(--text-muted); width: 90px; }
+        .event-title { flex: 1; font-size: 1.1rem; margin-left: 10px; letter-spacing: 0.5px;}
+        .event-tag { font-size: 0.65rem; padding: 4px 10px; border-radius: 12px; font-family: monospace; text-transform: uppercase; margin-left: 10px; letter-spacing: 1px; font-weight: bold;}
+
+        .tag-work { background: rgba(59,130,246,0.15); color: #60a5fa; border: 1px solid #3b82f6; }
+        .tag-gym { background: rgba(16,185,129,0.15); color: #34d399; border: 1px solid #10b981; }
+        .tag-medical { background: rgba(168,85,247,0.15); color: #c084fc; border: 1px solid #a855f7; }
+        .tag-personal { background: rgba(252,211,77,0.15); color: #fcd34d; border: 1px solid #fcd34d; }
+
+        .week-column { display: flex; flex-direction: column; gap: 5px; min-height: 300px; border-right: 1px solid rgba(255,255,255,0.05); padding-right: 5px;}
+        .week-column:last-child { border-right: none; }
+        .week-date-header { text-align: center; padding-bottom: 10px; border-bottom: 1px solid rgba(255,255,255,0.1); margin-bottom: 10px; }
+        .week-day-name { font-family: monospace; font-size: 0.7rem; color: var(--text-muted); text-transform: uppercase; }
+        .week-day-num { font-size: 1.2rem; color: var(--text-main); font-weight: bold; margin-top: 5px;}
+        .week-event-mini { background: rgba(0,0,0,0.6); border-left: 3px solid var(--primary); padding: 5px; border-radius: 4px; font-size: 0.7rem; margin-bottom: 5px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; cursor: pointer; font-family: monospace;}
+
+        .week-event-mini.work { border-color: #60a5fa; color: #60a5fa;}
+        .week-event-mini.gym { border-color: #34d399; color: #34d399;}
+        .week-event-mini.medical { border-color: #c084fc; color: #c084fc;}
+        .week-event-mini.personal { border-color: #fcd34d; color: #fcd34d;}
+
+        /* Side Panels (AI & ToDo) */
+        .panel-card { background: rgba(0,0,0,0.3); border: 1px solid var(--glass-border); border-radius: 25px; padding: 25px; box-shadow: inset 0 0 50px rgba(0,0,0,0.5);}
+        .panel-title { font-size: 1rem; color: var(--primary); text-transform: uppercase; letter-spacing: 2px; margin-bottom: 15px; font-family: monospace; border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 10px; }
+        
+        .ai-input { width: 100%; background: rgba(0,0,0,0.6); border: 1px solid var(--glass-border); color: var(--text-main); padding: 15px; border-radius: 15px; outline: none; font-family: 'Georgia', serif; resize: vertical; min-height: 100px; margin-bottom: 10px; font-size: 0.95rem; line-height: 1.5; border-left: 2px solid var(--primary);}
+        .ai-input:focus { border-color: var(--accent); box-shadow: 0 0 15px var(--primary-glow); }
+        
+        .todo-item { display: flex; align-items: center; gap: 12px; margin-bottom: 12px; font-size: 0.95rem; background: rgba(0,0,0,0.3); padding: 12px; border-radius: 12px; border: 1px solid rgba(255,255,255,0.02); transition: 0.2s;}
+        .todo-item:hover { background: rgba(255,255,255,0.05); }
+        .todo-cb { appearance: none; width: 20px; height: 20px; border: 2px solid var(--primary); border-radius: 4px; cursor: pointer; background: rgba(0,0,0,0.4); position: relative; transition: 0.2s; flex-shrink: 0;}
+        .todo-cb:checked { background: var(--primary); border-color: var(--primary);}
+        .todo-cb:checked::after { content: '✓'; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); color: #000; font-size: 0.8rem; font-weight: bold;}
+        .todo-cb:checked + span { text-decoration: line-through; opacity: 0.5; }
+
+        /* RESPONSIVE LAYOUT LOGIC */
+        @media (max-width: 1050px) {
+            .planner-bubble { flex-direction: column; height: 95dvh; overflow-y: auto;}
+            .side-panel { overflow-y: visible; }
+            #ui-wrapper { display: flex; flex-direction: column; align-items: center; padding-bottom: 20px; overflow-y: auto; }
+            #top-nav { position: static; display: flex; gap: 10px; padding: 20px; width: 100%; justify-content: center; flex-wrap: wrap; margin-top: 60px;}
+            .nav-logo { position: absolute; top: 20px; left: 50%; transform: translateX(-50%); margin: 0; }
+            .widget-dock { position: static; flex-direction: row; justify-content: center; width: 95%; max-width: 500px; }
+            #maker-panel { position: static; width: 95%; max-width: 500px; height: auto; min-height: 500px; border-radius: 25px; margin-top: 20px; }
+        }
+
+        /* TV OPTIMIZATION */
+        @media (min-width: 1800px) {
+            .planner-bubble { max-width: 1600px !important; height: 75dvh !important; padding: 50px !important; }
+            .ai-input { font-size: 1.3rem !important; line-height: 1.8 !important; }
+            .boot-title { font-size: 4rem !important; }
+            .nav-logo { font-size: 2rem !important; top: 40px !important; left: 50px !important;}
+            #maker-panel { width: 550px !important; top: 120px !important;}
+            .widget-dock { top: 120px !important; right: 50px !important;}
+            .artifact-btn { font-size: 0.9rem !important; padding: 15px 30px !important; }
+        }
     </style>
 </head>
-<body id="os-body" class="lunar-mode">
+<body id="os-body" onclick="restoreUI()">
 
-    <!-- CUSTOM NATIVE DIALOG -->
-    <div id="somnia-dialog" class="modal-overlay">
-        <div class="cast-box">
-            <h3 id="dialog-title" style="color: var(--primary); letter-spacing: 4px; margin-top: 0; text-transform: uppercase; font-family: 'Times New Roman', serif;">Notice</h3>
-            <p id="dialog-msg" style="font-size: 0.9rem; color: var(--text-muted); line-height: 1.6; margin-bottom: 25px; font-style: italic;"></p>
-            <input type="text" id="dialog-input" class="core-input" style="display:none;">
-            <div style="display:flex; gap:15px; width:100%;">
-                <button id="dialog-cancel" class="toy-btn" style="flex:1;">Nevermind</button>
-                <button id="dialog-confirm" class="toy-btn" style="flex:1; border-color:var(--accent); background: rgba(255,255,255,0.05);">Confirm</button>
-            </div>
+    <div id="boot-screen">
+        <div class="kore-orb"></div>
+        <div class="boot-content">
+            <h1 class="boot-title">SOMNIASCHEDS</h1>
+            <p class="boot-disclaimer">
+                A calm, open hall where your days take shape with gentle structure and quiet intention. In the Atrium, time doesn’t rush — it <b>arranges</b>. Tasks settle into place. Routines breathe. Your schedule becomes a soft architecture you can move through at your own pace.
+            </p>
+            <button class="artifact-btn" style="padding: 16px 45px; font-size: 1rem; border-color: var(--accent); border-radius: 50px;" onclick="startEngine()">ENTER THE ATRIUM</button>
         </div>
     </div>
 
-    <!-- MAIN APP CANVAS -->
+    <div id="somnia-dialog" class="modal-overlay">
+        <div class="cast-box">
+            <h3 id="dialog-title" style="color: var(--primary); letter-spacing: 4px; margin-top: 0; text-transform: uppercase; font-family: 'Times New Roman', serif;">Notice</h3>
+            <p id="dialog-msg" style="font-size: 0.9rem; color: var(--text-muted); line-height: 1.6; margin-bottom: 25px; font-family: 'Georgia', serif; font-style: italic;"></p>
+            <input type="text" id="dialog-input" class="core-input" style="display:none; border-radius: 12px;">
+            <div style="display:flex; gap:15px; width:100%;">
+                <button id="dialog-cancel" class="toy-btn" style="flex:1;">Nevermind</button>
+                <button id="dialog-confirm" class="toy-btn" style="flex:1; border-color:var(--accent); background: rgba(255,255,255,0.05); color: var(--text-main);">Confirm</button>
+            </div>
+        </div>
+    </div>
+    
+    <div id="drop-modal" class="modal-overlay" onclick="toggleModal('drop-modal')">
+        <div class="cast-box" onclick="event.stopPropagation()">
+            <h3 style="color: var(--primary); letter-spacing: 4px; margin-top: 0; text-transform: uppercase; font-family: 'Times New Roman', serif;">Drop Your Vibe</h3>
+            <p style="font-size: 0.9rem; color: var(--text-muted); line-height: 1.6; margin-bottom: 25px; font-family: 'Georgia', serif; font-style: italic;">Copy the link below to drop this setup anywhere:</p>
+            <input type="text" id="drop-link-input" class="core-input" style="border-radius: 12px;" readonly value="https://project-kore-llc.github.io/SomniaScheds/" onclick="this.select()">
+            <button class="toy-btn" style="width: 100%; border-color:var(--accent); color:var(--text-main);" onclick="toggleModal('drop-modal')">Close</button>
+        </div>
+    </div>
+
     <div id="bg-anchor"></div>
     <div id="glow-layer" class="glow-pulse"></div>
     <canvas id="particleCanvas"></canvas>
 
-    <div id="ui-wrapper" onclick="restoreUI()">
+    <div id="ui-wrapper">
+        <div class="nav-logo">SOMNIASCHEDS</div>
+        
         <div id="top-nav" onclick="event.stopPropagation()">
-            <button class="artifact-btn" onclick="toggleCloak()">Focus Mode</button>
-            <button class="artifact-btn" onclick="toggleModal('scratchpad-modal')">Scribes (Journal)</button>
-            <button class="artifact-btn" onclick="toggleModal('cast-modal')">Projector</button>
-            <button class="artifact-btn" onclick="shareSomnia()">Share</button>
+            <button class="artifact-btn" onclick="toggleCloak()">Cloak UI</button>
+            <button class="artifact-btn" onclick="toggleModal('planner-modal')">Planner</button>
+            <button class="artifact-btn" onclick="toggleModal('cast-modal')">Project</button>
+            <button class="artifact-btn btn-drop" onclick="dropSomnia()">Drop</button>
         </div>
 
-        <div class="nav-logo">SOMNIASCHEDS</div>
+        <div class="widget-dock" onclick="event.stopPropagation()">
+            <div class="gorgeous-widget">
+                <div class="time-display" id="clock-widget">00:00</div>
+                <div class="date-display" id="date-widget">Loading...</div>
+            </div>
+            <div class="gorgeous-widget">
+                <div class="weather-display" id="weather-icon">☁️ 72°F</div>
+                <div class="weather-desc" id="weather-text">Calm & Overcast</div>
+                <div style="font-size: 0.65rem; color: var(--text-muted); margin-top: 10px; font-family: monospace; letter-spacing: 2px;">LOCAL FIRST REGIONAL DATA</div>
+            </div>
+        </div>
 
         <main id="maker-panel" onclick="event.stopPropagation()">
             <div class="tab-bar">
-                <button class="tab-btn" onclick="switchTab('tab-audio', this)">Audio</button>
+                <button class="tab-btn active" onclick="switchTab('tab-audio', this)">Audio</button>
                 <button class="tab-btn" onclick="switchTab('tab-canvas', this)">Canvas</button>
                 <button class="tab-btn" onclick="switchTab('tab-atmos', this)">Atmos</button>
-                <button class="tab-btn active" onclick="switchTab('tab-scheds', this)">Planner</button>
                 <button class="tab-btn" onclick="switchTab('tab-vault', this)">Vault</button>
+                <button class="tab-btn" onclick="switchTab('tab-protips', this)">Pro Tips</button>
             </div>
 
-            <div id="tab-audio" class="tab-content">
-                <div style="display: flex; justify-content: space-between; align-items: center;">
-                    <label class="toy-btn" style="flex:1; text-align:center; margin-right:10px;">
-                        + Upload Custom Audio
+            <div id="tab-audio" class="tab-content active">
+                <div style="display: flex; justify-content: space-between; align-items: center; gap: 10px;">
+                    <label class="toy-btn" style="flex:1; text-align:center; border-color: var(--accent);">
+                        ✨ Add Custom Sound
                         <input type="file" style="display:none;" accept="audio/*" onchange="handleAudioUpload(this)">
                     </label>
-                    <button class="toy-btn" onclick="stopAllAudio()" style="border-color:#fb7185; color:#fb7185;">Silence All</button>
+                    <button class="toy-btn" onclick="stopAllAudio()" style="border-color:#fb7185; color:#fb7185; background: rgba(251,113,133,0.05);">Shh!</button>
                 </div>
-                <div class="ctrl-row">
+                <div class="ctrl-row" style="margin-top: 10px;">
                     <label style="color: var(--primary);">Master Gain</label>
                     <input type="range" class="ctrl-slider" id="master-gain-slider" min="0" max="2" step="0.1" value="1" oninput="setMasterGain(this.value)">
                 </div>
-                <div id="mixer-container" style="display:flex; flex-direction:column; gap:8px;"></div>
+                <div id="mixer-container" style="display:flex; flex-direction:column; gap:10px; margin-top: 10px;"></div>
             </div>
 
             <div id="tab-canvas" class="tab-content">
-                <h4 class="section-title">Saved Backgrounds</h4>
-                <div class="btn-grid" id="custom-bgs" style="display: flex; flex-direction: column; gap: 8px;"></div>
-                <h4 class="section-title" style="margin-top:15px;">Upload</h4>
-                <label class="upload-zone">
-                    <span>+ Upload Local Background Image</span>
+                <h4 class="section-title">Your Masterpieces</h4>
+                <label class="upload-zone" style="margin-bottom: 15px;">
+                    <span style="display:block; margin-bottom: 5px;">🖼️ Upload Local Background</span>
+                    <span style="font-size: 0.6rem; opacity: 0.6; font-style: italic;">(It's safe, we promise!)</span>
                     <input type="file" accept="image/*" onchange="executeImageUpload(this)">
                 </label>
+                <div id="custom-bgs" style="display:flex; flex-direction:column; gap: 10px;"></div>
             </div>
 
             <div id="tab-atmos" class="tab-content">
-                <h4 class="section-title">Color Arrays</h4>
+                <h4 class="section-title">Color Palettes</h4>
                 <div class="btn-grid" id="color-grid"></div>
-                <h4 class="section-title" style="margin-top:15px;">Particles</h4>
+
+                <h4 class="section-title" style="margin-top:20px;">Sprinkles (Particles)</h4>
                 <div class="btn-grid" id="particle-grid"></div>
-                <h4 class="section-title" style="margin-top:15px;">Screen Glows</h4>
+
+                <h4 class="section-title" style="margin-top:20px;">Glow Styles</h4>
                 <div class="btn-grid" id="glow-grid"></div>
-                <h4 class="section-title" style="margin-top:15px;">Particle Colors</h4>
+
+                <h4 class="section-title" style="margin-top:20px;">Sprinkle Colors</h4>
                 <div class="btn-grid" id="particle-color-grid"></div>
-                <h4 class="section-title" style="margin-top:15px;">Glow Colors</h4>
+
+                <h4 class="section-title" style="margin-top:20px;">Glow Colors</h4>
                 <div class="btn-grid" id="glow-color-grid"></div>
 
-                <h4 class="section-title" style="margin-top:20px;">Master Sliders</h4>
+                <h4 class="section-title" style="margin-top:25px;">Engine Tweaks</h4>
                 <div class="ctrl-row"><label>Speed</label><input type="range" class="ctrl-slider" id="speed-slider" min="1" max="20" value="10" oninput="updateVar('--anim-speed', (21-this.value)+'s'); saveCurrentState();"></div>
                 <div class="ctrl-row"><label>Opacity</label><input type="range" class="ctrl-slider" id="opac-slider" min="0" max="1" step="0.1" value="0.3" oninput="updateVar('--glow-opac', this.value); saveCurrentState();"></div>
                 <div class="ctrl-row"><label>Brightness</label><input type="range" class="ctrl-slider" id="bright-slider" min="0.2" max="2" step="0.1" value="0.85" oninput="updateVar('--bg-bright', this.value); saveCurrentState();"></div>
+                <div class="ctrl-row"><label>Zoom</label><input type="range" class="ctrl-slider" id="zoom-slider" min="1" max="2" step="0.1" value="1" oninput="updateVar('--bg-zoom', this.value); saveCurrentState();"></div>
                 <div class="ctrl-row"><label>Density</label><input type="range" class="ctrl-slider" id="density-slider" min="10" max="200" value="50" step="10" oninput="updateParticleDensity(this.value); saveCurrentState();"></div>
+                <div class="ctrl-row" style="margin-top: 5px;"><label>Low GPU</label><input type="checkbox" id="lowGpuToggle" style="accent-color: var(--primary); transform: scale(1.2);" onclick="toggleLowGpu()"></div>
             </div>
 
-            <div id="tab-scheds" class="tab-content active">
-                
-                <!-- HEADER & CALENDAR -->
-                <div style="display: flex; gap: 15px; flex-wrap: wrap;">
-                    <div class="sched-card" style="flex: 1; min-width: 200px;">
-                        <div class="sched-header-row">
-                            <div>
-                                <div class="sched-header-main" id="sched-today-label">Today</div>
-                                <div class="sched-subtext" id="sched-today-date"></div>
-                            </div>
-                            <div style="text-align:right;">
-                                <div class="sched-subtext" id="sched-time-label" style="font-size: 1rem; color: var(--primary);">--:--</div>
-                            </div>
-                        </div>
-                        <div class="sched-calendar-nav" style="margin-top: 10px;">
-                            <button class="sched-pill-btn" onclick="changeSchedsMonth(-1)">◀</button>
-                            <div class="sched-calendar-month" id="sched-month-label"></div>
-                            <button class="sched-pill-btn" onclick="changeSchedsMonth(1)">▶</button>
-                        </div>
-                        <div class="sched-calendar-grid" id="sched-calendar-grid"></div>
-                    </div>
-                    
-                    <!-- TIMER -->
-                    <div class="sched-card" style="flex: 1; min-width: 200px; display: flex; justify-content: center; align-items: center;">
-                        <div class="sched-section-title" style="width: 100%; text-align: left;">Focus Timer</div>
-                        <div class="sched-timer-display" id="sched-timer-display">25:00</div>
-                        <div class="sched-timer-controls">
-                            <button class="sched-pill-btn" onclick="startSchedsTimer()">Start</button>
-                            <button class="sched-pill-btn" onclick="pauseSchedsTimer()">Pause</button>
-                            <button class="sched-pill-btn" onclick="resetSchedsTimer()">Reset</button>
-                        </div>
-                        <div class="sched-input-row" style="margin-top: 10px; justify-content: center;">
-                            <input id="sched-timer-minutes" class="sched-input" type="number" min="1" max="180" value="25" style="width: 60px; text-align: center;" onchange="setSchedsPreset(this.value)">
-                            <span class="sched-subtext">mins</span>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- DAILY TALLIES -->
-                <div class="sched-card">
-                    <div class="sched-section-title">Daily Tallies</div>
-                    <div class="sched-subtext">Track Pomodoros, water, or tasks.</div>
-                    <div id="tallies-container" style="display: flex; flex-direction: column; gap: 8px; margin-top: 5px;"></div>
-                    <button class="sched-pill-btn" style="align-self: flex-start; margin-top: 5px;" onclick="addTally()">+ Add Tracker</button>
-                </div>
-
-                <!-- DAY PLAN & NOTES -->
-                <div class="sched-card">
-                    <div class="sched-section-title">Day Plan</div>
-                    <div class="sched-subtext" id="sched-selected-date-label">Select a day to plan.</div>
-                    <div class="sched-input-row" style="margin-top:10px;">
-                        <input id="sched-event-title" class="sched-input" type="text" placeholder="Task or event..." style="flex: 1;">
-                        <input id="sched-event-time" class="sched-time" type="time">
-                        <button class="sched-pill-btn" onclick="addSchedsEvent()">Add</button>
-                    </div>
-                    <div class="sched-list" id="sched-event-list" style="margin-top: 10px;"></div>
-                </div>
-
-                <div class="sched-card">
-                    <div class="sched-section-title">Quick Notes</div>
-                    <textarea id="sched-note-input" class="sched-textarea" placeholder="Type a note and press 'Save'..." style="margin-top: 5px;"></textarea>
-                    <button class="sched-pill-btn" style="align-self: flex-end; margin-top: 5px;" onclick="addSchedsNote()">Save Note</button>
-                    <div class="sched-list" id="sched-note-list" style="margin-top: 10px;"></div>
-                </div>
-            </div>
-
-            <!-- VAULT -->
             <div id="tab-vault" class="tab-content">
-                <div style="display: flex; gap: 8px; margin-bottom: 15px; flex-wrap: wrap;">
-                    <button class="toy-btn" id="save-btn" style="flex: 1 1 100%; border-color: var(--primary); padding: 15px;" onclick="savePreset()">💾 Save Current Vibe</button>
-                    <button class="toy-btn" style="flex: 1;" onclick="exportVault()">📤 Export</button>
-                    <label class="toy-btn" style="flex: 1; text-align: center;">
-                        📥 Import <input type="file" accept=".json" style="display:none;" onchange="importVault(this)">
+                <button class="toy-btn" id="save-btn" style="border-color: var(--primary); padding: 18px; font-size: 0.75rem; border-radius: 50px;" onclick="savePreset()">💖 Save This Vibe to Vault</button>
+                <div style="display:flex; gap:10px; margin-top: 10px;">
+                    <button class="toy-btn" style="flex:1; border-color: var(--glass-border);" onclick="exportVibes()">📥 Export Vibes</button>
+                    <label class="toy-btn" style="flex:1; text-align:center; border-color: var(--glass-border); cursor: pointer;">
+                        📤 Import Vibes
+                        <input type="file" style="display:none;" accept=".json" onchange="importVibes(this)">
                     </label>
                 </div>
-                <div id="vault-list" style="display: flex; flex-direction: column; gap: 10px;"></div>
+                <div id="vault-list" style="display:flex; flex-direction:column; gap:12px; margin-top:15px;"></div>
+            </div>
+
+            <div id="tab-protips" class="tab-content">
+                <h4 class="section-title">SOMNIASCHEDS PRO TIPS</h4>
+                <p style="font-size: 0.85rem; color: var(--text-muted); line-height: 1.6; margin-top: 0;">
+                    Welcome to your highly aesthetic, offline-first digital scheduler. Here is how to make the most of it:
+                </p>
+                <ul style="font-size: 0.85rem; color: var(--text-muted); line-height: 1.6; padding-left: 20px;">
+                    <li><strong>The Planner:</strong> Click "Planner" in the top navigation to enter The Atrium. Your schedule and tasks are stored safely and permanently inside your device via IndexedDB.</li>
+                    <li><strong>Sensory Control:</strong> Use the "Atmos" tab to adjust the speed, brightness, and opacity of your environment to down-regulate sensory overhead during long planning sessions.</li>
+                    <li><strong>Vibe Architecture:</strong> Mix and match up to 60 total aesthetic variables. Try "Gothic" + "Bats" + "Inferno" for a dark vibe, or "Library" + "Motes" + "Sepia" for deep focus!</li>
+                    <li><strong>Cloak UI:</strong> Once your vibe is set, hit "Cloak UI" to hide all menus so you can focus entirely on the atmosphere and widgets. Click anywhere on the screen to bring the menus back.</li>
+                </ul>
+
+                <h4 class="section-title" style="margin-top: 15px; color: var(--primary);">💾 Backup & Cloud Sync (Local-First Approach)</h4>
+                <p style="font-size: 0.85rem; color: var(--text-muted); line-height: 1.6;">
+                    Because your data never leaves your device automatically, you are entirely in control of your backups:<br>
+                    1. <strong>Export:</strong> Use the "Export Vibes" (Vault tab) and "Export Planner" (Planner side panel) buttons to download your environment settings and schedules as <code>.json</code> files.<br>
+                    2. <strong>Secure:</strong> Upload these files into Google Drive, a secure local folder, or external media for safekeeping.<br>
+                    3. <strong>Restore:</strong> If you clear your browser data or switch devices, simply use the "Import" buttons to inject your exact architectural setup and schedule back into the engine.
+                </p>
+
+                <h4 class="section-title" style="margin-top: 15px; color: var(--primary);">🤖 Pro Tip: Awakening the AI Assistant</h4>
+                <p style="font-size: 0.85rem; color: var(--text-muted); line-height: 1.6;">
+                    To utilize natural language scheduling (e.g. "Schedule a 2-hour deep work block for KORE architecture tomorrow"):<br>
+                    1. Go to <strong>aistudio.google.com</strong> and sign in with your Google account.<br>
+                    2. Click <strong>"Get API key"</strong> in the left sidebar and create a key.<br>
+                    3. Open the <strong>Planner</strong> from the top navigation in SomniaScheds.<br>
+                    4. Paste it into the "Gemini API Key" field at the top of the AI Assistant panel and click <strong>Save Key</strong>.<br>
+                    <em>Privacy Note: Your key and prompts never leave your local workspace except at the exact moment of parsing.</em>
+                </p>
+                
+                <h4 class="section-title" style="margin-top: 15px; color: var(--primary);">PWA Support</h4>
+                <p style="font-size: 0.85rem; color: var(--text-muted); line-height: 1.6;">
+                    This app is PWA enabled. Install it to your device's home screen for a completely offline, local-first computing experience!
+                </p>
             </div>
         </main>
     </div>
 
-    <!-- SCRIBES (Journal Archive) -->
-    <div id="scratchpad-modal" class="modal-overlay" onclick="toggleModal('scratchpad-modal')">
-        <div class="scribes-bubble" onclick="event.stopPropagation()">
-            <div class="archive-vault">
-                <div class="vault-header">
-                    <div>
-                        <h2>SomniaScribes</h2>
-                        <div style="font-size: 0.6rem; opacity: 0.6; letter-spacing: 4px; font-family: monospace;">PRIVATE SOMATIC JOURNAL</div>
-                    </div>
-                    <input type="text" id="search-annals" placeholder="SEARCH ARCHIVE..." oninput="renderAnnals()">
+    <div id="planner-modal" class="modal-overlay" onclick="toggleModal('planner-modal')">
+        <div class="planner-bubble" onclick="event.stopPropagation()">
+            
+            <div class="cal-panel">
+                <div class="view-toggles">
+                    <button class="view-btn" onclick="setView('day', this)">Day List</button>
+                    <button class="view-btn" onclick="setView('week', this)">Week Block</button>
+                    <button class="view-btn active" onclick="setView('month', this)">Month Grid</button>
                 </div>
-                <div id="annals" class="annals-body"></div>
-                <textarea id="lore-editor" class="lore-input" rows="3" placeholder="Write a new entry... [Press ENTER to save]"></textarea>
+                
+                <div class="cal-header">
+                    <button class="artifact-btn" onclick="navCal(-1)" style="padding: 8px 15px; border-radius: 12px;">◀</button>
+                    <div class="cal-title" id="cal-title-label">October 2026</div>
+                    <button class="artifact-btn" onclick="navCal(1)" style="padding: 8px 15px; border-radius: 12px;">▶</button>
+                </div>
+
+                <div id="cal-grid-container" class="grid-month">
+                    </div>
             </div>
-            <div class="command-array">
-                <button class="lux-btn" onclick="jolt('lunar')">Lunar</button>
-                <button class="lux-btn" onclick="jolt('noir')">Noir</button>
-                <button class="lux-btn" onclick="jolt('vellum')">Vellum</button>
-                <button class="lux-btn" onclick="exportFullArchive()">📤 Export Backup</button>
-                <button class="lux-btn" onclick="document.getElementById('import-trigger').click()">📥 Import Backup</button>
+
+            <div class="side-panel">
+                <div class="panel-card">
+                    <div class="panel-title" style="display: flex; justify-content: space-between; align-items: center;">
+                        <span>🧠 AI Assistant</span>
+                        <div style="display: flex; gap: 5px;">
+                            <input type="password" id="gemini-key-input" class="core-input" style="margin:0; padding: 4px 8px; width: 120px; font-size: 0.7rem; border-radius: 6px;" placeholder="API Key...">
+                            <button class="toy-btn" id="save-key-btn" style="padding: 4px 8px; font-size: 0.6rem; border-radius: 6px;" onclick="saveApiKey()">Save</button>
+                        </div>
+                    </div>
+                    <textarea class="ai-input" id="ai-prompt" placeholder="e.g., 'Schedule a 2-hour deep work block for KORE architecture tomorrow at 10 AM, tag it as work, and remind me to grab groceries at 5 PM.'"></textarea>
+                    <button class="artifact-btn" style="width: 100%; border-color: var(--accent); font-size: 0.8rem; padding: 12px; border-radius: 12px;" onclick="processAI()">Process & Arrange</button>
+                    <div id="ai-status" style="font-size: 0.7rem; color: var(--text-muted); font-family: monospace; margin-top: 10px; text-align: center; height: 15px;">Awaiting instructions...</div>
+                </div>
+
+                <div class="panel-card" style="flex: 1; display: flex; flex-direction: column;">
+                    <div class="panel-title">Local Tasks & Anchors</div>
+                    <div id="todo-list" style="flex: 1; overflow-y: auto; padding-right: 5px;">
+                        </div>
+                    <input type="text" class="core-input" id="new-todo" placeholder="+ Add task and press Enter..." onkeypress="if(event.key==='Enter') addTodo()" style="margin-bottom:0; margin-top:15px; padding:12px; border-radius: 12px;">
+                </div>
+
+                <div class="panel-card" style="padding: 15px 25px;">
+                    <div class="panel-title" style="font-size: 0.8rem; margin-bottom: 10px;">Data Backup</div>
+                    <div style="display:flex; gap:10px;">
+                        <button class="artifact-btn" style="flex:1; font-size: 0.65rem; padding: 8px;" onclick="exportPlanner()">📥 Export Planner</button>
+                        <label class="artifact-btn" style="flex:1; text-align:center; font-size: 0.65rem; padding: 8px; cursor: pointer;">
+                            📤 Import Planner
+                            <input type="file" style="display:none;" accept=".json" onchange="importPlanner(this)">
+                        </label>
+                    </div>
+                </div>
             </div>
-            <input type="file" id="import-trigger" style="display:none" accept=".json" onchange="importFullArchive(event)">
+
         </div>
     </div>
 
-    <!-- CAST/PROJECTOR MODAL -->
     <div id="cast-modal" class="modal-overlay" onclick="toggleModal('cast-modal')">
         <div class="cast-box" onclick="event.stopPropagation()">
-            <h3 style="color: var(--primary); letter-spacing: 4px; margin-top: 0; margin-bottom: 15px; font-family: 'Times New Roman', serif;">PROJECTOR MODE</h3>
-            <p style="font-size: 0.9rem; color: var(--text-muted); line-height: 1.6; margin-bottom: 20px; font-family: 'Georgia', serif; font-style: italic;">
-                Cast the scene to a TV, or expand it fully on your monitor to hide all browser distractions.
+            <h3 style="color: var(--primary); letter-spacing: 4px; margin-top: 0; margin-bottom: 15px; font-family: 'Times New Roman', serif;">PROJECT TO THE BIG SCREEN</h3>
+            <p style="font-size: 0.9rem; color: var(--text-muted); line-height: 1.6; margin-bottom: 30px; font-family: 'Georgia', serif; font-style: italic;">
+                Want to make your room entirely magical? Use your browser's Tab Mirroring to cast this cozy scheduler to your TV!
             </p>
-            <div style="background: rgba(0,0,0,0.3); padding: 20px; border-radius: 20px; border: 1px dashed var(--glass-border); width: 100%; margin-bottom: 25px; text-align: left;">
-                <p style="font-size: 0.75rem; color: var(--primary); margin: 0 0 10px 0; text-transform: uppercase; letter-spacing: 1px;">How to Cast:</p>
-                <p style="font-size: 0.75rem; color: var(--text-muted); line-height: 1.6; margin: 0; font-family: monospace;">
-                    1. Right-click the background.<br>
-                    2. Select <b>"Cast..."</b><br>
-                    3. Choose your display.<br>
-                    <i>* Make sure "Cast Tab" is selected!</i>
-                </p>
-            </div>
-            <button class="toy-btn" style="width: 100%; padding: 18px; border-color: var(--accent); color: var(--text-main); font-size: 0.8rem; border-radius: 50px;" onclick="toggleFullscreen()">⛶ Just Fill My Screen</button>
+            <button class="toy-btn" style="width: 100%; margin-bottom: 10px; padding: 18px; border-color: var(--accent); color: var(--text-main); font-size: 0.8rem; border-radius: 50px;" onclick="toggleFullscreen()">⛶ Fill The Screen</button>
         </div>
     </div>
 
     <script>
-        // === 1. GLOBAL UI & ALERTS ===
-        function switchTab(tabId, btn) {
-            document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
-            if (btn) btn.classList.add('active');
-            document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
-            const tab = document.getElementById(tabId);
-            if (tab) tab.classList.add('active');
+        // Set Default Aesthetic Mode on Root immediately
+        document.documentElement.className = 'lunar-mode';
+
+        // PWA REGISTRATION
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('./sw.js')
+                    .catch(err => console.log('PWA bypassed for local dev.'));
+            });
         }
 
-        function toggleCloak() { document.body.classList.toggle('cloaked'); }
-        function restoreUI() { document.body.classList.remove('cloaked'); }
-        function toggleModal(id) { document.getElementById(id).classList.toggle('active'); }
-        function updateVar(name, val) { document.documentElement.style.setProperty(name, val); }
-        function jolt(palette) { document.documentElement.className = palette + '-mode'; saveCurrentState(); }
+        // === 0. SOMNIASCHEDS DB (IndexedDB) ===
+        const dbPromise = new Promise((resolve, reject) => {
+            const req = indexedDB.open('SomniaSchedsDB_Core', 1);
+            req.onupgradeneeded = e => {
+                const db = e.target.result;
+                if (!db.objectStoreNames.contains('media')) db.createObjectStore('media');
+                if (!db.objectStoreNames.contains('events')) db.createObjectStore('events', { keyPath: 'id' });
+                if (!db.objectStoreNames.contains('todos')) db.createObjectStore('todos', { keyPath: 'id' });
+            };
+            req.onsuccess = e => resolve(e.target.result);
+            req.onerror = e => reject(e);
+        });
 
-        function toggleFullscreen() {
-            if (!document.fullscreenElement) { document.documentElement.requestFullscreen().catch(e => console.log(e)); } 
-            else { document.exitFullscreen(); }
-            toggleModal('cast-modal');
-        }
+        // Media Store
+        async function saveMedia(key, blob) { const db = await dbPromise; db.transaction('media', 'readwrite').objectStore('media').put(blob, key); }
+        async function getMedia(key) { return new Promise(async res => { const db = await dbPromise; const req = db.transaction('media').objectStore('media').get(key); req.onsuccess = () => res(req.result); req.onerror = () => res(null); }); }
+        async function getAllMediaKeys() { return new Promise(async res => { const db = await dbPromise; const req = db.transaction('media').objectStore('media').getAllKeys(); req.onsuccess = () => res(req.result); }); }
+        async function deleteMedia(key) { const db = await dbPromise; db.transaction('media', 'readwrite').objectStore('media').delete(key); localStorage.removeItem('somnia_name_' + key); }
 
+        // Data Store
+        async function dbPut(store, data) { const db = await dbPromise; db.transaction(store, 'readwrite').objectStore(store).put(data); }
+        async function dbGetAll(store) { return new Promise(async res => { const db = await dbPromise; const req = db.transaction(store).objectStore(store).getAll(); req.onsuccess = () => res(req.result); }); }
+        async function dbDelete(store, key) { const db = await dbPromise; db.transaction(store, 'readwrite').objectStore(store).delete(key); }
+
+        // === 0.5. CUSTOM NATIVE ALERTS ===
         function somniaAlert(title, msg) {
             return new Promise(resolve => {
                 const modal = document.getElementById('somnia-dialog');
@@ -448,44 +708,74 @@
             });
         }
 
-        // === 2. INDEXED DB ENGINE (Local Media Storage) ===
-        const dbPromise = new Promise((resolve, reject) => {
-            const req = indexedDB.open('SomniaSchedsDB', 1);
-            req.onupgradeneeded = e => { if (!e.target.result.objectStoreNames.contains('media')) e.target.result.createObjectStore('media'); };
-            req.onsuccess = e => resolve(e.target.result); req.onerror = e => reject(e);
-        });
-        async function saveMedia(key, blob) { const db = await dbPromise; db.transaction('media', 'readwrite').objectStore('media').put(blob, key); }
-        async function getMedia(key) { return new Promise(async resolve => { const db = await dbPromise; const req = db.transaction('media').objectStore('media').get(key); req.onsuccess = () => resolve(req.result); req.onerror = () => resolve(null); }); }
-        async function getAllMediaKeys() { return new Promise(async resolve => { const db = await dbPromise; const req = db.transaction('media').objectStore('media').getAllKeys(); req.onsuccess = () => resolve(req.result); }); }
-        async function deleteMedia(key) { const db = await dbPromise; db.transaction('media', 'readwrite').objectStore('media').delete(key); localStorage.removeItem('somnia_name_' + key); }
+        // === 1. BOOT SEQUENCE ===
+        async function startEngine() {
+            const bootScreen = document.getElementById('boot-screen');
+            bootScreen.style.opacity = '0';
+            if(!window.location.search) await restoreActiveState();
 
-        // BACKGROUNDS
-        async function loadCustomBackgrounds() {
-            const grid = document.getElementById('custom-bgs'); grid.innerHTML = '';
-            const keys = await getAllMediaKeys(); const bgKeys = keys.filter(k => k.startsWith('bg_'));
+            if (!activeAudio['windchimes']) {
+                toggleStem('windchimes', 'windchimes.mp3');
+                const slider = document.getElementById('vol-windchimes');
+                if(slider) slider.value = 0.5; 
+            }
+            setTimeout(() => { bootScreen.remove(); }, 1500);
+        }
+
+        // === 2. GLOBAL UI ===
+        function switchTab(tabId, btn) {
+            document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+            document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+            document.getElementById(tabId).classList.add('active');
+        }
+
+        function toggleCloak() { document.body.classList.toggle('cloaked'); }
+        function restoreUI() { document.body.classList.remove('cloaked'); }
+        function toggleModal(modalId) { document.getElementById(modalId).classList.toggle('active'); }
+        function updateVar(name, val) { document.documentElement.style.setProperty(name, val); }
+
+        function toggleFullscreen() {
+            if (!document.fullscreenElement) document.documentElement.requestFullscreen().catch(e => console.log(e));
+            else document.exitFullscreen();
+            document.getElementById('cast-modal').classList.remove('active');
+        }
+
+        // === 3. BACKGROUNDS ===
+        async function loadCustomBackgrounds(reload = false) {
+            const grid = document.getElementById('custom-bgs');
+            if(reload) grid.innerHTML = '';
+            const keys = await getAllMediaKeys();
+            const bgKeys = keys.filter(k => k.startsWith('bg_'));
             for(let key of bgKeys) {
                 const blob = await getMedia(key);
-                if(blob) { addBgButton(URL.createObjectURL(blob), key, localStorage.getItem('somnia_name_' + key) || "🖼️ Image"); }
+                if(blob) {
+                    const savedName = localStorage.getItem('somnia_name_' + key) || "🖼️ Cozy Pic " + key.replace('bg_', '').substring(0, 3);
+                    addBgButton(URL.createObjectURL(blob), key, savedName);
+                }
             }
         }
 
-        function addBgButton(url, key, name) {
+        function addBgButton(imgUrl, key, name) {
             const grid = document.getElementById('custom-bgs');
             const wrap = document.createElement('div'); wrap.style.display = 'flex'; wrap.style.gap = '8px'; wrap.style.width = '100%';
             const btn = document.createElement('button'); btn.className = 'toy-btn'; btn.style.flex = "1"; btn.textContent = name;
             btn.onclick = () => {
                 grid.querySelectorAll('.toy-btn').forEach(b => b.classList.remove('active')); btn.classList.add('active');
-                document.getElementById('bg-anchor').style.backgroundImage = `url('${url}')`;
+                document.getElementById('bg-anchor').style.backgroundImage = `url('${imgUrl}')`;
                 localStorage.setItem('somnia_active_bg_key', key); saveCurrentState();
             };
             const editBtn = document.createElement('button'); editBtn.className = 'toy-btn'; editBtn.innerHTML = '✏️'; editBtn.style.padding = '0 15px';
             editBtn.onclick = () => renameCustomItem(key, 'bg');
-            const delBtn = document.createElement('button'); delBtn.className = 'toy-btn'; delBtn.innerHTML = '✕'; delBtn.style.color = '#fb7185'; delBtn.style.padding = '0 15px';
+            const delBtn = document.createElement('button'); delBtn.className = 'toy-btn'; delBtn.innerHTML = '✕'; delBtn.style.padding = '0 15px'; delBtn.style.color = '#fb7185'; delBtn.style.borderColor = 'rgba(251,113,133,0.3)';
             delBtn.onclick = async () => {
-                if(await somniaConfirm("Delete Background?", "Are you sure you want to delete this custom background?")) {
+                const confirmed = await somniaConfirm("TRASH THIS CANVAS?", "Are you sure you want to delete this custom background? It will be gone forever.");
+                if(confirmed) {
                     await deleteMedia(key);
-                    if(localStorage.getItem('somnia_active_bg_key') === key) { document.getElementById('bg-anchor').style.backgroundImage = "none"; localStorage.removeItem('somnia_active_bg_key'); }
-                    loadCustomBackgrounds();
+                    if(localStorage.getItem('somnia_active_bg_key') === key) {
+                        document.getElementById('bg-anchor').style.backgroundImage = "url('SomniaScheds.png')"; localStorage.removeItem('somnia_active_bg_key');
+                    }
+                    await loadCustomBackgrounds(true);
                 }
             };
             wrap.appendChild(btn); wrap.appendChild(editBtn); wrap.appendChild(delBtn); grid.prepend(wrap);
@@ -493,10 +783,10 @@
 
         async function renameCustomItem(key, type) {
             const currentName = localStorage.getItem('somnia_name_' + key) || "";
-            const newName = await somniaPrompt("RENAME ITEM", "What should we call this?", currentName);
+            const newName = await somniaPrompt("RENAME THIS GEM", "What should we call this?", currentName);
             if (newName) {
                 localStorage.setItem('somnia_name_' + key, newName);
-                if (type === 'audio') { loadCustomAudio(); } else if (type === 'bg') { loadCustomBackgrounds(); }
+                if (type === 'audio') { customAudioLibrary = []; await loadCustomAudio(true); } else if (type === 'bg') { await loadCustomBackgrounds(true); }
             }
         }
 
@@ -508,15 +798,15 @@
                 const img = new Image();
                 img.onload = async () => {
                     const canvas = document.createElement('canvas'); const ctx = canvas.getContext('2d');
-                    let width = img.width; let height = img.height; const MAX = 1920;
-                    if (width > MAX) { height *= MAX / width; width = MAX; }
+                    const MAX_WIDTH = 1920; let width = img.width; let height = img.height;
+                    if (width > MAX_WIDTH) { height *= MAX_WIDTH / width; width = MAX_WIDTH; }
                     canvas.width = width; canvas.height = height; ctx.drawImage(img, 0, 0, width, height);
                     canvas.toBlob(async (blob) => {
                         await saveMedia(key, blob);
-                        const finalName = await somniaPrompt("Name Background", "What should we call this background?", "My Vibe") || "🖼️ Custom";
+                        const customName = await somniaPrompt("NAME THIS VIBE", "What should we call this masterpiece?", "My Cozy Vibe");
+                        const finalName = customName || "🖼️ Custom Canvas";
                         localStorage.setItem('somnia_name_' + key, finalName);
-                        const imgUrl = URL.createObjectURL(blob);
-                        addBgButton(imgUrl, key, finalName);
+                        const imgUrl = URL.createObjectURL(blob); addBgButton(imgUrl, key, finalName);
                         document.getElementById('bg-anchor').style.backgroundImage = `url('${imgUrl}')`;
                         localStorage.setItem('somnia_active_bg_key', key); saveCurrentState();
                     }, 'image/jpeg', 0.85);
@@ -526,156 +816,191 @@
             reader.readAsDataURL(file); input.value = ""; 
         }
 
-        // === 3. WEB AUDIO API MIXER ===
+        function saveCurrentState() {
+            const state = {
+                bodyClass: document.documentElement.className.replace('cloaked', '').trim(),
+                glowClass: document.getElementById('glow-layer').className, particleType: window.particleType, particleCount: window.particleCount,
+                vars: {
+                    speed: getComputedStyle(document.documentElement).getPropertyValue('--anim-speed').trim(), opac: getComputedStyle(document.documentElement).getPropertyValue('--glow-opac').trim(),
+                    bright: getComputedStyle(document.documentElement).getPropertyValue('--bg-bright').trim(), zoom: getComputedStyle(document.documentElement).getPropertyValue('--bg-zoom').trim(),
+                    pColor: getComputedStyle(document.documentElement).getPropertyValue('--particle-color').trim(), gColor: getComputedStyle(document.documentElement).getPropertyValue('--glow-color').trim()
+                }
+            };
+            localStorage.setItem('somnia_active_state', JSON.stringify(state));
+        }
+
+        async function restoreActiveState() {
+            try {
+                const stateStr = localStorage.getItem('somnia_active_state'); const activeBgKey = localStorage.getItem('somnia_active_bg_key');
+                if (activeBgKey) { 
+                    const blob = await getMedia(activeBgKey); 
+                    if(blob) { 
+                        document.getElementById('bg-anchor').style.backgroundImage = `url('${URL.createObjectURL(blob)}')`; 
+                    } else { 
+                        document.getElementById('bg-anchor').style.backgroundImage = "url('SomniaScheds.png')"; 
+                    } 
+                } else {
+                    document.getElementById('bg-anchor').style.backgroundImage = "url('SomniaScheds.png')";
+                }
+                if (stateStr) {
+                    const state = JSON.parse(stateStr);
+                    document.documentElement.className = state.bodyClass || 'lunar-mode'; document.getElementById('glow-layer').className = state.glowClass || 'glow-pulse';
+                    window.particleType = state.particleType || 'dust'; window.particleCount = state.particleCount || 50;
+                    if (state.vars) {
+                        updateVar('--anim-speed', state.vars.speed); updateVar('--glow-opac', state.vars.opac); updateVar('--bg-bright', state.vars.bright); updateVar('--bg-zoom', state.vars.zoom);
+                        updateVar('--particle-color', state.vars.pColor); updateVar('--glow-color', state.vars.gColor);
+                        if(document.getElementById('speed-slider')) document.getElementById('speed-slider').value = 21 - parseInt(state.vars.speed);
+                        if(document.getElementById('opac-slider')) document.getElementById('opac-slider').value = state.vars.opac;
+                        if(document.getElementById('bright-slider')) document.getElementById('bright-slider').value = state.vars.bright;
+                        if(document.getElementById('zoom-slider')) document.getElementById('zoom-slider').value = state.vars.zoom;
+                        if(document.getElementById('density-slider')) document.getElementById('density-slider').value = state.particleCount;
+                    }
+                }
+            } catch (e) { console.log("State restore error", e); }
+        }
+
+        // === 4. VAULT PRESETS ===
+        let savedVault = JSON.parse(localStorage.getItem('somniaVault')) || [];
+        async function savePreset() {
+            let presetName = await somniaPrompt("VAULT THIS VIBE", "Name your gorgeous aesthetic setup:", "Cozy Setting " + (savedVault.length + 1));
+            if (!presetName) return; 
+            const btn = document.getElementById('save-btn'); btn.innerText = "✓ SAVED!"; setTimeout(() => { btn.innerText = "💖 Save This Vibe to Vault"; }, 2000);
+            const state = {
+                name: presetName, bodyClass: document.documentElement.className.replace('cloaked', '').trim(), glowClass: document.getElementById('glow-layer').className, particleType: window.particleType, particleCount: window.particleCount, bgKey: localStorage.getItem('somnia_active_bg_key'), 
+                vars: { speed: getComputedStyle(document.documentElement).getPropertyValue('--anim-speed').trim(), opac: getComputedStyle(document.documentElement).getPropertyValue('--glow-opac').trim(), bright: getComputedStyle(document.documentElement).getPropertyValue('--bg-bright').trim(), zoom: getComputedStyle(document.documentElement).getPropertyValue('--bg-zoom').trim(), pColor: getComputedStyle(document.documentElement).getPropertyValue('--particle-color').trim(), gColor: getComputedStyle(document.documentElement).getPropertyValue('--glow-color').trim() },
+                audio: Object.keys(activeAudio).map(id => ({ id: id, vol: document.getElementById(`vol-${id}`).value }))
+            };
+            savedVault.push(state); localStorage.setItem('somniaVault', JSON.stringify(savedVault)); renderVault();
+        }
+
+        function renderVault() {
+            const container = document.getElementById('vault-list');
+            container.innerHTML = savedVault.map((preset, index) => `
+                <div class="mixer-card" style="padding: 8px 15px;">
+                    <button class="mixer-btn" style="color: var(--primary);" onclick="loadPreset(${index})">▶ ${preset.name}</button>
+                    <button class="toy-btn" style="padding: 6px 12px; font-size: 0.6rem; border-color: #fb7185; color: #fb7185; background: rgba(251,113,133,0.05);" onclick="promptDeletePreset(${index})">✕</button>
+                </div>
+            `).join('');
+        }
+
+        async function promptDeletePreset(index) { const confirmed = await somniaConfirm("TRASH THIS VIBE?", "Are you sure you want to delete this saved preset?"); if(confirmed) { savedVault.splice(index, 1); localStorage.setItem('somniaVault', JSON.stringify(savedVault)); renderVault(); } }
+
+        async function loadPreset(index) {
+            const state = savedVault[index]; if (!state) return;
+            document.documentElement.className = state.bodyClass; document.getElementById('glow-layer').className = state.glowClass; window.particleType = state.particleType; window.particleCount = state.particleCount; 
+            if (state.bgKey) { 
+                const blob = await getMedia(state.bgKey); 
+                if(blob) { 
+                    document.getElementById('bg-anchor').style.backgroundImage = `url('${URL.createObjectURL(blob)}')`; 
+                    localStorage.setItem('somnia_active_bg_key', state.bgKey); 
+                } 
+            } else { 
+                document.getElementById('bg-anchor').style.backgroundImage = "url('SomniaScheds.png')"; 
+                localStorage.removeItem('somnia_active_bg_key'); 
+            }
+            updateVar('--anim-speed', state.vars.speed); updateVar('--glow-opac', state.vars.opac); updateVar('--bg-bright', state.vars.bright); updateVar('--bg-zoom', state.vars.zoom); updateVar('--particle-color', state.vars.pColor); updateVar('--glow-color', state.vars.gColor);
+            if(document.getElementById('speed-slider')) document.getElementById('speed-slider').value = 21 - parseInt(state.vars.speed); if(document.getElementById('opac-slider')) document.getElementById('opac-slider').value = state.vars.opac; if(document.getElementById('bright-slider')) document.getElementById('bright-slider').value = state.vars.bright; if(document.getElementById('zoom-slider')) document.getElementById('zoom-slider').value = state.vars.zoom; if(document.getElementById('density-slider')) document.getElementById('density-slider').value = state.particleCount;
+            stopAllAudio(); 
+            if(state.audio) { state.audio.forEach(track => { const sound = soundLibrary.find(s => s.id === track.id) || customAudioLibrary.find(s => s.id === track.id); if (sound) { const slider = document.getElementById(`vol-${track.id}`); if (slider) slider.value = track.vol; toggleStem(track.id, sound.url); } }); }
+            saveCurrentState();
+        }
+
+        // === 5. AUDIO ENGINE ===
         const activeAudio = {}; let audioCtx; let masterGainNode;
         const soundLibrary = [
             { id: "rain", name: "🌧️ Gentle Rain", url: "rain.mp3" }, { id: "thunder", name: "🌩️ Thunderstorm", url: "thunder.mp3" },
             { id: "winterwind", name: "🌬️ Winter Wind", url: "winterwind.mp3" }, { id: "owls", name: "🦉 Midnight Owls", url: "owls.mp3" },
-            { id: "fire", name: "🔥 Hearth Fire", url: "fire.mp3" }, { id: "simmering", name: "🍲 Simmering Pot", url: "simmeringpot.mp3" },
+            { id: "raven", name: "🐦‍⬛ Raven Calls", url: "raven.mp3" }, { id: "frogs", name: "🐸 Swamp Frogs", url: "frogs.mp3" },
+            { id: "crickets", name: "🦗 Night Crickets", url: "crickets.mp3" }, { id: "fire", name: "🔥 Hearth Fire", url: "fire.mp3" },
+            { id: "simmering", name: "🍲 Simmering Pot", url: "simmeringpot.mp3" }, { id: "teacup", name: "☕ Teacup Clinks", url: "teacup.mp3" },
             { id: "clock", name: "🕰️ Ticking Clock", url: "clock.mp3" }, { id: "cat", name: "🐾 Purring Cat", url: "cat.mp3" },
-            { id: "windchimes", name: "🎐 Wind Chimes", url: "windchimes.mp3" }, { id: "darkmusic", name: "🖤 Dark Atmos", url: "darkmusic1.mp3" }
+            { id: "windchimes", name: "🎐 Wind Chimes", url: "windchimes.mp3" }, { id: "musicbox1", name: "🎶 Music Box I", url: "musicbox1.mp3" }
         ];
         let customAudioLibrary = [];
 
-        function initAudioContext() {
-            if (!audioCtx) {
-                audioCtx = new (window.AudioContext || window.webkitAudioContext)();
-                masterGainNode = audioCtx.createGain();
-                masterGainNode.gain.value = document.getElementById('master-gain-slider') ? document.getElementById('master-gain-slider').value : 1;
-                masterGainNode.connect(audioCtx.destination);
-            }
-            if (audioCtx.state === 'suspended') audioCtx.resume();
-        }
+        function initAudioContext() { if (!audioCtx) { audioCtx = new (window.AudioContext || window.webkitAudioContext)(); masterGainNode = audioCtx.createGain(); masterGainNode.gain.value = document.getElementById('master-gain-slider') ? document.getElementById('master-gain-slider').value : 1; masterGainNode.connect(audioCtx.destination); } if (audioCtx.state === 'suspended') audioCtx.resume(); }
         function setMasterGain(val) { if (masterGainNode) masterGainNode.gain.value = val; }
-
-        async function loadCustomAudio() {
-            customAudioLibrary = [];
-            const keys = await getAllMediaKeys(); const audioKeys = keys.filter(k => k.startsWith('aud_'));
-            for(let key of audioKeys) {
-                const blob = await getMedia(key);
-                if(blob) customAudioLibrary.push({ id: key, name: localStorage.getItem('somnia_name_' + key) || "📁 Audio", url: URL.createObjectURL(blob), isCustom: true });
-            }
-            initMixer();
-        }
-
-        function initMixer() {
-            const container = document.getElementById('mixer-container');
-            const allSounds = [...customAudioLibrary, ...soundLibrary];
-            container.innerHTML = allSounds.map(track => {
-                let editBtn = track.isCustom ? `<button class="toy-btn" style="padding: 5px 10px; margin-right: 5px;" onclick="renameCustomItem('${track.id}', 'audio')">✏️</button>` : '';
-                let delBtn = track.isCustom ? `<button class="toy-btn" style="padding:5px 10px; border:none; color:#fb7185;" onclick="deleteCustomAudio('${track.id}')">✕</button>` : '';
-                return `
-                <div class="mixer-card" id="card-${track.id}">
-                    <button class="mixer-btn" onclick="toggleStem('${track.id}', '${track.url}')">${track.name}</button>
-                    ${editBtn}${delBtn}
-                    <input type="range" id="vol-${track.id}" class="mixer-slider" min="0" max="1" step="0.05" value="0.5" oninput="adjustVol('${track.id}', this.value)">
-                </div>
-            `}).join('');
-            Object.keys(activeAudio).forEach(id => { const c = document.getElementById(`card-${id}`); if(c) c.classList.add('playing'); });
-        }
-
-        async function deleteCustomAudio(id) {
-            if(await somniaConfirm("Delete Audio?", "Are you sure you want to delete this custom audio track?")) {
-                if(activeAudio[id]) { activeAudio[id].audio.pause(); delete activeAudio[id]; }
-                await deleteMedia(id); loadCustomAudio();
-            }
-        }
-
-        function handleAudioUpload(input) {
-            if (!input.files || input.files.length === 0) return;
-            const file = input.files[0]; const key = 'aud_' + Date.now();
-            saveMedia(key, file).then(async () => {
-                const finalName = await somniaPrompt("Name Audio", "Name this sound:", "✨ Focus Audio") || "📁 Custom Audio";
-                localStorage.setItem('somnia_name_' + key, finalName); loadCustomAudio();
-            });
-            input.value = ""; 
-        }
-
-        function toggleStem(id, url) {
-            initAudioContext(); const card = document.getElementById(`card-${id}`);
-            if (activeAudio[id]) { activeAudio[id].audio.pause(); delete activeAudio[id]; if(card) card.classList.remove('playing');
-            } else {
-                const audio = new Audio(url); audio.loop = true;
-                const source = audioCtx.createMediaElementSource(audio); const gain = audioCtx.createGain();
-                gain.gain.value = document.getElementById(`vol-${id}`) ? document.getElementById(`vol-${id}`).value : 0.5;
-                source.connect(gain); gain.connect(masterGainNode);
-                audio.play().then(() => { activeAudio[id] = { audio, gain }; if(card) card.classList.add('playing'); }).catch(e => console.log("Unlock audio first."));
-            }
-        }
+        async function loadCustomAudio(reload = false) { if(reload) customAudioLibrary = []; const keys = await getAllMediaKeys(); const audioKeys = keys.filter(k => k.startsWith('aud_')); for(let key of audioKeys) { const blob = await getMedia(key); if(blob) { const savedName = localStorage.getItem('somnia_name_' + key) || "📁 " + key.replace('aud_','').substring(0,8); customAudioLibrary.push({ id: key, name: savedName, url: URL.createObjectURL(blob), isCustom: true }); } } initMixer(); }
+        function initMixer() { const container = document.getElementById('mixer-container'); const allSounds = [...customAudioLibrary, ...soundLibrary]; container.innerHTML = allSounds.map(track => { let editBtn = track.isCustom ? `<button class="toy-btn" style="padding: 5px 10px; background:transparent; border:none; margin-right: 5px;" onclick="renameCustomItem('${track.id}', 'audio')">✏️</button>` : ''; let delBtn = track.isCustom ? `<button class="toy-btn" style="padding: 5px 10px; background:transparent; border:none; margin-right: 5px; color:#fb7185;" onclick="promptDeleteAudio('${track.id}')">✕</button>` : ''; return ` <div class="mixer-card" id="card-${track.id}"> <button class="mixer-btn" onclick="toggleStem('${track.id}', '${track.url}')">${track.name}</button> ${editBtn} ${delBtn} <input type="range" id="vol-${track.id}" class="mixer-slider" min="0" max="1" step="0.05" value="0.5" oninput="adjustVol('${track.id}', this.value)"> </div> `}).join(''); Object.keys(activeAudio).forEach(id => { const c = document.getElementById(`card-${id}`); if(c) c.classList.add('playing'); }); }
+        async function promptDeleteAudio(id) { const confirmed = await somniaConfirm("TRASH THIS SOUND?", "Are you sure you want to delete this custom audio?"); if(confirmed) { if(activeAudio[id]) { activeAudio[id].audio.pause(); delete activeAudio[id]; } await deleteMedia(id); customAudioLibrary = []; await loadCustomAudio(true); } }
+        function handleAudioUpload(input) { if (!input.files || input.files.length === 0) return; const file = input.files[0]; const key = 'aud_' + Date.now(); saveMedia(key, file).then(async () => { const customName = await somniaPrompt("NAME THIS SOUNDSCAPE", "What should we call this magic noise?", "✨ Funky Sounds"); const finalName = customName || "📁 " + file.name.substring(0,10); localStorage.setItem('somnia_name_' + key, finalName); customAudioLibrary.unshift({ id: key, name: finalName, url: URL.createObjectURL(file), isCustom: true }); initMixer(); }); input.value = "";  }
+        function toggleStem(id, url) { initAudioContext();  const card = document.getElementById(`card-${id}`); if (activeAudio[id]) { activeAudio[id].audio.pause(); delete activeAudio[id]; card.classList.remove('playing'); } else { const audio = new Audio(url); audio.loop = true;  const source = audioCtx.createMediaElementSource(audio); const gain = audioCtx.createGain(); gain.gain.value = document.getElementById(`vol-${id}`) ? document.getElementById(`vol-${id}`).value : 0.5; source.connect(gain); gain.connect(masterGainNode); audio.play().then(() => { activeAudio[id] = { audio, gain }; card.classList.add('playing'); }).catch(e => console.log("Unlock audio first.")); } }
         function adjustVol(id, val) { if (activeAudio[id]) activeAudio[id].gain.gain.value = val; }
-        function stopAllAudio() { Object.keys(activeAudio).forEach(id => { activeAudio[id].audio.pause(); const c = document.getElementById(`card-${id}`); if(c) c.classList.remove('playing'); delete activeAudio[id]; }); }
+        function stopAllAudio() { Object.keys(activeAudio).forEach(id => { activeAudio[id].audio.pause(); document.getElementById(`card-${id}`).classList.remove('playing'); delete activeAudio[id]; }); }
 
-        function playTimerChime() {
-            initAudioContext();
-            try {
-                const osc = audioCtx.createOscillator(); const gain = audioCtx.createGain();
-                osc.type = 'sine'; osc.frequency.setValueAtTime(523.25, audioCtx.currentTime); // C5
-                osc.frequency.exponentialRampToValueAtTime(1046.50, audioCtx.currentTime + 1); // C6
-                gain.gain.setValueAtTime(0, audioCtx.currentTime); gain.gain.linearRampToValueAtTime(0.5, audioCtx.currentTime + 0.1); gain.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + 3);
-                osc.connect(gain); gain.connect(masterGainNode); osc.start(); osc.stop(audioCtx.currentTime + 3);
-            } catch(e) {}
-        }
-
-        // --- 4. ATMOS & PARTICLES ---
-        const colors = ['lunar','noir','vellum','amethyst','crimson','emerald','solar','void','obsidian','ghost'];
-        const glows = ['pulse','breathe','strobe','phantom','wave','flicker','aurora','static','none'];
-        const particlesList = ['dust','embers','snow','void','rain','ash','stars','bubbles','spores'];
-        const particleColors = [ { name: 'Lunar', value: '#e0e7ff' }, { name: 'Noir', value: '#D4AF37' }, { name: 'Vellum', value: '#C2B280' }, { name: 'Amethyst', value: '#d8b4e2' }, { name: 'Crimson', value: '#fb7185' }, { name: 'Emerald', value: '#34d399' }, { name: 'Solar', value: '#fbbf24' }, { name: 'Void', value: '#ec4899' }, { name: 'Obsidian', value: '#9ca3af' }, { name: 'Ghost', value: '#f8fafc' } ];
-        const glowColors = [ { name: 'Lunar', value: 'rgba(224,231,255,0.4)' }, { name: 'Noir', value: 'rgba(212,175,55,0.4)' }, { name: 'Vellum', value: 'rgba(194,178,128,0.4)' }, { name: 'Amethyst', value: 'rgba(216,180,226,0.4)' }, { name: 'Crimson', value: 'rgba(251,113,133,0.4)' }, { name: 'Emerald', value: 'rgba(52,211,153,0.4)' }, { name: 'Solar', value: 'rgba(251,191,36,0.4)' }, { name: 'Void', value: 'rgba(236,72,153,0.4)' }, { name: 'Obsidian', value: 'rgba(156,163,175,0.4)' }, { name: 'Ghost', value: 'rgba(248,250,252,0.4)' } ];
+        // === 6. ATMOS & PARTICLES ===
+        const colors = [ 'lunar','noir','vellum','amethyst','crimson','emerald','solar','void','obsidian','ghost', 'gothic','library','y2k','vintage','cyber','twilight','autumn','abyss','sepia','frost' ];
+        const glows = [ 'pulse','breathe','strobe','phantom','wave','flicker','aurora','radar','static','none', 'heartbeat','shimmer','glitch','scanner','nebula','vortex','ripple','halo','eclipse','inferno' ];
+        const particlesList = [ 'dust','embers','snow','void','rain','ash','stars','bubbles','matrix','spores', 'leaves','glitch','runes','fireflies','fog','petals','sparks','bats','static','motes' ];
+        const particleColors = [  { name: 'Lunar', value: '#e0e7ff' }, { name: 'Noir', value: '#D4AF37' }, { name: 'Vellum', value: '#C2B280' }, { name: 'Amethyst', value: '#d8b4e2' }, { name: 'Crimson', value: '#fb7185' }, { name: 'Emerald', value: '#34d399' }, { name: 'Solar', value: '#fbbf24' }, { name: 'Void', value: '#ec4899' }, { name: 'Obsidian', value: '#9ca3af' }, { name: 'Ghost', value: '#f8fafc' }, { name: 'Gothic', value: '#881337' }, { name: 'Library', value: '#78350f' }, { name: 'Y2K', value: '#22d3ee' }, { name: 'Vintage', value: '#57534e' }, { name: 'Cyber', value: '#84cc16' }, { name: 'Twilight', value: '#312e81' }, { name: 'Autumn', value: '#ea580c' }, { name: 'Abyss', value: '#0891b2' }, { name: 'Sepia', value: '#b45309' }, { name: 'Frost', value: '#bae6fd' } ];
+        const glowColors = [  { name: 'Lunar', value: 'rgba(224,231,255,0.4)' }, { name: 'Noir', value: 'rgba(212,175,55,0.4)' }, { name: 'Vellum', value: 'rgba(194,178,128,0.4)' }, { name: 'Amethyst', value: 'rgba(216,180,226,0.4)' }, { name: 'Crimson', value: 'rgba(251,113,133,0.4)' }, { name: 'Emerald', value: 'rgba(52,211,153,0.4)' }, { name: 'Solar', value: 'rgba(251,191,36,0.4)' }, { name: 'Void', value: 'rgba(236,72,153,0.4)' }, { name: 'Obsidian', value: 'rgba(156,163,175,0.4)' }, { name: 'Ghost', value: 'rgba(248,250,252,0.4)' }, { name: 'Gothic', value: 'rgba(136,19,55,0.4)' }, { name: 'Library', value: 'rgba(120,53,15,0.4)' }, { name: 'Y2K', value: 'rgba(34,211,238,0.4)' }, { name: 'Vintage', value: 'rgba(87,83,78,0.4)' }, { name: 'Cyber', value: 'rgba(132,204,22,0.4)' }, { name: 'Twilight', value: 'rgba(49,46,129,0.4)' }, { name: 'Autumn', value: 'rgba(234,88,12,0.4)' }, { name: 'Abyss', value: 'rgba(8,145,178,0.4)' }, { name: 'Sepia', value: 'rgba(180,83,9,0.4)' }, { name: 'Frost', value: 'rgba(186,230,253,0.4)' } ];
 
         function populateGrid(id, arr, type) {
             const grid = document.getElementById(id);
             arr.forEach((item, index) => {
                 const isObj = typeof item === 'object'; const label = isObj ? item.name : item; const val = isObj ? item.value : item;
-                const b = document.createElement('button'); b.className = 'toy-btn'; b.textContent = label; if(index === 0) b.classList.add('active'); 
+                const b = document.createElement('button'); b.className = 'toy-btn'; b.textContent = label;  if(index === 0) b.classList.add('active'); 
                 b.onclick = () => {
                     document.querySelectorAll(`#${id} .toy-btn`).forEach(btn => btn.classList.remove('active')); b.classList.add('active');
-                    if(type === 'color') { document.documentElement.className = `${val}-mode`; saveCurrentState(); }
-                    if(type === 'glow') { document.getElementById('glow-layer').className = `glow-${val}`; saveCurrentState(); }
-                    if(type === 'particle') { window.particleType = val; saveCurrentState(); }
-                    if(type === 'particleColor') { updateVar('--particle-color', val); saveCurrentState(); }
-                    if(type === 'glowColor') { updateVar('--glow-color', val); saveCurrentState(); }
+                    if(type === 'color') document.documentElement.className = `${val}-mode`;
+                    if(type === 'glow') document.getElementById('glow-layer').className = `glow-${val}`;
+                    if(type === 'particle') window.particleType = val;
+                    if(type === 'particleColor') updateVar('--particle-color', val);
+                    if(type === 'glowColor') updateVar('--glow-color', val);
+                    saveCurrentState(); 
                 };
                 grid.appendChild(b);
             });
         }
 
-        window.particleType = 'dust'; let particleCount = 50; 
-        function buildParticles(w, h) { return Array.from({ length: particleCount }, () => ({ x: Math.random() * w, y: Math.random() * h, r: Math.random() * 2 + 0.5, vx: (Math.random() - 0.5), vy: (Math.random() - 0.5) })); }
-        function updateParticleDensity(val) { particleCount = parseInt(val); }
+        window.particleType = 'dust'; window.particleCount = 50; 
+        function buildParticles(w, h) { return Array.from({ length: window.particleCount }, () => ({ x: Math.random() * w, y: Math.random() * h, r: Math.random() * 2 + 0.5, vx: (Math.random() - 0.5), vy: (Math.random() - 0.5), t: Math.random() * 100 })); }
+        function updateParticleDensity(val) { window.particleCount = parseInt(val); }
+
+        let lowGpu = false;
+        function toggleLowGpu() { lowGpu = !lowGpu; const canvas = document.getElementById('particleCanvas'); if (lowGpu) { canvas.width = window.innerWidth / 2; canvas.height = window.innerHeight / 2; canvas.style.transform = "scale(2) translateZ(0)"; }  else { canvas.width = window.innerWidth; canvas.height = window.innerHeight; canvas.style.transform = "scale(1) translateZ(0)"; } }
 
         function initParticles() {
             const canvas = document.getElementById('particleCanvas'); const ctx = canvas.getContext('2d');
             let w = canvas.width = window.innerWidth; let h = canvas.height = window.innerHeight;
             window.addEventListener('resize', () => { w = canvas.width = window.innerWidth; h = canvas.height = window.innerHeight; particles = buildParticles(w, h); });
-            let particles = buildParticles(w, h); let lastTime = 0;
+            let particles = buildParticles(w, h); const isDinosaur = navigator.hardwareConcurrency < 4 || window.innerWidth < 1024; let lastTime = 0;
 
             function loop(timestamp) {
                 requestAnimationFrame(loop);
                 if (!timestamp) timestamp = performance.now();
-                if (timestamp - lastTime < 16) return;
+                if (timestamp - lastTime < (isDinosaur ? 33 : 16)) return;
                 lastTime = timestamp;
 
                 ctx.clearRect(0, 0, w, h);
-                if (particles.length !== particleCount) particles = buildParticles(w, h);
+                if (particles.length !== window.particleCount) particles = buildParticles(w, h);
 
                 let color = getComputedStyle(document.documentElement).getPropertyValue('--particle-color').trim();
                 if (color.includes('var(')) { const varName = color.match(/var\(([^)]+)\)/)[1].trim(); color = getComputedStyle(document.documentElement).getPropertyValue(varName).trim(); }
-                ctx.fillStyle = color; ctx.shadowBlur = 8; ctx.shadowColor = color;
+                ctx.fillStyle = color; ctx.shadowBlur = lowGpu ? 2 : (isDinosaur ? 0 : 8); ctx.shadowColor = color;
 
-                particles.forEach((p) => {
-                    let spd = parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--anim-speed')) || 10;
-                    let mult = 10 / spd;
-
-                    if (particleType === 'dust') { p.x += p.vx * mult; p.y += p.vy * mult; }
-                    else if (particleType === 'embers') { p.y -= (Math.abs(p.vy)+0.5)*mult; p.x += p.vx*mult; }
-                    else if (particleType === 'snow') { p.y += (Math.abs(p.vy)+0.5)*mult; p.x += Math.sin(p.y/50)*mult; }
-                    else if (particleType === 'void') { p.x += p.vx*2*mult; p.y += p.vy*2*mult; ctx.shadowBlur=0; }
-                    else if (particleType === 'rain') { p.y += 8*mult; p.x -= 1*mult; }
-                    else if (particleType === 'ash') { p.y -= p.vy*mult; p.x += Math.cos(p.y/30)*mult; ctx.fillStyle="#555"; }
-                    else if (particleType === 'stars') { p.x += 0.05*mult; p.y += 0.05*mult; if(Math.random()<0.01) p.r = Math.random()*3; }
-                    else if (particleType === 'bubbles') { p.y -= 2*mult; p.x += Math.sin(p.y/20)*2*mult; ctx.beginPath(); ctx.arc(p.x,p.y,p.r*2,0,Math.PI*2); ctx.strokeStyle=color; ctx.stroke(); return; }
-                    else if (particleType === 'spores') { p.x += (Math.random()-0.5)*mult; p.y += (Math.random()-0.5)*mult; p.r = Math.abs(Math.sin(Date.now()/1000))*3; }
+                particles.forEach((p, i) => {
+                    let spd = parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--anim-speed')) || 10; let mult = 10 / spd;
+                    if (window.particleType === 'dust') { p.x += p.vx * mult; p.y += p.vy * mult; }
+                    else if (window.particleType === 'embers') { p.y -= (Math.abs(p.vy)+0.5)*mult; p.x += p.vx*mult; }
+                    else if (window.particleType === 'snow') { p.y += (Math.abs(p.vy)+0.5)*mult; p.x += Math.sin(p.y/50)*mult; }
+                    else if (window.particleType === 'void') { p.x += p.vx*2*mult; p.y += p.vy*2*mult; ctx.shadowBlur=0; }
+                    else if (window.particleType === 'rain') { p.y += 8*mult; p.x -= 1*mult; }
+                    else if (window.particleType === 'ash') { p.y -= p.vy*mult; p.x += Math.cos(p.y/30)*mult; ctx.fillStyle="#555"; }
+                    else if (window.particleType === 'stars') { p.x += 0.05*mult; p.y += 0.05*mult; if(Math.random()<0.01) p.r = Math.random()*3; }
+                    else if (window.particleType === 'bubbles') { p.y -= 2*mult; p.x += Math.sin(p.y/20)*2*mult; ctx.beginPath(); ctx.arc(p.x,p.y,p.r*2,0,Math.PI*2); ctx.strokeStyle=color; ctx.stroke(); return; }
+                    else if (window.particleType === 'matrix') { p.y += 4*mult; if(i%2===0) ctx.fillText(String.fromCharCode(0x30A0+Math.random()*96), p.x, p.y); return; }
+                    else if (window.particleType === 'spores') { p.x += (Math.random()-0.5)*mult; p.y += (Math.random()-0.5)*mult; p.r = Math.abs(Math.sin(Date.now()/1000+i))*3; }
+                    else if (window.particleType === 'leaves') { p.y += (Math.abs(p.vy)+1)*mult; p.x += Math.sin(p.y/30)*2*mult; ctx.fillRect(p.x, p.y, p.r*2, p.r); return; }
+                    else if (window.particleType === 'glitch') { if(Math.random()<0.05){ p.x = Math.random()*w; p.y = Math.random()*h; } ctx.fillRect(p.x, p.y, p.r*10, 2); return; }
+                    else if (window.particleType === 'runes') { p.y -= 1*mult; ctx.fillText(String.fromCharCode(0x16A0+Math.random()*80), p.x, p.y); return; }
+                    else if (window.particleType === 'fireflies') { p.x += Math.sin(p.t)*mult; p.y += Math.cos(p.t)*mult; p.t+=0.05; ctx.shadowBlur = 15; ctx.beginPath(); ctx.arc(p.x, p.y, p.r*1.5, 0, Math.PI * 2); ctx.fill(); return; }
+                    else if (window.particleType === 'fog') { p.x += p.vx*mult; ctx.globalAlpha=0.1; ctx.beginPath(); ctx.arc(p.x, p.y, p.r*20, 0, Math.PI * 2); ctx.fill(); ctx.globalAlpha=1; return; }
+                    else if (window.particleType === 'petals') { p.y += 2*mult; p.x += Math.sin(p.y/40)*3*mult; ctx.fillStyle='rgba(255,182,193,0.8)'; ctx.beginPath(); ctx.ellipse(p.x, p.y, p.r*3, p.r, Math.PI/4, 0, 2*Math.PI); ctx.fill(); return; }
+                    else if (window.particleType === 'sparks') { p.y -= (Math.abs(p.vy)+3)*mult; p.x += (Math.random()-0.5)*mult; ctx.fillRect(p.x, p.y, 2, p.r*4); return; }
+                    else if (window.particleType === 'bats') { p.x += p.vx*3*mult; p.y += Math.sin(p.x/20)*2*mult; ctx.fillText('v', p.x, p.y); return; }
+                    else if (window.particleType === 'static') { if(Math.random()<0.1) { p.x=Math.random()*w; p.y=Math.random()*h; } ctx.fillRect(p.x, p.y, 2, 2); return; }
+                    else if (window.particleType === 'motes') { p.y -= 0.5*mult; p.x += Math.sin(p.y/50)*mult; ctx.globalAlpha=Math.abs(Math.sin(p.t)); p.t+=0.02; ctx.beginPath(); ctx.arc(p.x, p.y, p.r/2, 0, Math.PI * 2); ctx.fill(); ctx.globalAlpha=1; return; }
 
                     if (p.x < 0) p.x = w; if (p.x > w) p.x = 0; if (p.y < 0) p.y = h; if (p.y > h) p.y = 0;
                     ctx.beginPath(); ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2); ctx.fill();
@@ -684,256 +1009,277 @@
             requestAnimationFrame(loop);
         }
 
-        // --- 5. SOMNIASCHEDS (Planner/Calendar/Timer) ---
-        const SCHEDS_EVENTS_KEY = 'somnia_scheds_events'; const SCHEDS_NOTES_KEY = 'somnia_scheds_notes';
-        let schedsEvents = JSON.parse(localStorage.getItem(SCHEDS_EVENTS_KEY) || '[]'); let schedsNotes = JSON.parse(localStorage.getItem(SCHEDS_NOTES_KEY) || '[]');
-        let schedsCurrentMonth = new Date(); let schedsSelectedDate = null;
-        let schedsTimerSeconds = 25 * 60; let schedsTimerInterval = null;
+        // === 7. NATIVE SOCIAL SHARE ===
+        function parseUrlState() { const urlParams = new URLSearchParams(window.location.search); if(urlParams.has('vibe')) document.documentElement.className = urlParams.get('vibe') + '-mode'; if(urlParams.has('p')) window.particleType = urlParams.get('p'); if(urlParams.has('g')) document.getElementById('glow-layer').className = 'glow-' + urlParams.get('g'); }
+        async function dropSomnia() { const dropUrl = `https://project-kore-llc.github.io/SomniaScheds/`; if (navigator.share) { try { await navigator.share({ title: 'SomniaScheds', text: 'Step into my Digital Sanctuary.', url: dropUrl }); } catch (err) { console.log("Drop canceled", err); } } else { toggleModal('drop-modal'); } }
 
-        function saveSchedsData() { localStorage.setItem(SCHEDS_EVENTS_KEY, JSON.stringify(schedsEvents)); localStorage.setItem(SCHEDS_NOTES_KEY, JSON.stringify(schedsNotes)); }
-        function formatDateKey(date) { return `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, '0')}-${String(date.getDate()).padStart(2, '0')}`; }
+        // === 8. SCHEDULER & CALENDAR ENGINE ===
+        let currentDate = new Date();
+        let selectedDate = new Date();
+        let currentView = 'month'; // day, week, month
+        let events = [];
+        let todos = [];
 
-        function renderSchedsHeader() { document.getElementById('sched-today-date').textContent = new Date().toLocaleDateString(undefined, { weekday: 'long', month: 'long', day: 'numeric' }); }
-        function renderSchedsTime() { document.getElementById('sched-time-label').textContent = new Date().toLocaleTimeString(undefined, { hour: '2-digit', minute: '2-digit' }); }
+        function updateWidgets() {
+            const now = new Date();
+            document.getElementById('clock-widget').textContent = now.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+            document.getElementById('date-widget').textContent = now.toLocaleDateString([], { weekday: 'long', month: 'long', day: 'numeric' });
+        }
 
-        function renderSchedsCalendar() {
-            const monthLabel = document.getElementById('sched-month-label'); const grid = document.getElementById('sched-calendar-grid');
-            const viewMonth = schedsCurrentMonth.getMonth(); const viewYear = schedsCurrentMonth.getFullYear();
-            monthLabel.textContent = schedsCurrentMonth.toLocaleString(undefined, { month: 'long', year: 'numeric' });
-            grid.innerHTML = '';
-            ['S', 'M', 'T', 'W', 'T', 'F', 'S'].forEach(d => { const label = document.createElement('div'); label.className = 'sched-day-label'; label.textContent = d; grid.appendChild(label); });
-            const firstDay = new Date(viewYear, viewMonth, 1).getDay(); const lastDate = new Date(viewYear, viewMonth + 1, 0).getDate();
-            for (let i = 0; i < firstDay; i++) grid.appendChild(document.createElement('div'));
-            const todayKey = formatDateKey(new Date());
+        function setView(view, btnElement) {
+            currentView = view;
+            document.querySelectorAll('.view-btn').forEach(b => b.classList.remove('active')); btnElement.classList.add('active');
+            renderCalendar();
+        }
 
-            for (let d = 1; d <= lastDate; d++) {
-                const cell = document.createElement('div'); cell.className = 'sched-day'; cell.textContent = d;
-                const key = formatDateKey(new Date(viewYear, viewMonth, d));
-                if (key === todayKey) cell.classList.add('today');
-                if (schedsEvents.some(ev => ev.date === key)) cell.classList.add('has-event');
-                if (schedsSelectedDate === key) cell.classList.add('selected');
-                cell.onclick = () => { schedsSelectedDate = key; renderSchedsCalendar(); renderSchedsDay(); };
-                grid.appendChild(cell);
+        function navCal(dir) {
+            if(currentView === 'month') currentDate.setMonth(currentDate.getMonth() + dir);
+            if(currentView === 'week') currentDate.setDate(currentDate.getDate() + (dir * 7));
+            if(currentView === 'day') currentDate.setDate(currentDate.getDate() + dir);
+            renderCalendar();
+        }
+
+        function getFormatDate(d) { return `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`; }
+        function getDayName(dayIndex) { const days = ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday']; return days[dayIndex]; }
+
+        function renderCalendar() {
+            const grid = document.getElementById('cal-grid-container'); const title = document.getElementById('cal-title-label');
+            grid.innerHTML = ''; grid.className = `grid-${currentView}`;
+
+            if (currentView === 'month') {
+                title.textContent = currentDate.toLocaleDateString([], { month: 'long', year: 'numeric' });
+                const y = currentDate.getFullYear(), m = currentDate.getMonth(); const firstDay = new Date(y, m, 1).getDay(); const daysInMonth = new Date(y, m + 1, 0).getDate();
+
+                ['S','M','T','W','T','F','S'].forEach(d => { grid.innerHTML += `<div class="day-label">${d}</div>`; });
+                for(let i=0; i<firstDay; i++) grid.innerHTML += `<div></div>`;
+
+                for(let i=1; i<=daysInMonth; i++) {
+                    const dStr = getFormatDate(new Date(y, m, i)); const isToday = dStr === getFormatDate(new Date()); const dayEvents = events.filter(e => e.date === dStr);
+                    let cell = document.createElement('div'); cell.className = `cal-cell ${isToday ? 'today' : ''}`; cell.textContent = i;
+                    cell.onclick = () => { selectedDate = new Date(y, m, i); currentDate = new Date(y, m, i); setView('day', document.querySelectorAll('.view-btn')[0]); };
+                    
+                    if(dayEvents.length > 0) {
+                        let dotsContainer = document.createElement('div'); dotsContainer.className = 'event-dot-container';
+                        dayEvents.slice(0, 4).forEach(ev => { let dot = document.createElement('div'); dot.className = `event-indicator ${ev.tag || 'work'}`; dotsContainer.appendChild(dot); });
+                        cell.appendChild(dotsContainer);
+                    }
+                    grid.appendChild(cell);
+                }
+            } 
+            else if (currentView === 'week') {
+                const startOfWeek = new Date(currentDate); startOfWeek.setDate(currentDate.getDate() - currentDate.getDay());
+                const endOfWeek = new Date(startOfWeek); endOfWeek.setDate(startOfWeek.getDate() + 6);
+                title.textContent = `${startOfWeek.toLocaleDateString([], { month: 'short', day: 'numeric' })} — ${endOfWeek.toLocaleDateString([], { month: 'short', day: 'numeric', year: 'numeric' })}`;
+
+                for(let i=0; i<7; i++) {
+                    let colDate = new Date(startOfWeek); colDate.setDate(startOfWeek.getDate() + i);
+                    const dStr = getFormatDate(colDate); const isToday = dStr === getFormatDate(new Date());
+                    const dayEvents = events.filter(e => e.date === dStr).sort((a,b) => a.time.localeCompare(b.time));
+
+                    let colHTML = `<div class="week-column"> <div class="week-date-header" style="${isToday ? 'color: var(--primary); border-bottom-color: var(--primary);' : ''}"> <div class="week-day-name">${getDayName(i).substring(0,3)}</div> <div class="week-day-num">${colDate.getDate()}</div> </div>`;
+                    dayEvents.forEach(ev => { colHTML += `<div class="week-event-mini ${ev.tag || 'work'}" title="${ev.time} - ${ev.title}">${ev.time} ${ev.title}</div>`; });
+                    colHTML += `</div>`; grid.innerHTML += colHTML;
+                }
+            }
+            else if (currentView === 'day') {
+                title.textContent = currentDate.toLocaleDateString([], { weekday: 'long', month: 'long', day: 'numeric' });
+                const dStr = getFormatDate(currentDate); const dayEvents = events.filter(e => e.date === dStr).sort((a,b) => a.time.localeCompare(b.time));
+                
+                if(dayEvents.length === 0) {
+                    grid.innerHTML = `<div style="text-align:center; color:var(--text-muted); margin-top:40px; font-family:monospace; font-size:1rem;">Workspace clear. No anchors set for today.</div>`;
+                } else {
+                    dayEvents.forEach(ev => {
+                        let tagClass = `tag-${ev.tag || 'work'}`;
+                        grid.innerHTML += `
+                            <div class="event-card">
+                                <div class="event-time">${ev.time || 'All Day'}</div>
+                                <div class="event-title">${ev.title} <span class="event-tag ${tagClass}">${ev.tag || 'Task'}</span></div>
+                                <button class="artifact-btn" style="padding: 6px 12px; font-size: 0.7rem; border-color: #fb7185; color:#fb7185; background:rgba(251,113,133,0.1);" onclick="deleteEvent('${ev.id}')">✕ Drop</button>
+                            </div>
+                        `;
+                    });
+                }
             }
         }
 
-        function changeSchedsMonth(delta) { schedsCurrentMonth.setMonth(schedsCurrentMonth.getMonth() + delta); renderSchedsCalendar(); }
+        async function deleteEvent(id) { await dbDelete('events', id); events = events.filter(e => e.id !== id); renderCalendar(); }
 
-        function renderSchedsDay() {
-            const label = document.getElementById('sched-selected-date-label'); const list = document.getElementById('sched-event-list'); const noteList = document.getElementById('sched-note-list');
-            if (!schedsSelectedDate) { label.textContent = 'Select a day to plan.'; list.innerHTML = ''; noteList.innerHTML = ''; return; }
-            const localDateObj = new Date(schedsSelectedDate + 'T12:00:00'); // Force local midday to prevent tz shift
-            label.textContent = localDateObj.toLocaleDateString(undefined, { weekday: 'long', month: 'long', day: 'numeric' });
-            const eventsForDay = schedsEvents.filter(ev => ev.date === schedsSelectedDate).sort((a,b) => a.time.localeCompare(b.time));
-            if (eventsForDay.length === 0) list.innerHTML = '<div class="sched-subtext">No tasks yet.</div>';
-            else list.innerHTML = eventsForDay.map(ev => `<div class="sched-list-item"><span>${ev.time ? ev.time + ' — ' : ''}${ev.title}</span><button class="sched-delete-btn" onclick="deleteSchedsEvent('${ev.id}')">✕</button></div>`).join('');
-            const notesForDay = schedsNotes.filter(n => n.date === schedsSelectedDate);
-            if (notesForDay.length === 0) noteList.innerHTML = '<div class="sched-subtext">No notes yet.</div>';
-            else noteList.innerHTML = notesForDay.map(n => `<div class="sched-list-item"><span>${n.text}</span><button class="sched-delete-btn" onclick="deleteSchedsNote('${n.id}')">✕</button></div>`).join('');
+        // === 9. TO-DO ENGINE ===
+        async function addTodo() {
+            const input = document.getElementById('new-todo'); if(!input.value.trim()) return;
+            const newTodo = { id: 'td_'+Date.now(), text: input.value, done: false };
+            todos.push(newTodo); await dbPut('todos', newTodo); input.value = ''; renderTodos();
         }
 
-        function addSchedsEvent() {
-            if (!schedsSelectedDate) return;
-            const titleInput = document.getElementById('sched-event-title'); const timeInput = document.getElementById('sched-event-time');
-            if (!titleInput.value.trim()) return;
-            schedsEvents.push({ id: 'ev-' + Date.now(), date: schedsSelectedDate, title: titleInput.value.trim(), time: timeInput.value });
-            saveSchedsData(); titleInput.value = ''; timeInput.value = ''; renderSchedsCalendar(); renderSchedsDay();
+        async function toggleTodo(id) {
+            const td = todos.find(t => t.id === id);
+            if(td) { td.done = !td.done; await dbPut('todos', td); renderTodos(); }
         }
 
-        function deleteSchedsEvent(id) { schedsEvents = schedsEvents.filter(ev => ev.id !== id); saveSchedsData(); renderSchedsCalendar(); renderSchedsDay(); }
+        async function deleteTodo(id) { await dbDelete('todos', id); todos = todos.filter(t => t.id !== id); renderTodos(); }
 
-        function addSchedsNote() {
-            if (!schedsSelectedDate) return;
-            const input = document.getElementById('sched-note-input');
-            if (!input.value.trim()) return;
-            schedsNotes.unshift({ id: 'note-' + Date.now(), date: schedsSelectedDate, text: input.value.trim() });
-            saveSchedsData(); input.value = ''; renderSchedsDay();
-        }
-
-        function deleteSchedsNote(id) { schedsNotes = schedsNotes.filter(n => n.id !== id); saveSchedsData(); renderSchedsDay(); }
-
-        // TIMER
-        function updateSchedsTimerDisplay() {
-            const display = document.getElementById('sched-timer-display');
-            const m = Math.floor(schedsTimerSeconds / 60); const s = schedsTimerSeconds % 60;
-            display.textContent = `${String(m).padStart(2,'0')}:${String(s).padStart(2,'0')}`;
-            if (schedsTimerSeconds === 0) { display.classList.add('timer-flash'); } else { display.classList.remove('timer-flash'); }
-        }
-
-        function startSchedsTimer() {
-            if (schedsTimerInterval) return;
-            schedsTimerInterval = setInterval(() => {
-                if (schedsTimerSeconds > 0) {
-                    schedsTimerSeconds--; updateSchedsTimerDisplay();
-                    if(schedsTimerSeconds === 0) playTimerChime();
-                } else { clearInterval(schedsTimerInterval); schedsTimerInterval = null; }
-            }, 1000);
-        }
-        function pauseSchedsTimer() { if (schedsTimerInterval) { clearInterval(schedsTimerInterval); schedsTimerInterval = null; } }
-        function resetSchedsTimer() { pauseSchedsTimer(); setSchedsPreset(document.getElementById('sched-timer-minutes').value); }
-        function setSchedsPreset(mins) { pauseSchedsTimer(); schedsTimerSeconds = (parseInt(mins) || 25) * 60; updateSchedsTimerDisplay(); }
-
-        // DAILY TALLIES
-        let tallies = JSON.parse(localStorage.getItem('somnia_tallies')) || [ {name: "Pomodoros", val: 0}, {name: "Water", val: 0} ];
-        function renderTallies() {
-            document.getElementById('tallies-container').innerHTML = tallies.map((t, i) => `
-                <div class="tally-row">
-                    <input type="text" class="tally-name" value="${t.name}" onchange="tallies[${i}].name=this.value; saveTallies();">
-                    <div class="tally-ctrls">
-                        <button class="score-btn" onclick="tallies[${i}].val--; saveTallies(); renderTallies();">-</button>
-                        <div class="tally-val">${t.val}</div>
-                        <button class="score-btn" onclick="tallies[${i}].val++; saveTallies(); renderTallies();">+</button>
-                    </div>
-                    <button class="sched-delete-btn" onclick="tallies.splice(${i},1); saveTallies(); renderTallies();">✕</button>
+        function renderTodos() {
+            const list = document.getElementById('todo-list');
+            if(todos.length === 0) { list.innerHTML = `<div style="color:var(--text-muted); font-family:monospace; font-size:0.8rem; text-align:center;">No local tasks.</div>`; return; }
+            list.innerHTML = todos.map(t => `
+                <div class="todo-item">
+                    <input type="checkbox" class="todo-cb" ${t.done ? 'checked' : ''} onchange="toggleTodo('${t.id}')">
+                    <span style="flex:1;">${t.text}</span>
+                    <button class="artifact-btn" style="padding: 4px 8px; border:none; color:#fb7185; font-size:1rem; box-shadow:none; background:transparent;" onclick="deleteTodo('${t.id}')">✕</button>
                 </div>
             `).join('');
         }
-        function saveTallies() { localStorage.setItem('somnia_tallies', JSON.stringify(tallies)); }
-        function addTally() { tallies.push({name: "Tracker", val: 0}); saveTallies(); renderTallies(); }
 
-        // === 6. SOMNIASCRIBES JOURNAL ENGINE ===
-        let archive = JSON.parse(localStorage.getItem('kore_archive')) || [];
-
-        function renderAnnals() {
-            const query = (document.getElementById('search-annals')?.value || "").toLowerCase();
-            const container = document.getElementById('annals');
-            container.innerHTML = archive.filter(e => e.text.toLowerCase().includes(query)).map((entry, index) => `
-                <div class="lore-entry">
-                    <div class="entry-meta">${entry.timestamp}</div>
-                    <button class="shred-btn" onclick="shredEntry(${index})">✕</button>
-                    <div><span style="color:var(--primary); opacity:0.6; margin-right:10px;">></span> ${entry.text}</div>
-                </div>
-            `).join('');
-            container.scrollTop = container.scrollHeight;
+        // === 10. AI SCHEDULING (Gemini) ===
+        function saveApiKey() {
+            const input = document.getElementById('gemini-key-input'); const btn = document.getElementById('save-key-btn');
+            if(input.value.trim() !== '') { localStorage.setItem('gemini_api_key', input.value.trim()); btn.innerText = "Saved!"; setTimeout(() => { btn.innerText = "Save"; }, 2000); }
         }
 
-        function commitLore() {
-            const input = document.getElementById('lore-editor');
-            if (!input.value.trim()) return;
-            const now = new Date(); const timestamp = now.toLocaleDateString() + " // " + now.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
-            archive.push({ text: input.value, timestamp }); localStorage.setItem('kore_archive', JSON.stringify(archive));
-            input.value = ""; renderAnnals();
-        }
+        async function processAI() {
+            const prompt = document.getElementById('ai-prompt').value.trim(); const status = document.getElementById('ai-status');
+            const apiKey = localStorage.getItem('gemini_api_key');
+            
+            if(!apiKey) { status.style.color = '#fb7185'; status.textContent = "Error: API Key missing. Check ProTips & Setup."; return; }
+            if(!prompt) { status.style.color = '#fb7185'; status.textContent = "Please provide instructions in the prompt."; return; }
 
-        async function shredEntry(index) { 
-            if(await somniaConfirm("Delete Entry?", "Are you sure you want to shred this journal entry forever?")) {
-                archive.splice(index, 1); localStorage.setItem('kore_archive', JSON.stringify(archive)); renderAnnals(); 
-            }
-        }
+            status.style.color = 'var(--accent)'; status.textContent = "Parsing architecture through Oracle API...";
 
-        // === 7. VAULT (STATE SAVING) ===
-        let savedVault = JSON.parse(localStorage.getItem('somniaVault')) || [];
-        function saveCurrentState() {
-            const state = {
-                bodyClass: document.documentElement.className.replace('cloaked', '').trim(),
-                glowClass: document.getElementById('glow-layer').className, particleType: window.particleType, particleCount: window.particleCount,
-                vars: { speed: getComputedStyle(document.documentElement).getPropertyValue('--anim-speed').trim(), opac: getComputedStyle(document.documentElement).getPropertyValue('--glow-opac').trim(), bright: getComputedStyle(document.documentElement).getPropertyValue('--bg-bright').trim(), zoom: getComputedStyle(document.documentElement).getPropertyValue('--bg-zoom').trim(), pColor: getComputedStyle(document.documentElement).getPropertyValue('--particle-color').trim(), gColor: getComputedStyle(document.documentElement).getPropertyValue('--glow-color').trim() }
-            };
-            localStorage.setItem('somnia_active_state', JSON.stringify(state));
-        }
+            const systemPrompt = `You are a local-first scheduling AI. Extract the intent from the following prompt and return a pure JSON array of event objects. Each object must have: "title" (string), "time" (string HH:MM in 24h format, default "12:00" if none), "tag" (string: "work", "gym", "medical", or "personal"). If there's a todo/reminder, add a "todo" (string) field to the object. Prompt: "${prompt}"`;
 
-        async function restoreActiveState() {
             try {
-                const stateStr = localStorage.getItem('somnia_active_state');
-                const activeBgKey = localStorage.getItem('somnia_active_bg_key');
-                if (activeBgKey) { const blob = await getMedia(activeBgKey); if(blob) { document.getElementById('bg-anchor').style.backgroundImage = `url('${URL.createObjectURL(blob)}')`; } }
-                if (stateStr) {
-                    const state = JSON.parse(stateStr);
-                    document.documentElement.className = state.bodyClass || 'lunar-mode'; document.getElementById('glow-layer').className = state.glowClass || 'glow-pulse';
-                    window.particleType = state.particleType || 'dust'; window.particleCount = state.particleCount || 50;
-                    if (state.vars) {
-                        updateVar('--anim-speed', state.vars.speed); updateVar('--glow-opac', state.vars.opac); updateVar('--bg-bright', state.vars.bright); updateVar('--bg-zoom', state.vars.zoom); updateVar('--particle-color', state.vars.pColor); updateVar('--glow-color', state.vars.gColor);
-                        if(document.getElementById('speed-slider')) document.getElementById('speed-slider').value = 21 - parseInt(state.vars.speed);
-                        if(document.getElementById('opac-slider')) document.getElementById('opac-slider').value = state.vars.opac;
-                        if(document.getElementById('bright-slider')) document.getElementById('bright-slider').value = state.vars.bright;
-                        if(document.getElementById('density-slider')) document.getElementById('density-slider').value = state.particleCount;
+                const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${apiKey}`, {
+                    method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ contents: [{ parts: [{ text: systemPrompt }] }] })
+                });
+                const data = await response.json();
+                
+                if(data.error) { status.style.color = '#fb7185'; status.textContent = `API Error: ${data.error.message}`; return; }
+                
+                let replyText = data.candidates[0].content.parts[0].text;
+                replyText = replyText.replace(/```json/g, '').replace(/```/g, '').trim();
+                
+                const parsedEvents = JSON.parse(replyText);
+                
+                for(let ev of parsedEvents) {
+                    const newEv = { id: 'ev_' + Date.now() + Math.random(), title: ev.title, date: getFormatDate(currentDate), time: ev.time, tag: ev.tag };
+                    events.push(newEv); await dbPut('events', newEv);
+                    if(ev.todo) {
+                        const newTodo = { id: 'td_'+Date.now()+Math.random(), text: ev.todo, done: false };
+                        todos.push(newTodo); await dbPut('todos', newTodo);
                     }
                 }
-            } catch (e) { console.log("State restore error", e); }
+
+                document.getElementById('ai-prompt').value = '';
+                status.style.color = '#34d399'; status.textContent = "Architecture arranged successfully.";
+                renderCalendar(); renderTodos();
+                
+                if ("Notification" in window && Notification.permission === "granted") {
+                    new Notification("SomniaScheds Planner", { body: "Your schedule has been successfully arranged by the Oracle.", icon: 'SomniaScheds.png' });
+                }
+
+                setTimeout(() => { status.style.color = 'var(--text-muted)'; status.textContent = "Awaiting instructions..."; }, 4000);
+
+            } catch(e) {
+                console.log(e);
+                status.style.color = '#fb7185'; status.textContent = "Network/Parsing Error. Check console.";
+            }
         }
 
-        async function savePreset() {
-            let presetName = await somniaPrompt("VAULT THIS VIBE", "Name your gorgeous aesthetic setup:", "Cozy Setting " + (savedVault.length + 1));
-            if (!presetName) return; 
-            const state = {
-                name: presetName, bodyClass: document.documentElement.className.replace('cloaked', '').trim(),
-                glowClass: document.getElementById('glow-layer').className, particleType: window.particleType, particleCount: window.particleCount,
-                bgKey: localStorage.getItem('somnia_active_bg_key'), 
-                vars: { speed: getComputedStyle(document.documentElement).getPropertyValue('--anim-speed').trim(), opac: getComputedStyle(document.documentElement).getPropertyValue('--glow-opac').trim(), bright: getComputedStyle(document.documentElement).getPropertyValue('--bg-bright').trim(), zoom: getComputedStyle(document.documentElement).getPropertyValue('--bg-zoom').trim(), pColor: getComputedStyle(document.documentElement).getPropertyValue('--particle-color').trim(), gColor: getComputedStyle(document.documentElement).getPropertyValue('--glow-color').trim() },
-                audio: Object.keys(activeAudio).map(id => ({ id: id, vol: activeAudio[id].gain ? activeAudio[id].gain.gain.value : 0.5 }))
-            };
-            savedVault.push(state); localStorage.setItem('somniaVault', JSON.stringify(savedVault)); renderVault();
-            somniaAlert("SAVED!", "Vibe successfully saved to the Vault.");
+        // === 11. DATA BACKUP & RESTORE (IMPORT/EXPORT) ===
+        function triggerDownload(data, filename) {
+            const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a'); a.href = url; a.download = filename;
+            document.body.appendChild(a); a.click(); document.body.removeChild(a); URL.revokeObjectURL(url);
         }
 
-        function renderVault() {
-            const list = document.getElementById('vault-list'); if(!list) return;
-            list.innerHTML = savedVault.map((preset, index) => `
-                <div class="mixer-card" style="flex-direction:row; align-items:center;">
-                    <button class="mixer-btn" style="color: var(--primary);" onclick="loadPreset(${index})">▶ ${preset.name}</button>
-                    <button class="toy-btn" style="padding: 6px 12px; font-size: 0.6rem; border-color: #fb7185; color: #fb7185; background: rgba(251,113,133,0.05);" onclick="promptDeletePreset(${index})">✕</button>
-                </div>
-            `).join('');
+        // Vault Export/Import
+        function exportVibes() {
+            const vault = JSON.parse(localStorage.getItem('somniaVault')) || [];
+            const activeState = JSON.parse(localStorage.getItem('somnia_active_state')) || {};
+            triggerDownload({ type: "somnia_vibes", vault, activeState }, `somnia_vibes_${getFormatDate(new Date())}.json`);
         }
 
-        async function promptDeletePreset(index) {
-            const confirmed = await somniaConfirm("TRASH THIS VIBE?", "Are you sure you want to delete this saved preset?");
-            if(confirmed) { savedVault.splice(index, 1); localStorage.setItem('somniaVault', JSON.stringify(savedVault)); renderVault(); }
-        }
-
-        async function loadPreset(index) {
-            const state = savedVault[index]; if (!state) return;
-            document.documentElement.className = state.bodyClass; document.getElementById('glow-layer').className = state.glowClass;
-            window.particleType = state.particleType; window.particleCount = state.particleCount;
-            if (state.bgKey) { const blob = await getMedia(state.bgKey); if(blob) { document.getElementById('bg-anchor').style.backgroundImage = `url('${URL.createObjectURL(blob)}')`; localStorage.setItem('somnia_active_bg_key', state.bgKey); } } else { document.getElementById('bg-anchor').style.backgroundImage = "none"; localStorage.removeItem('somnia_active_bg_key'); }
-            updateVar('--anim-speed', state.vars.speed); updateVar('--glow-opac', state.vars.opac); updateVar('--bg-bright', state.vars.bright); updateVar('--bg-zoom', state.vars.zoom); updateVar('--particle-color', state.vars.pColor); updateVar('--glow-color', state.vars.gColor);
-            if(document.getElementById('speed-slider')) document.getElementById('speed-slider').value = 21 - parseInt(state.vars.speed);
-            if(document.getElementById('opac-slider')) document.getElementById('opac-slider').value = state.vars.opac;
-            if(document.getElementById('bright-slider')) document.getElementById('bright-slider').value = state.vars.bright;
-            if(document.getElementById('density-slider')) document.getElementById('density-slider').value = state.particleCount;
-            stopAllAudio(); 
-            if(state.audio) { state.audio.forEach(track => { const sound = soundLibrary.find(s => s.id === track.id) || customAudioLibrary.find(s => s.id === track.id); if (sound) { const volSlider = document.getElementById(`vol-${track.id}`); if (volSlider) volSlider.value = track.vol; toggleStem(track.id, sound.url); } }); }
-            saveCurrentState();
-        }
-
-        // === EXPORT / IMPORT FULL SANCTUARY BACKUP ===
-        function exportFullArchive() {
-            const backup = { archive: archive, schedsEvents: schedsEvents, schedsNotes: schedsNotes, tallies: tallies, vault: savedVault };
-            const blob = new Blob([JSON.stringify(backup, null, 2)], { type: "application/json" });
-            const a = document.createElement('a'); a.href = URL.createObjectURL(blob); a.download = "SOMNIASANCTUARY_BACKUP.json"; a.click();
-        }
-
-        function importFullArchive(e) {
+        function importVibes(input) {
+            if (!input.files || !input.files[0]) return;
             const reader = new FileReader();
-            reader.onload = (x) => {
+            reader.onload = (e) => {
                 try {
-                    const data = JSON.parse(x.target.result);
-                    if(data.archive) { archive = data.archive; localStorage.setItem('kore_archive', JSON.stringify(archive)); }
-                    if(data.schedsEvents) { schedsEvents = data.schedsEvents; schedsNotes = data.schedsNotes; saveSchedsData(); }
-                    if(data.tallies) { tallies = data.tallies; saveTallies(); }
-                    if(data.vault) { savedVault = data.vault; localStorage.setItem('somniaVault', JSON.stringify(savedVault)); renderVault(); }
-                    renderAnnals(); renderSchedsDay(); renderSchedsCalendar(); renderTallies();
-                    somniaAlert("SUCCESS", "Sanctuary Backup Restored.");
-                } catch (err) { somniaAlert("ERROR", "Invalid Backup File."); }
+                    const data = JSON.parse(e.target.result);
+                    if (data.type === "somnia_vibes") {
+                        if (data.vault) {
+                            savedVault = data.vault;
+                            localStorage.setItem('somniaVault', JSON.stringify(savedVault));
+                            renderVault();
+                        }
+                        if (data.activeState) {
+                            localStorage.setItem('somnia_active_state', JSON.stringify(data.activeState));
+                            restoreActiveState(); // Apply immediately
+                        }
+                        somniaAlert("VIBES RESTORED", "Your digital sanctuary's aesthetic has been injected.");
+                    } else { throw new Error("Incorrect file type"); }
+                } catch(err) { somniaAlert("IMPORT FAILED", "This doesn't look like a valid SomniaScheds Vibes file."); }
             };
-            if (e.target.files[0]) { reader.readAsText(e.target.files[0]); e.target.value = ''; }
+            reader.readAsText(input.files[0]); input.value = '';
         }
 
-        // NATIVE SHARE
-        function shareSomnia() {
-            const shareUrl = "https://somniascapes.com";
-            if (navigator.share) { try { navigator.share({ title: 'SomniaScheds', text: 'Step into my Digital Sanctuary.', url: shareUrl }); } catch (err) {} } 
-            else { toggleModal('share-modal'); document.getElementById('share-link-input').value = shareUrl; }
+        // Planner Export/Import
+        async function exportPlanner() {
+            const allEvents = await dbGetAll('events');
+            const allTodos = await dbGetAll('todos');
+            triggerDownload({ type: "somnia_planner", events: allEvents, todos: allTodos }, `somnia_planner_${getFormatDate(new Date())}.json`);
         }
 
-        // BOOT
+        function importPlanner(input) {
+            if (!input.files || !input.files[0]) return;
+            const reader = new FileReader();
+            reader.onload = async (e) => {
+                try {
+                    const data = JSON.parse(e.target.result);
+                    if (data.type === "somnia_planner") {
+                        if (data.events) { for (let ev of data.events) { await dbPut('events', ev); } }
+                        if (data.todos) { for (let td of data.todos) { await dbPut('todos', td); } }
+                        events = await dbGetAll('events'); todos = await dbGetAll('todos');
+                        renderCalendar(); renderTodos();
+                        somniaAlert("ARCHITECTURE INJECTED", "Your local tasks and schedule have been successfully merged.");
+                    } else { throw new Error("Incorrect file type"); }
+                } catch(err) { somniaAlert("IMPORT FAILED", "This doesn't look like a valid SomniaScheds Planner file."); }
+            };
+            reader.readAsText(input.files[0]); input.value = '';
+        }
+
+        // === BOOT ===
         document.addEventListener('DOMContentLoaded', async () => {
-            populateGrid('color-grid', colors, 'color'); populateGrid('particle-grid', particlesList, 'particle'); populateGrid('glow-grid', glows, 'glow'); populateGrid('particle-color-grid', particleColors, 'particleColor'); populateGrid('glow-color-grid', glowColors, 'glowColor');
-            await loadCustomBackgrounds(); await loadCustomAudio(); await restoreActiveState();
-            initParticles(); renderSchedsHeader(); renderSchedsCalendar(); updateSchedsTimerDisplay(); renderTallies(); renderVault();
-            setInterval(renderSchedsTime, 1000); renderSchedsTime();
-            document.getElementById('lore-editor').addEventListener('keydown', (e) => { if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); commitLore(); } });
-            renderAnnals(); schedsSelectedDate = formatDateKey(new Date()); renderSchedsCalendar(); renderSchedsDay();
+            parseUrlState();
+            
+            populateGrid('color-grid', colors, 'color');
+            populateGrid('particle-grid', particlesList, 'particle');
+            populateGrid('glow-grid', glows, 'glow');
+            populateGrid('particle-color-grid', particleColors, 'particleColor');
+            populateGrid('glow-color-grid', glowColors, 'glowColor');
+
+            await loadCustomBackgrounds();
+            await loadCustomAudio();
+            initParticles();
+
+            // Load Scheds Data
+            events = await dbGetAll('events');
+            todos = await dbGetAll('todos');
+            
+            renderVault(); 
+            renderTodos();
+            renderCalendar();
+            
+            setInterval(updateWidgets, 1000); updateWidgets();
+            
+            const keyInput = document.getElementById('gemini-key-input');
+            if(localStorage.getItem('gemini_api_key') && keyInput) {
+                keyInput.value = localStorage.getItem('gemini_api_key');
+            }
+
+            if ("Notification" in window && Notification.permission !== "granted" && Notification.permission !== "denied") {
+                Notification.requestPermission();
+            }
         });
     </script>
 </body>
