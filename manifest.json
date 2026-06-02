@@ -1,1 +1,23 @@
-
+{
+  "name": "SomniaScheds",
+  "short_name": "Somnia",
+  "description": "A private, offline-first digital scheduler and AI assistant.",
+  "start_url": "./",
+  "display": "standalone",
+  "background_color": "#050508",
+  "theme_color": "#020204",
+  "icons": [
+    {
+      "src": "SomniaScheds.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "SomniaScheds.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ]
+}
