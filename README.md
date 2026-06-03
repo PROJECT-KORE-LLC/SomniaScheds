@@ -1,4 +1,7 @@
-# 🌙 SOMNIASCHEDS // THE DIGITAL SANCTUARY
+# 🌙 SOMNIASCHEDS 
+**Atrium of the Somniaverse**
+
+This district of the Somniaverse is still forming
 
 **Less bloat. More focus. Absolute sovereignty.**
 
