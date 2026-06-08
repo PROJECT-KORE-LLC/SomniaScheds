@@ -105,7 +105,7 @@
         #bg-anchor {
             position: fixed; inset: 0; 
             background: linear-gradient(135deg, #0f172a 0%, #000000 100%);
-            background-image: url('SomniaScheds.png'); /* Set default Background Image */
+            background-image: url('library.png'); /* Set default Background Image */
             background-size: cover; 
             background-position: center center;
             background-repeat: no-repeat;
@@ -388,6 +388,107 @@
             .widget-dock { top: 120px !important; right: 50px !important;}
             .artifact-btn { font-size: 0.9rem !important; padding: 15px 30px !important; }
         }
+    
+
+        /* --- FLOATING AI LIBRARIAN WIDGET --- */
+        .ink-oracle-outer {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            width: 165px;
+            height: 165px;
+            z-index: 9500;
+            cursor: pointer;
+            pointer-events: auto;
+            transition: transform 0.5s cubic-bezier(0.25, 1, 0.5, 1), opacity 0.5s ease, filter 0.3s ease;
+        }
+
+        body.cloaked .ink-oracle-outer {
+            opacity: 0 !important;
+            pointer-events: none !important;
+        }
+
+        .ink-oracle-inner {
+            width: 100%;
+            height: 100%;
+            position: relative;
+            animation: oracle-float 5.5s infinite alternate ease-in-out;
+            transform-origin: bottom center;
+        }
+
+        .oracle-avatar {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            filter: drop-shadow(0 0 18px var(--primary-glow));
+            transition: filter 0.3s ease, transform 0.3s ease;
+        }
+
+        .ink-oracle-inner::after {
+            content: '';
+            position: absolute;
+            inset: 4px;
+            background: radial-gradient(circle, var(--primary-glow) 0%, transparent 72%);
+            z-index: -1;
+            border-radius: 50%;
+            opacity: 0.7;
+            animation: oracle-glow 2.8s infinite alternate ease-in-out;
+            pointer-events: none;
+        }
+
+        .ink-oracle-outer:hover .oracle-avatar {
+            filter: drop-shadow(0 0 32px var(--primary));
+            transform: scale(1.03);
+        }
+
+        body.oracle-open .ink-oracle-outer {
+            transform: scale(1.16) translateY(-6px);
+        }
+
+        body.oracle-open .planner-bubble {
+            box-shadow: 0 30px 90px rgba(0,0,0,0.88), 0 0 24px var(--primary-glow);
+        }
+
+        .oracle-focus-pulse {
+            animation: oracle-panel-pulse 1.4s ease-in-out 2;
+        }
+
+        @keyframes oracle-float {
+            0% { transform: translateY(0) rotate(-1deg); }
+            100% { transform: translateY(-18px) rotate(1deg); }
+        }
+
+        @keyframes oracle-glow {
+            0% { opacity: 0.35; transform: scale(0.88); }
+            100% { opacity: 0.8; transform: scale(1.1); }
+        }
+
+        @keyframes oracle-panel-pulse {
+            0%, 100% { box-shadow: inset 0 0 50px rgba(0,0,0,0.5); }
+            50% { box-shadow: inset 0 0 50px rgba(0,0,0,0.5), 0 0 22px var(--primary-glow); border-color: var(--primary); }
+        }
+
+        @media (max-width: 767px) {
+            .ink-oracle-outer {
+                bottom: 18px;
+                right: 18px;
+                width: 112px;
+                height: 112px;
+            }
+
+            body.oracle-open .ink-oracle-outer {
+                transform: scale(1.08) translateY(-4px);
+            }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            .ink-oracle-inner,
+            .ink-oracle-inner::after,
+            .oracle-focus-pulse {
+                animation: none !important;
+            }
+        }
+
     </style>
 </head>
 <body id="os-body" onclick="restoreUI()">
@@ -558,6 +659,15 @@
             </div>
         </main>
     </div>
+
+
+    <!-- Floating AI Widget: Librarian Oracle. Visible above every screen unless Cloak UI is active. -->
+    <div id="ink-oracle-widget" class="ink-oracle-outer" onclick="openSchedulerOracle(event)" title="Open the Librarian Oracle">
+        <div class="ink-oracle-inner">
+            <img src="librarian1.png" alt="The Librarian Oracle" class="oracle-avatar">
+        </div>
+    </div>
+
 
     <div id="planner-modal" class="modal-overlay" onclick="toggleModal('planner-modal')">
         <div class="planner-bubble" onclick="event.stopPropagation()">
@@ -732,7 +842,37 @@
 
         function toggleCloak() { document.body.classList.toggle('cloaked'); }
         function restoreUI() { document.body.classList.remove('cloaked'); }
-        function toggleModal(modalId) { document.getElementById(modalId).classList.toggle('active'); }
+        function toggleModal(modalId) {
+            const modal = document.getElementById(modalId);
+            if (!modal) return;
+            modal.classList.toggle('active');
+            if (modalId === 'planner-modal') {
+                document.body.classList.toggle('oracle-open', modal.classList.contains('active'));
+            }
+        }
+
+        function openSchedulerOracle(event) {
+            if (event) event.stopPropagation();
+            if (document.body.classList.contains('cloaked')) return;
+
+            const planner = document.getElementById('planner-modal');
+            if (planner && !planner.classList.contains('active')) {
+                planner.classList.add('active');
+            }
+            document.body.classList.add('oracle-open');
+
+            setTimeout(() => {
+                const aiPrompt = document.getElementById('ai-prompt');
+                const aiPanel = aiPrompt ? aiPrompt.closest('.panel-card') : null;
+                if (aiPanel) {
+                    aiPanel.classList.remove('oracle-focus-pulse');
+                    void aiPanel.offsetWidth;
+                    aiPanel.classList.add('oracle-focus-pulse');
+                }
+                if (aiPrompt) aiPrompt.focus({ preventScroll: true });
+            }, 120);
+        }
+
         function updateVar(name, val) { document.documentElement.style.setProperty(name, val); }
 
         function toggleFullscreen() {
@@ -773,7 +913,7 @@
                 if(confirmed) {
                     await deleteMedia(key);
                     if(localStorage.getItem('somnia_active_bg_key') === key) {
-                        document.getElementById('bg-anchor').style.backgroundImage = "url('SomniaScheds.png')"; localStorage.removeItem('somnia_active_bg_key');
+                        document.getElementById('bg-anchor').style.backgroundImage = "url('library.png')"; localStorage.removeItem('somnia_active_bg_key');
                     }
                     await loadCustomBackgrounds(true);
                 }
@@ -837,10 +977,10 @@
                     if(blob) { 
                         document.getElementById('bg-anchor').style.backgroundImage = `url('${URL.createObjectURL(blob)}')`; 
                     } else { 
-                        document.getElementById('bg-anchor').style.backgroundImage = "url('SomniaScheds.png')"; 
+                        document.getElementById('bg-anchor').style.backgroundImage = "url('library.png')"; 
                     } 
                 } else {
-                    document.getElementById('bg-anchor').style.backgroundImage = "url('SomniaScheds.png')";
+                    document.getElementById('bg-anchor').style.backgroundImage = "url('library.png')";
                 }
                 if (stateStr) {
                     const state = JSON.parse(stateStr);
@@ -861,6 +1001,35 @@
 
         // === 4. VAULT PRESETS ===
         let savedVault = JSON.parse(localStorage.getItem('somniaVault')) || [];
+
+        function ensurePermanentLibraryPreset() {
+            const permanentId = 'permanent_library_atrium';
+            const exists = savedVault.some(preset => preset && preset.id === permanentId);
+            if (!exists) {
+                savedVault.unshift({
+                    id: permanentId,
+                    __permanent: true,
+                    name: 'Library Atrium — Permanent Preset',
+                    bodyClass: 'lunar-mode',
+                    glowClass: 'glow-pulse',
+                    particleType: 'dust',
+                    particleCount: 50,
+                    bgKey: null,
+                    bgAsset: 'library.png',
+                    vars: {
+                        speed: '10s',
+                        opac: '0.3',
+                        bright: '0.85',
+                        zoom: '1',
+                        pColor: 'var(--primary)',
+                        gColor: 'var(--primary-glow)'
+                    },
+                    audio: []
+                });
+                localStorage.setItem('somniaVault', JSON.stringify(savedVault));
+            }
+        }
+
         async function savePreset() {
             let presetName = await somniaPrompt("VAULT THIS VIBE", "Name your gorgeous aesthetic setup:", "Cozy Setting " + (savedVault.length + 1));
             if (!presetName) return; 
@@ -883,7 +1052,14 @@
             `).join('');
         }
 
-        async function promptDeletePreset(index) { const confirmed = await somniaConfirm("TRASH THIS VIBE?", "Are you sure you want to delete this saved preset?"); if(confirmed) { savedVault.splice(index, 1); localStorage.setItem('somniaVault', JSON.stringify(savedVault)); renderVault(); } }
+        async function promptDeletePreset(index) {
+            if (savedVault[index] && savedVault[index].__permanent) {
+                await somniaAlert("PERMANENT PRESET", "The Library Atrium preset is the room's permanent baseline and cannot be deleted.");
+                return;
+            }
+            const confirmed = await somniaConfirm("TRASH THIS VIBE?", "Are you sure you want to delete this saved preset?");
+            if(confirmed) { savedVault.splice(index, 1); localStorage.setItem('somniaVault', JSON.stringify(savedVault)); renderVault(); }
+        }
 
         async function loadPreset(index) {
             const state = savedVault[index]; if (!state) return;
@@ -895,7 +1071,7 @@
                     localStorage.setItem('somnia_active_bg_key', state.bgKey); 
                 } 
             } else { 
-                document.getElementById('bg-anchor').style.backgroundImage = "url('SomniaScheds.png')"; 
+                document.getElementById('bg-anchor').style.backgroundImage = "url('library.png')"; 
                 localStorage.removeItem('somnia_active_bg_key'); 
             }
             updateVar('--anim-speed', state.vars.speed); updateVar('--glow-opac', state.vars.opac); updateVar('--bg-bright', state.vars.bright); updateVar('--bg-zoom', state.vars.zoom); updateVar('--particle-color', state.vars.pColor); updateVar('--glow-color', state.vars.gColor);
@@ -1174,7 +1350,7 @@
                 renderCalendar(); renderTodos();
                 
                 if ("Notification" in window && Notification.permission === "granted") {
-                    new Notification("SomniaScheds Planner", { body: "Your schedule has been successfully arranged by the Oracle.", icon: 'SomniaScheds.png' });
+                    new Notification("SomniaScheds Planner", { body: "Your schedule has been successfully arranged by the Oracle.", icon: 'library.png' });
                 }
 
                 setTimeout(() => { status.style.color = 'var(--text-muted)'; status.textContent = "Awaiting instructions..."; }, 4000);
@@ -1209,6 +1385,7 @@
                     if (data.type === "somnia_vibes") {
                         if (data.vault) {
                             savedVault = data.vault;
+                            ensurePermanentLibraryPreset();
                             localStorage.setItem('somniaVault', JSON.stringify(savedVault));
                             renderVault();
                         }
@@ -1266,6 +1443,7 @@
             events = await dbGetAll('events');
             todos = await dbGetAll('todos');
             
+            ensurePermanentLibraryPreset();
             renderVault(); 
             renderTodos();
             renderCalendar();
