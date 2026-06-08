@@ -1,23 +1,38 @@
 {
   "name": "SomniaScheds",
-  "short_name": "Somnia",
-  "description": "A private, offline-first digital scheduler and AI assistant.",
-  "start_url": "./",
+  "short_name": "Scheds",
+  "description": "A private, offline-first digital scheduler and cozy AI-assisted planning room in SomniaScapes.",
+  "start_url": "./index.html",
+  "scope": "./",
   "display": "standalone",
-  "background_color": "#050508",
+  "orientation": "any",
+  "background_color": "#020204",
   "theme_color": "#020204",
+  "categories": [
+    "productivity",
+    "lifestyle",
+    "utilities"
+  ],
   "icons": [
     {
-      "src": "SomniaScheds.png",
+      "src": "./librarian1.png",
       "sizes": "192x192",
       "type": "image/png",
       "purpose": "any maskable"
     },
     {
-      "src": "SomniaScheds.png",
+      "src": "./librarian1.png",
       "sizes": "512x512",
       "type": "image/png",
       "purpose": "any maskable"
+    }
+  ],
+  "shortcuts": [
+    {
+      "name": "Open Planner",
+      "short_name": "Planner",
+      "description": "Open the SomniaScheds planner.",
+      "url": "./index.html#planner"
     }
   ]
 }
