@@ -5,10 +5,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <meta name="description" content="THE CHRONARIUM // A private, offline-first planning chamber.">
     <meta name="theme-color" content="#020204">
-    <meta name="chronarium-build" content="chronarium-v1-11-tick-roams-page">
+    <meta name="chronarium-build" content="chronarium-v1-13-tick-safe-edges">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-    <title>THE CHRONARIUM // TICK ROAMS PAGE</title>
+    <title>THE CHRONARIUM // TICK SAFE EDGES</title>
 <style>
         /* ============================================================
            THE CHRONARIUM — COZY CHAOS ENVIRONMENT
@@ -1089,6 +1089,53 @@
             .chron-pet.unlocked,
             .chron-pet.tick-crossing img {
                 animation: none !important;
+            }
+        }
+
+        /* --- CHRONARIUM V1.13: TICK SAFE EDGES FOR CHAT BUBBLE --- */
+        .chron-pet {
+            --tick-safe-side-pad: 300px;
+        }
+
+        .chron-pet.tick-bubble-right .tick-lore-bubble {
+            left: 78%;
+            right: auto;
+            border-radius: 22px 22px 22px 8px;
+        }
+
+        .chron-pet.tick-bubble-right .tick-lore-bubble::after {
+            left: 18px;
+            right: auto;
+            border-left: 1px solid var(--glass-border);
+            border-top: 1px solid var(--glass-border);
+            border-right: none;
+            border-bottom: none;
+            bottom: -8px;
+        }
+
+        .chron-pet.tick-bubble-left .tick-lore-bubble {
+            right: 78%;
+            left: auto;
+        }
+
+        @media (min-width: 768px) {
+            .chron-pet .tick-lore-bubble {
+                max-width: min(260px, calc(100vw - 80px));
+            }
+        }
+
+        @media (max-width: 767px) {
+            .chron-pet {
+                --tick-safe-side-pad: 22px;
+            }
+
+            .chron-pet.tick-bubble-right .tick-lore-bubble,
+            .chron-pet.tick-bubble-left .tick-lore-bubble,
+            .chron-pet .tick-lore-bubble {
+                left: auto !important;
+                right: 0 !important;
+                bottom: 105% !important;
+                max-width: 72vw !important;
             }
         }
 
@@ -2345,7 +2392,7 @@
                 if (isTickVisibleAndUnlocked() && Math.random() > 0.45) {
                     sayTickLore();
                 }
-            }, 26000);
+            }, 72000);
         }
 
         function wireTickPetClick() {
@@ -2356,7 +2403,12 @@
                 event.stopPropagation();
                 if (isTickVisibleAndUnlocked()) {
                     sayTickLore();
-                    try { addChronariumXP(1); } catch(e) {}
+                    try {
+                        if (!window.__tickClickXpAt || Date.now() - window.__tickClickXpAt > 30000) {
+                            window.__tickClickXpAt = Date.now();
+                            addChronariumXP(1);
+                        }
+                    } catch(e) {}
                 }
             });
         }
@@ -2492,8 +2544,9 @@
             const petW = pet.offsetWidth || 98;
             const petH = pet.offsetHeight || 98;
 
-            const safeLeftMin = 22;
-            const safeLeftMax = Math.max(safeLeftMin, vw - petW - 28);
+            const sidePad = vw < 768 ? 22 : Math.min(320, Math.max(230, vw * 0.18));
+            const safeLeftMin = sidePad;
+            const safeLeftMax = Math.max(safeLeftMin, vw - petW - sidePad);
             const safeBottomMin = 22;
             const safeBottomMax = Math.max(safeBottomMin, Math.min(vh - petH - 80, vh * 0.58));
 
@@ -2502,6 +2555,8 @@
 
             pet.style.setProperty('--tick-left', `${left}px`);
             pet.style.setProperty('--tick-bottom', `${bottom}px`);
+            pet.classList.toggle('tick-bubble-right', left < 340);
+            pet.classList.toggle('tick-bubble-left', left >= 340);
 
             pet.classList.remove('tick-flutter-hop');
             void pet.offsetWidth;
@@ -2611,11 +2666,15 @@
             const petW = pet ? (pet.offsetWidth || 98) : 98;
             const petH = pet ? (pet.offsetHeight || 98) : 98;
 
-            // Page-wide flight lanes. These keep Tick away from the very edge but let him roam high, low, left, right.
+            // Page-wide flight lanes with safe side padding so Tick's chat bubble cannot run off-screen.
+            const sidePad = vw < 768 ? 22 : Math.min(320, Math.max(230, vw * 0.18));
+            const xSafeMin = sidePad;
+            const xSafeMax = Math.max(xSafeMin, vw - petW - sidePad);
+
             const lanes = [
-                { xMin: 22, xMax: vw - petW - 26, yMin: 92, yMax: Math.max(120, vh * 0.34) },
-                { xMin: 22, xMax: vw - petW - 26, yMin: Math.max(110, vh * 0.34), yMax: Math.max(150, vh * 0.62) },
-                { xMin: 22, xMax: vw - petW - 26, yMin: Math.max(160, vh * 0.62), yMax: vh - petH - 32 }
+                { xMin: xSafeMin, xMax: xSafeMax, yMin: 92, yMax: Math.max(120, vh * 0.34) },
+                { xMin: xSafeMin, xMax: xSafeMax, yMin: Math.max(110, vh * 0.34), yMax: Math.max(150, vh * 0.62) },
+                { xMin: xSafeMin, xMax: xSafeMax, yMin: Math.max(160, vh * 0.62), yMax: vh - petH - 32 }
             ];
 
             const lane = lanes[Math.floor(Math.random() * lanes.length)];
@@ -2638,6 +2697,14 @@
             pet.style.setProperty('--tick-left', `${point.x}px`);
             pet.style.setProperty('--tick-top', `${point.y}px`);
             pet.style.removeProperty('--tick-bottom');
+
+            const vw = Math.max(document.documentElement.clientWidth || 0, window.innerWidth || 0);
+            pet.classList.toggle('tick-bubble-right', point.x < 340);
+            pet.classList.toggle('tick-bubble-left', point.x >= 340);
+            if (point.x > vw - 380) {
+                pet.classList.add('tick-bubble-left');
+                pet.classList.remove('tick-bubble-right');
+            }
 
             if (withHop) {
                 pet.classList.remove('tick-crossing', 'tick-flutter-hop');
@@ -2684,11 +2751,8 @@
                     vanishTickThenRoamBack();
                 } else {
                     moveTickAroundPage(true);
-                    if (Math.random() < 0.34) {
-                        setTimeout(() => sayTickLore(), 900);
-                    }
                 }
-            }, 6500);
+            }, 9500);
         }
 
         const tickRoamUnlockBaseV111 = window.unlockChronariumPet;
@@ -2719,6 +2783,62 @@
                 if (tickCanRoamPage()) startTickPageRoam();
             }, 900);
         });
+
+        // --- CHRONARIUM V1.12: TICK SPEECH PACING ---
+        let tickSpeechLastAt = 0;
+        const TICK_SPEECH_COOLDOWN_MS = 38000;
+
+        const tickPacedSayBaseV112 = window.sayTickLore;
+        window.sayTickLore = function(line, hold = 4800, force = false) {
+            const now = Date.now();
+            if (!force && now - tickSpeechLastAt < TICK_SPEECH_COOLDOWN_MS) {
+                return;
+            }
+            tickSpeechLastAt = now;
+            if (typeof tickPacedSayBaseV112 === 'function') {
+                tickPacedSayBaseV112(line, hold);
+            }
+        };
+
+        function forceTickLore(line, hold = 5200) {
+            window.sayTickLore(line, hold, true);
+        }
+
+        const tickPacedUnlockBaseV112 = window.unlockChronariumPet;
+        window.unlockChronariumPet = function() {
+            if (typeof tickPacedUnlockBaseV112 === 'function') tickPacedUnlockBaseV112();
+            setTimeout(() => {
+                forceTickLore("Tick wakes softly. She will keep to the margins unless called.", 5600);
+            }, 1200);
+        };
+
+        const tickPacedVanishBaseV112 = window.vanishTickThenRoamBack;
+        window.vanishTickThenRoamBack = function() {
+            const pet = document.getElementById('chron-pet');
+            if (!pet || !tickCanRoamPage()) return;
+
+            pet.classList.add('tick-vanished');
+            pet.classList.remove('tick-speaking');
+
+            clearTimeout(tickRoamVanishTimer);
+            tickRoamVanishTimer = setTimeout(() => {
+                moveTickAroundPage(false);
+                pet.classList.remove('tick-vanished');
+                pet.classList.add('tick-arriving');
+                setTimeout(() => pet.classList.remove('tick-arriving'), 900);
+
+                // Reappearing is mostly visual now. She only speaks if enough quiet time has passed.
+                if (Date.now() - tickSpeechLastAt > TICK_SPEECH_COOLDOWN_MS) {
+                    const lines = [
+                        "Tick returns with one tiny minute tucked under her wing.",
+                        "Tick reappears, politely pretending she was here the whole time.",
+                        "A soft brass flutter crosses the Chronarium.",
+                        "Tick found a quiet second and brought it back."
+                    ];
+                    setTimeout(() => sayTickLore(lines[Math.floor(Math.random() * lines.length)], 4300), 750);
+                }
+            }, 2200 + Math.random() * 2800);
+        };
 
     </script>
 </body>
