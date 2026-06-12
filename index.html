@@ -5,10 +5,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <meta name="description" content="THE CHRONARIUM // A private, offline-first planning chamber.">
     <meta name="theme-color" content="#020204">
-    <meta name="chronarium-build" content="chronarium-v1-13-tick-safe-edges">
+    <meta name="chronarium-build" content="chronarium-v1-14-tick-reactive-presets">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-    <title>THE CHRONARIUM // TICK SAFE EDGES</title>
+    <title>THE CHRONARIUM // TICK REACTIVE PRESETS</title>
 <style>
         /* ============================================================
            THE CHRONARIUM — COZY CHAOS ENVIRONMENT
@@ -1139,6 +1139,94 @@
             }
         }
 
+        /* --- CHRONARIUM V1.14: TICK CLICK + PRESET REACTIONS --- */
+        .chron-pet.tick-click-react img {
+            animation: tick-click-react 0.72s ease both !important;
+        }
+
+        .chron-pet.tick-startled img {
+            animation: tick-startled-react 0.9s ease both !important;
+        }
+
+        .chron-pet.tick-delighted img {
+            animation: tick-delighted-react 1.05s ease both !important;
+        }
+
+        .chron-pet.tick-inspecting img {
+            animation: tick-inspecting-react 1.15s ease both !important;
+        }
+
+        .chron-pet.tick-settled img {
+            animation: tick-settled-react 1.2s ease both !important;
+        }
+
+        @keyframes tick-click-react {
+            0% { transform: scale(1) rotate(0deg); }
+            22% { transform: scale(1.12) rotate(-9deg); }
+            46% { transform: scale(0.98) rotate(7deg); }
+            70% { transform: scale(1.06) rotate(-4deg); }
+            100% { transform: scale(1) rotate(0deg); }
+        }
+
+        @keyframes tick-startled-react {
+            0%, 100% { transform: translateY(0) rotate(0deg) scale(1); }
+            18% { transform: translateY(-20px) rotate(-14deg) scale(1.08); }
+            38% { transform: translateY(6px) rotate(10deg) scale(0.98); }
+            62% { transform: translateY(-11px) rotate(-7deg) scale(1.04); }
+        }
+
+        @keyframes tick-delighted-react {
+            0%, 100% { transform: translateY(0) rotate(0deg) scale(1); }
+            20% { transform: translateY(-15px) rotate(9deg) scale(1.07); }
+            40% { transform: translateY(-3px) rotate(-8deg) scale(1.02); }
+            62% { transform: translateY(-18px) rotate(6deg) scale(1.08); }
+            82% { transform: translateY(2px) rotate(-3deg) scale(1.01); }
+        }
+
+        @keyframes tick-inspecting-react {
+            0%, 100% { transform: translateX(0) rotate(0deg) scale(1); }
+            20% { transform: translateX(-8px) rotate(-6deg) scale(1.03); }
+            42% { transform: translateX(8px) rotate(5deg) scale(1.03); }
+            64% { transform: translateX(-5px) rotate(-3deg) scale(1.01); }
+        }
+
+        @keyframes tick-settled-react {
+            0% { transform: translateY(-7px) rotate(-3deg) scale(1.03); }
+            35% { transform: translateY(2px) rotate(2deg) scale(0.99); }
+            70% { transform: translateY(-3px) rotate(-1deg) scale(1.01); }
+            100% { transform: translateY(0) rotate(0deg) scale(1); }
+        }
+
+        .tick-reaction-spark {
+            position: fixed;
+            z-index: 499;
+            width: 6px;
+            height: 6px;
+            border-radius: 999px;
+            background: var(--primary);
+            box-shadow: 0 0 12px var(--primary-glow);
+            pointer-events: none;
+            opacity: 0;
+            animation: tick-spark-drift 900ms ease-out forwards;
+        }
+
+        @keyframes tick-spark-drift {
+            0% { opacity: 0; transform: translate3d(0,0,0) scale(0.5); }
+            20% { opacity: 1; }
+            100% { opacity: 0; transform: translate3d(var(--spark-x), var(--spark-y), 0) scale(0.05); }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            .chron-pet.tick-click-react img,
+            .chron-pet.tick-startled img,
+            .chron-pet.tick-delighted img,
+            .chron-pet.tick-inspecting img,
+            .chron-pet.tick-settled img,
+            .tick-reaction-spark {
+                animation: none !important;
+            }
+        }
+
     </style>
 
     <!-- CHRONARIUM V1.10 NOTE: folded editor keeps tabs visible; tab click unfolds selected panel. -->
@@ -2117,14 +2205,14 @@
         }
 
         const CHRONARIUM_PRESETS = [
-            { name:'Dawn Ledger', file:'scheds1.png', mode:'vellum-mode', glow:'glow-breathe' },
-            { name:'Rainy Agenda', file:'scheds2.png', mode:'lunar-mode', glow:'glow-pulse' },
-            { name:'Moon Calendar', file:'scheds3.png', mode:'twilight-mode', glow:'glow-halo' },
-            { name:'Tea & Tasks', file:'scheds4.png', mode:'library-mode', glow:'glow-flicker' },
-            { name:'Storm Desk', file:'scheds5.png', mode:'obsidian-mode', glow:'glow-scanner' },
-            { name:'Velvet Week', file:'acheds6.png', fallback: 'scheds6.png', mode:'amethyst-mode', glow:'glow-nebula' },
-            { name:'Clockwork Garden', file:'scheds7.png', mode:'emerald-mode', glow:'glow-ripple' },
-            { name:'Quiet Midnight', file:'scheds8.png', mode:'void-mode', glow:'glow-phantom' },
+            { name:'Dawn Ledger', file:'scheds1.png', mode:'vellum-mode', glow:'glow-breathe' , reaction:'delighted', tickLine:'Tick warms her wings in the dawn ledger light.'},
+            { name:'Rainy Agenda', file:'scheds2.png', mode:'lunar-mode', glow:'glow-pulse' , reaction:'settled', tickLine:'Tick taps the glass: rain makes the hours easier to stack.'},
+            { name:'Moon Calendar', file:'scheds3.png', mode:'twilight-mode', glow:'glow-halo' , reaction:'inspecting', tickLine:'Tick consults the moon and pretends this was her idea.'},
+            { name:'Tea & Tasks', file:'scheds4.png', mode:'library-mode', glow:'glow-flicker' , reaction:'delighted', tickLine:'Tick approves of tea-adjacent planning. Strongly.'},
+            { name:'Storm Desk', file:'scheds5.png', mode:'obsidian-mode', glow:'glow-scanner' , reaction:'startled', tickLine:'Tick jumps at the thunder, then bravely supervises.'},
+            { name:'Velvet Week', file:'acheds6.png', fallback: 'scheds6.png', mode:'amethyst-mode', glow:'glow-nebula' , reaction:'settled', tickLine:'Tick settles into the velvet hush between appointments.'},
+            { name:'Clockwork Garden', file:'scheds7.png', mode:'emerald-mode', glow:'glow-ripple' , reaction:'inspecting', tickLine:'Tick inspects the clockwork garden like a tiny foreman.'},
+            { name:'Quiet Midnight', file:'scheds8.png', mode:'void-mode', glow:'glow-phantom' , reaction:'settled', tickLine:'Tick dims her lantern and walks softly through midnight.'},
         ];
 
         function renderChronariumPresets() {
@@ -2150,6 +2238,7 @@
                     applyMode(preset.mode);
                     applyGlow(preset.glow);
                     addChronariumXP(3);
+                    reactTickToPreset(preset);
                     saveCurrentState();
                 });
                 grid.appendChild(card);
@@ -2839,6 +2928,104 @@
                 }
             }, 2200 + Math.random() * 2800);
         };
+
+        // --- CHRONARIUM V1.14: TICK CLICK + PRESET REACTIONS ---
+        let tickLastClickReactAt = 0;
+
+        function tickIsAvailableForReaction() {
+            const pet = document.getElementById('chron-pet');
+            return !!pet && pet.classList.contains('unlocked') && !pet.classList.contains('locked');
+        }
+
+        function clearTickReactionClasses(pet) {
+            if (!pet) return;
+            pet.classList.remove('tick-click-react', 'tick-startled', 'tick-delighted', 'tick-inspecting', 'tick-settled', 'tick-crossing', 'tick-flutter-hop');
+        }
+
+        function animateTickReaction(type = 'click') {
+            const pet = document.getElementById('chron-pet');
+            if (!pet || !tickIsAvailableForReaction()) return;
+
+            const classMap = {
+                click: 'tick-click-react',
+                startled: 'tick-startled',
+                delighted: 'tick-delighted',
+                inspecting: 'tick-inspecting',
+                settled: 'tick-settled'
+            };
+
+            const cls = classMap[type] || classMap.click;
+            clearTickReactionClasses(pet);
+            void pet.offsetWidth;
+            pet.classList.add(cls);
+
+            const duration = type === 'click' ? 780 : 1250;
+            setTimeout(() => pet.classList.remove(cls), duration);
+            spawnTickReactionSparks(type);
+        }
+
+        function spawnTickReactionSparks(type = 'click') {
+            const pet = document.getElementById('chron-pet');
+            if (!pet || !tickIsAvailableForReaction()) return;
+
+            const rect = pet.getBoundingClientRect();
+            const count = type === 'click' ? 5 : 9;
+            for (let i = 0; i < count; i++) {
+                const spark = document.createElement('div');
+                spark.className = 'tick-reaction-spark';
+                const startX = rect.left + rect.width * (0.35 + Math.random() * 0.3);
+                const startY = rect.top + rect.height * (0.30 + Math.random() * 0.35);
+                spark.style.left = `${startX}px`;
+                spark.style.top = `${startY}px`;
+                spark.style.setProperty('--spark-x', `${Math.round((Math.random() - 0.5) * 90)}px`);
+                spark.style.setProperty('--spark-y', `${Math.round(-30 - Math.random() * 70)}px`);
+                document.body.appendChild(spark);
+                setTimeout(() => spark.remove(), 1000);
+            }
+        }
+
+        function reactTickToPreset(preset) {
+            if (!preset || !tickIsAvailableForReaction()) return;
+
+            const reaction = preset.reaction || 'settled';
+            animateTickReaction(reaction);
+
+            setTimeout(() => {
+                if (typeof moveTickAroundPage === 'function') {
+                    moveTickAroundPage(true);
+                }
+            }, 420);
+
+            const line = preset.tickLine || "Tick tests the new atmosphere with one cautious wingbeat.";
+            setTimeout(() => {
+                if (typeof forceTickLore === 'function') forceTickLore(line, 5600);
+                else if (typeof sayTickLore === 'function') sayTickLore(line, 5600, true);
+            }, 700);
+        }
+
+        const tickReactiveWireBaseV114 = window.wireTickPetClick;
+        window.wireTickPetClick = function() {
+            if (typeof tickReactiveWireBaseV114 === 'function') tickReactiveWireBaseV114();
+
+            const pet = document.getElementById('chron-pet');
+            if (!pet || pet.dataset.tickReactiveClickWired === 'true') return;
+            pet.dataset.tickReactiveClickWired = 'true';
+
+            pet.addEventListener('click', (event) => {
+                event.stopPropagation();
+                if (!tickIsAvailableForReaction()) return;
+
+                const now = Date.now();
+                if (now - tickLastClickReactAt > 850) {
+                    tickLastClickReactAt = now;
+                    animateTickReaction('click');
+                }
+            }, true);
+        };
+
+        document.addEventListener('DOMContentLoaded', () => {
+            if (typeof wireTickPetClick === 'function') wireTickPetClick();
+        });
 
     </script>
 </body>
