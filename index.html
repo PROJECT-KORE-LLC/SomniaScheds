@@ -5,10 +5,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <meta name="description" content="THE CHRONARIUM // A private, offline-first planning chamber.">
     <meta name="theme-color" content="#020204">
-    <meta name="chronarium-build" content="chronarium-v1-19-game-objects-fixed">
+    <meta name="chronarium-build" content="chronarium-v1-20-premium-clockwork-games">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-    <title>THE CHRONARIUM // GAME OBJECTS FIXED</title>
+    <title>THE CHRONARIUM // PREMIUM CLOCKWORK GAMES</title>
 <style>
         /* ============================================================
            THE CHRONARIUM — COZY CHAOS ENVIRONMENT
@@ -1382,6 +1382,288 @@
             opacity: 1;
         }
 
+        /* --- CHRONARIUM V1.20: PREMIUM CLOCKWORK MINI-GAMES --- */
+        #mini-game-modal .planner-bubble,
+        #mini-game-modal .scribes-bubble,
+        #mini-game-modal .modal-card {
+            border-color: rgba(255, 219, 143, 0.18);
+            box-shadow: 0 34px 100px rgba(0,0,0,0.82), 0 0 44px rgba(168, 85, 247, 0.12);
+        }
+
+        #mini-game-field {
+            position: relative;
+            overflow: hidden;
+            isolation: isolate;
+            border-radius: 30px;
+            background-blend-mode: overlay, normal;
+            box-shadow:
+                inset 0 0 54px rgba(0,0,0,0.56),
+                inset 0 1px 0 rgba(255,255,255,0.08),
+                0 0 28px rgba(251,191,36,0.08);
+        }
+
+        #mini-game-field::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            z-index: 0;
+            pointer-events: none;
+            background:
+                radial-gradient(circle at 18% 18%, rgba(251,191,36,0.15), transparent 28%),
+                radial-gradient(circle at 80% 18%, rgba(129,140,248,0.16), transparent 30%),
+                radial-gradient(circle at 50% 95%, rgba(20,184,166,0.08), transparent 36%),
+                linear-gradient(180deg, rgba(0,0,0,0.06), rgba(0,0,0,0.42));
+        }
+
+        #mini-game-field::after {
+            content: '';
+            position: absolute;
+            inset: -30%;
+            z-index: 1;
+            pointer-events: none;
+            opacity: 0.28;
+            background:
+                conic-gradient(from 0deg,
+                    transparent 0 8%,
+                    rgba(251,191,36,0.16) 9% 10%,
+                    transparent 11% 24%,
+                    rgba(129,140,248,0.13) 25% 26%,
+                    transparent 27% 48%,
+                    rgba(20,184,166,0.09) 49% 50%,
+                    transparent 51% 100%);
+            animation: chronoFieldOrbit 18s linear infinite;
+        }
+
+        .mini-target {
+            z-index: 4;
+            width: 52px;
+            height: 52px;
+            border-radius: 18px;
+            font-family: Georgia, serif;
+            font-size: 1.45rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: visible;
+            transform-origin: center;
+            will-change: transform, left, top;
+            animation: chronoTargetFloat 0.86s ease-in-out infinite alternate;
+        }
+
+        .mini-target:hover {
+            transform: scale(1.16) rotate(-4deg);
+            filter: brightness(1.22) saturate(1.12);
+        }
+
+        .mini-target::before {
+            content: '';
+            position: absolute;
+            inset: -11px;
+            border-radius: inherit;
+            border: 1px solid rgba(255, 231, 166, 0.22);
+            background:
+                conic-gradient(from 35deg,
+                    transparent 0 16%,
+                    rgba(255,221,128,0.28) 17% 19%,
+                    transparent 20% 42%,
+                    rgba(165,180,252,0.22) 43% 46%,
+                    transparent 47% 74%,
+                    rgba(45,212,191,0.14) 75% 78%,
+                    transparent 79% 100%);
+            box-shadow: 0 0 18px rgba(251,191,36,0.16);
+            animation: chronoObjectOrbit 4.6s linear infinite;
+            pointer-events: none;
+        }
+
+        .mini-target.game-good {
+            border-color: rgba(255, 229, 160, 0.52) !important;
+            background:
+                radial-gradient(circle at 30% 24%, rgba(255,255,255,0.31), transparent 34%),
+                radial-gradient(circle at 50% 55%, rgba(251,191,36,0.22), transparent 52%),
+                linear-gradient(135deg, rgba(102, 66, 12, 0.78), rgba(12, 10, 24, 0.72)) !important;
+            color: #ffe8a6;
+            box-shadow:
+                0 0 18px rgba(255, 215, 128, 0.42),
+                0 0 34px rgba(129,140,248,0.11),
+                inset 0 0 18px rgba(255,255,255,0.06) !important;
+        }
+
+        .mini-target.game-bonus {
+            border-color: rgba(255, 249, 199, 0.88) !important;
+            background:
+                radial-gradient(circle at 35% 24%, rgba(255,255,255,0.42), transparent 36%),
+                radial-gradient(circle at 55% 58%, rgba(255,226,122,0.28), transparent 52%),
+                linear-gradient(135deg, rgba(217, 165, 42, 0.82), rgba(62, 36, 6, 0.78)) !important;
+            color: #fff4bc;
+            box-shadow:
+                0 0 28px rgba(255, 221, 114, 0.72),
+                0 0 52px rgba(168, 85, 247, 0.16),
+                inset 0 0 24px rgba(255,255,255,0.09) !important;
+            animation: chronoTargetFloat 0.66s ease-in-out infinite alternate, rareChronoPulse 0.8s ease-in-out infinite alternate;
+        }
+
+        .mini-target.game-bad {
+            border-color: rgba(148, 163, 184, 0.42) !important;
+            background:
+                radial-gradient(circle at 30% 24%, rgba(255,255,255,0.12), transparent 32%),
+                radial-gradient(circle at 50% 55%, rgba(100,116,139,0.16), transparent 54%),
+                linear-gradient(135deg, rgba(23, 26, 40, 0.84), rgba(5, 5, 12, 0.8)) !important;
+            color: #aeb7d5;
+            box-shadow:
+                0 0 16px rgba(70, 80, 130, 0.34),
+                inset 0 0 16px rgba(255,255,255,0.03) !important;
+        }
+
+        .mini-target .mini-icon {
+            position: relative;
+            z-index: 3;
+            filter: drop-shadow(0 0 8px rgba(255,235,170,0.26));
+        }
+
+        .mini-target .mini-object-label {
+            position: absolute;
+            left: 50%;
+            top: calc(100% + 8px);
+            transform: translateX(-50%);
+            white-space: nowrap;
+            font-family: monospace;
+            font-size: 0.48rem;
+            letter-spacing: 2px;
+            color: rgba(255,238,190,0.86);
+            text-shadow: 0 0 9px rgba(0,0,0,0.95), 0 0 9px rgba(251,191,36,0.25);
+            pointer-events: none;
+            opacity: 0;
+            transition: opacity 0.14s ease;
+        }
+
+        .mini-target:hover .mini-object-label {
+            opacity: 1;
+        }
+
+        .chrono-wing {
+            position: absolute;
+            width: 22px;
+            height: 32px;
+            top: 11px;
+            border-radius: 999px 999px 10px 10px;
+            background:
+                radial-gradient(circle at 40% 25%, rgba(255,255,255,0.34), transparent 32%),
+                linear-gradient(145deg, rgba(255,216,130,0.28), rgba(129,140,248,0.1));
+            border: 1px solid rgba(255,225,160,0.18);
+            z-index: 2;
+            pointer-events: none;
+            animation: chronoWingFlutter 0.42s ease-in-out infinite alternate;
+        }
+
+        .chrono-wing.left { left: -10px; transform-origin: right center; }
+        .chrono-wing.right { right: -10px; transform-origin: left center; animation-delay: -0.14s; }
+
+        .chrono-combo-hud {
+            position: absolute;
+            left: 18px;
+            bottom: 18px;
+            z-index: 7;
+            padding: 10px 14px;
+            border-radius: 999px;
+            border: 1px solid rgba(255,255,255,0.12);
+            background: rgba(0,0,0,0.48);
+            color: rgba(255,238,190,0.9);
+            font-family: monospace;
+            font-size: 0.66rem;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            backdrop-filter: blur(12px);
+            box-shadow: 0 0 24px rgba(251,191,36,0.1);
+            pointer-events: none;
+        }
+
+        .chrono-burst,
+        .chrono-trail {
+            position: absolute;
+            pointer-events: none;
+            z-index: 6;
+        }
+
+        .chrono-burst {
+            width: 9px;
+            height: 9px;
+            border-radius: 999px;
+            background: radial-gradient(circle, rgba(255,245,211,0.96), rgba(251,191,36,0.18) 62%, transparent 74%);
+            box-shadow: 0 0 14px rgba(251,191,36,0.52);
+            animation: chronoBurstFly 680ms ease-out forwards;
+        }
+
+        .chrono-burst.bad {
+            background: radial-gradient(circle, rgba(210,222,255,0.92), rgba(100,116,139,0.2) 62%, transparent 74%);
+            box-shadow: 0 0 14px rgba(100,116,139,0.42);
+        }
+
+        .chrono-trail {
+            width: 28px;
+            height: 28px;
+            border-radius: 999px;
+            border: 1px solid rgba(251,191,36,0.22);
+            background: radial-gradient(circle, rgba(251,191,36,0.12), transparent 68%);
+            box-shadow: 0 0 18px rgba(129,140,248,0.14);
+            animation: chronoTrailFade 760ms ease-out forwards;
+        }
+
+        .chrono-start-flash {
+            position: absolute;
+            inset: 0;
+            z-index: 8;
+            display: grid;
+            place-items: center;
+            pointer-events: none;
+            background: radial-gradient(circle, rgba(255,226,145,0.14), rgba(0,0,0,0.32) 62%, rgba(0,0,0,0.48));
+            color: #ffe8a6;
+            font-family: Georgia, serif;
+            font-size: clamp(1.3rem, 3vw, 2.4rem);
+            letter-spacing: 6px;
+            text-transform: uppercase;
+            text-shadow: 0 0 18px rgba(251,191,36,0.32), 0 0 34px rgba(0,0,0,0.8);
+            animation: chronoFlashOut 1100ms ease-out forwards;
+        }
+
+        @keyframes chronoFieldOrbit {
+            to { transform: rotate(360deg); }
+        }
+
+        @keyframes chronoObjectOrbit {
+            to { transform: rotate(360deg); }
+        }
+
+        @keyframes chronoWingFlutter {
+            from { transform: rotate(-16deg) scaleY(0.96); opacity: 0.76; }
+            to { transform: rotate(18deg) scaleY(1.04); opacity: 1; }
+        }
+
+        @keyframes chronoTargetFloat {
+            from { margin-top: -2px; }
+            to { margin-top: 4px; }
+        }
+
+        @keyframes rareChronoPulse {
+            from { filter: brightness(1) saturate(1); }
+            to { filter: brightness(1.18) saturate(1.22); }
+        }
+
+        @keyframes chronoBurstFly {
+            from { transform: translate(-50%, -50%) scale(0.3); opacity: 1; }
+            to { transform: translate(var(--burst-x), var(--burst-y)) scale(1.28); opacity: 0; }
+        }
+
+        @keyframes chronoTrailFade {
+            from { transform: scale(0.42); opacity: 0.62; }
+            to { transform: scale(1.8); opacity: 0; }
+        }
+
+        @keyframes chronoFlashOut {
+            0% { opacity: 0; transform: scale(0.98); }
+            18% { opacity: 1; transform: scale(1); }
+            100% { opacity: 0; transform: scale(1.04); }
+        }
+
     </style>
 
     <!-- CHRONARIUM V1.10 NOTE: folded editor keeps tabs visible; tab click unfolds selected panel. -->
@@ -2428,10 +2710,10 @@
 
             if(kind==='sort'){
                 title.textContent='Sort Sparks';
-                copy.textContent='Tap the celestial sigils, gear glyphs, and tea charms. Let the storm runes pass.';
+                copy.textContent='Tap moon sparks, sun motes, gear fragments, and hourglass dust. Let the void fizz pass.';
             } else {
                 title.textContent='Catch Ticks';
-                copy.textContent='Catch clockwork moths, golden time keys, hourglass shards, and moonphase coins before they vanish.';
+                copy.textContent='Catch escaped time-creatures, golden keys, hourglass shards, moon coins, and starlit cogs before they vanish.';
             }
 
             if(modal) modal.classList.add('active');
@@ -2558,17 +2840,19 @@
         const chronariumStartMiniGameBase = window.startMiniGame;
 
         const CHRONARIUM_CATCH_OBJECTS = [
-            { key:'clockwork-moth', icon:'🦋', label:'Clockwork Moth', points:1, rarity:0.34, mood:'delighted' },
-            { key:'golden-time-key', icon:'🗝️', label:'Golden Time Key', points:3, rarity:0.14, bonus:true, mood:'delighted' },
-            { key:'hourglass-shard', icon:'⌛', label:'Hourglass Shard', points:2, rarity:0.24, mood:'inspecting' },
-            { key:'moonphase-coin', icon:'🌙', label:'Moonphase Coin', points:2, rarity:0.28, mood:'settled' }
+            { key:'clockwork-tick', icon:'✦', label:'Clockwork Tick', points:1, rarity:0.28, wings:true, mood:'delighted' },
+            { key:'golden-time-key', icon:'🗝️', label:'Golden Time Key', points:4, rarity:0.10, bonus:true, mood:'delighted' },
+            { key:'hourglass-shard', icon:'⌛', label:'Hourglass Shard', points:2, rarity:0.22, mood:'inspecting' },
+            { key:'moonphase-coin', icon:'☾', label:'Moonphase Coin', points:2, rarity:0.22, mood:'settled' },
+            { key:'starlit-cog', icon:'⚙', label:'Starlit Cog', points:3, rarity:0.18, mood:'inspecting' }
         ];
 
         const CHRONARIUM_SORT_OBJECTS = [
-            { key:'celestial-sigil', icon:'☾', label:'Celestial Sigil', good:true, points:2, mood:'settled' },
-            { key:'gear-glyph', icon:'⚙', label:'Gear Glyph', good:true, points:2, mood:'inspecting' },
-            { key:'tea-charm', icon:'☕', label:'Tea Charm', good:true, points:2, mood:'delighted' },
-            { key:'storm-rune', icon:'ϟ', label:'Storm Rune', good:false, points:-2, mood:'startled' }
+            { key:'moon-spark', icon:'☾', label:'Moon Spark', good:true, points:2, mood:'settled' },
+            { key:'sun-mote', icon:'☀', label:'Sun Mote', good:true, points:2, mood:'delighted' },
+            { key:'gear-fragment', icon:'⚙', label:'Gear Fragment', good:true, points:2, mood:'inspecting' },
+            { key:'hourglass-dust', icon:'⌛', label:'Hourglass Dust', good:true, points:3, bonus:true, mood:'inspecting' },
+            { key:'void-fizz', icon:'✧', label:'Void Fizz', good:false, points:-2, mood:'startled' }
         ];
 
         function chooseChronariumObject(pool) {
@@ -2589,7 +2873,9 @@
             target.dataset.good = String(kind !== 'sort' ? true : !!item.good);
 
             target.classList.add(item.good === false ? 'game-bad' : (item.bonus ? 'game-bonus' : 'game-good'));
-            target.innerHTML = `<span aria-hidden="true">${item.icon}</span><span class="mini-object-label">${item.label}</span>`;
+
+            const wingMarkup = item.wings ? '<span class="chrono-wing left"></span><span class="chrono-wing right"></span>' : '';
+            target.innerHTML = `${wingMarkup}<span class="mini-icon" aria-hidden="true">${item.icon}</span><span class="mini-object-label">${item.label}</span>`;
             target.title = item.label;
             target.setAttribute('aria-label', item.label);
         }
@@ -2606,6 +2892,58 @@
             }
         }
 
+        function ensureChronoComboHud(field) {
+            let hud = field.querySelector('.chrono-combo-hud');
+            if (!hud) {
+                hud = document.createElement('div');
+                hud.className = 'chrono-combo-hud';
+                hud.textContent = 'Combo x0';
+                field.appendChild(hud);
+            }
+            return hud;
+        }
+
+        function setChronoComboHud(field, combo) {
+            const hud = ensureChronoComboHud(field);
+            hud.textContent = combo > 1 ? `Combo x${combo}` : 'Combo x0';
+        }
+
+        function chronoBurst(field, x, y, bad = false) {
+            if (!field) return;
+            for (let i = 0; i < 10; i++) {
+                const burst = document.createElement('span');
+                burst.className = `chrono-burst ${bad ? 'bad' : ''}`;
+                const angle = (Math.PI * 2 * i / 10) + Math.random() * 0.35;
+                const dist = 30 + Math.random() * 46;
+                burst.style.left = `${x}px`;
+                burst.style.top = `${y}px`;
+                burst.style.setProperty('--burst-x', `${Math.cos(angle) * dist}px`);
+                burst.style.setProperty('--burst-y', `${Math.sin(angle) * dist}px`);
+                field.appendChild(burst);
+                setTimeout(() => burst.remove(), 760);
+            }
+        }
+
+        function chronoTrail(field, x, y) {
+            if (!field) return;
+            const trail = document.createElement('span');
+            trail.className = 'chrono-trail';
+            trail.style.left = `${x - 14}px`;
+            trail.style.top = `${y - 14}px`;
+            field.appendChild(trail);
+            setTimeout(() => trail.remove(), 820);
+        }
+
+        function chronoStartFlash(field, text) {
+            if (!field) return;
+            const flash = document.createElement('div');
+            flash.className = 'chrono-start-flash';
+            flash.textContent = text;
+            field.appendChild(flash);
+            setTimeout(() => flash.remove(), 1200);
+        }
+
+
         window.startMiniGame = function(kind = 'catch') {
             if (!isChronariumPetUnlocked()) return;
 
@@ -2619,13 +2957,16 @@
             field.classList.toggle('game-sort', kind === 'sort');
             field.innerHTML = '';
             miniGameScore = 0;
-            miniGameTime = 24;
+            miniGameTime = 28;
+            let chronoCombo = 0;
+            setChronoComboHud(field, chronoCombo);
+            chronoStartFlash(field, kind === 'sort' ? 'Sort the Sparks' : 'Catch the Ticks');
             scoreEl.textContent = 'Score: 0';
             timerEl.textContent = 'Time: 24';
             if (miniGameTimer) clearInterval(miniGameTimer);
 
             function spawnHardWave() {
-                const count = kind === 'sort' ? 3 : 2;
+                const count = kind === 'sort' ? (miniGameTime < 12 ? 4 : 3) : (miniGameTime < 12 ? 3 : 2);
                 for (let i = 0; i < count; i++) {
                     const target = document.createElement('button');
                     target.className = 'mini-target';
@@ -2634,7 +2975,7 @@
                     let item;
                     if (kind === 'sort') {
                         const goodPool = CHRONARIUM_SORT_OBJECTS.filter(o => o.good);
-                        item = Math.random() > 0.48
+                        item = Math.random() > 0.46
                             ? goodPool[Math.floor(Math.random() * goodPool.length)]
                             : CHRONARIUM_SORT_OBJECTS.find(o => !o.good);
                     } else {
@@ -2646,27 +2987,39 @@
                     const size = item.bonus ? 50 : (kind === 'sort' ? 42 : 46);
                     target.style.width = size + 'px';
                     target.style.height = size + 'px';
-                    target.style.left = Math.max(4, Math.random() * (field.clientWidth - size - 6)) + 'px';
-                    target.style.top = Math.max(4, Math.random() * (field.clientHeight - size - 22)) + 'px';
+                    target.style.left = Math.max(6, Math.random() * (field.clientWidth - size - 10)) + 'px';
+                    target.style.top = Math.max(8, Math.random() * (field.clientHeight - size - 34)) + 'px';
+                    setTimeout(() => chronoTrail(field, parseFloat(target.style.left) + size / 2, parseFloat(target.style.top) + size / 2), 60);
 
                     target.addEventListener('click', () => {
                         const isGood = target.dataset.good === 'true';
                         const points = Number(target.dataset.points || 1);
+                        const rect = target.getBoundingClientRect();
+                        const fieldRect = field.getBoundingClientRect();
+                        const burstX = rect.left - fieldRect.left + rect.width / 2;
+                        const burstY = rect.top - fieldRect.top + rect.height / 2;
 
                         if (kind === 'sort' && !isGood) {
+                            chronoCombo = 0;
                             miniGameScore = Math.max(0, miniGameScore + points);
+                            chronoBurst(field, burstX, burstY, true);
                         } else {
-                            miniGameScore += Math.max(1, points);
+                            chronoCombo += 1;
+                            const comboBonus = chronoCombo > 0 && chronoCombo % 5 === 0 ? 2 : 0;
+                            miniGameScore += Math.max(1, points) + comboBonus;
                             addChronariumXP(item.bonus ? 2 : 1);
+                            chronoBurst(field, burstX, burstY, false);
+                            if (comboBonus) showChronariumToast(`Combo x${chronoCombo} · +${comboBonus}`, 1100);
                         }
 
+                        setChronoComboHud(field, chronoCombo);
                         tickMiniObjectReaction(item, kind, isGood);
                         scoreEl.textContent = 'Score: ' + miniGameScore;
                         target.remove();
                     });
 
                     field.appendChild(target);
-                    setTimeout(() => target.remove(), item.bonus ? 650 : (kind === 'sort' ? 820 : 900));
+                    setTimeout(() => target.remove(), item.bonus ? 720 : (kind === 'sort' ? 920 : 980));
                 }
             }
 
@@ -2681,11 +3034,11 @@
                     addChronariumXP(Math.max(5, Math.floor(miniGameScore / 2)));
                     if (typeof tickReactToGameFinish === 'function') tickReactToGameFinish(kind, miniGameScore);
                     if (typeof somniaAlert === 'function') {
-                        const label = kind === 'sort' ? 'sigils sorted' : 'time relics caught';
+                        const label = kind === 'sort' ? 'time sparks sorted' : 'escaped ticks caught';
                         somniaAlert('Round Complete', `The Chronarium records ${miniGameScore} ${label}.`);
                     }
                 }
-            }, 850);
+            }, 780);
 
             for (let i = 0; i < 4; i++) setTimeout(spawnHardWave, i * 220);
         };
