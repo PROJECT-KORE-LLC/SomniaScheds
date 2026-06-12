@@ -5,10 +5,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <meta name="description" content="THE CHRONARIUM // A private, offline-first planning chamber.">
     <meta name="theme-color" content="#020204">
-    <meta name="chronarium-build" content="chronarium-v1-6-assets-wired">
+    <meta name="chronarium-build" content="chronarium-v1-8-keeper-lore-initiation">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-    <title>THE CHRONARIUM // ASSETS WIRED</title>
+    <title>THE CHRONARIUM // KEEPER LORE INITIATION</title>
 <style>
         /* ============================================================
            THE CHRONARIUM — COZY CHAOS ENVIRONMENT
@@ -781,6 +781,179 @@
             object-fit: contain !important;
         }
 
+        /* --- CHRONARIUM V1.7: TICK PET LORE BUBBLES --- */
+        .chron-pet {
+            pointer-events: auto !important;
+            cursor: pointer;
+        }
+
+        .tick-lore-bubble {
+            position: absolute;
+            right: 78%;
+            bottom: 78%;
+            width: 240px;
+            max-width: 42vw;
+            padding: 12px 14px;
+            border: 1px solid var(--glass-border);
+            border-radius: 22px 22px 8px 22px;
+            background: rgba(8, 10, 18, 0.72);
+            backdrop-filter: blur(18px);
+            box-shadow: 0 18px 40px rgba(0,0,0,0.45), 0 0 18px var(--primary-glow);
+            color: var(--text-main);
+            font-family: Georgia, serif;
+            font-size: 0.78rem;
+            line-height: 1.45;
+            letter-spacing: 0.3px;
+            opacity: 0;
+            transform: translateY(8px) scale(0.96);
+            pointer-events: none;
+            transition: opacity 0.35s ease, transform 0.35s ease;
+        }
+
+        .tick-lore-bubble::after {
+            content: "";
+            position: absolute;
+            right: 18px;
+            bottom: -8px;
+            width: 14px;
+            height: 14px;
+            transform: rotate(45deg);
+            background: rgba(8, 10, 18, 0.72);
+            border-right: 1px solid var(--glass-border);
+            border-bottom: 1px solid var(--glass-border);
+        }
+
+        .chron-pet.tick-speaking .tick-lore-bubble {
+            opacity: 1;
+            transform: translateY(0) scale(1);
+        }
+
+        .chron-pet.locked .tick-lore-bubble {
+            display: none !important;
+        }
+
+        .chron-pet.tick-nudge img {
+            animation: tick-nudge 0.7s ease both;
+        }
+
+        @keyframes tick-nudge {
+            0%, 100% { transform: rotate(0deg) scale(1); }
+            25% { transform: rotate(-7deg) scale(1.04); }
+            50% { transform: rotate(5deg) scale(1.03); }
+            75% { transform: rotate(-3deg) scale(1.02); }
+        }
+
+        @media (max-width: 767px) {
+            .tick-lore-bubble {
+                right: 0;
+                bottom: 105%;
+                width: 210px;
+                max-width: 72vw;
+                font-size: 0.72rem;
+            }
+        }
+
+        /* --- CHRONARIUM V1.8: KEEPER LORE INITIATION --- */
+        .keeper-lore-bubble {
+            position: absolute;
+            right: 86%;
+            bottom: 64%;
+            width: 285px;
+            max-width: 48vw;
+            padding: 15px 15px 13px;
+            border: 1px solid var(--glass-border);
+            border-radius: 24px 24px 10px 24px;
+            background: rgba(8, 10, 18, 0.78);
+            backdrop-filter: blur(20px);
+            box-shadow: 0 20px 48px rgba(0,0,0,0.52), 0 0 22px var(--primary-glow);
+            opacity: 0;
+            transform: translateY(8px) scale(0.96);
+            pointer-events: none;
+            transition: opacity 0.35s ease, transform 0.35s ease;
+            color: var(--text-main);
+        }
+
+        .keeper-lore-bubble::after {
+            content: "";
+            position: absolute;
+            right: 18px;
+            bottom: -8px;
+            width: 14px;
+            height: 14px;
+            transform: rotate(45deg);
+            background: rgba(8, 10, 18, 0.78);
+            border-right: 1px solid var(--glass-border);
+            border-bottom: 1px solid var(--glass-border);
+        }
+
+        body.keeper-lore-open .keeper-lore-bubble {
+            opacity: 1;
+            transform: translateY(0) scale(1);
+            pointer-events: auto;
+        }
+
+        body.keeper-lore-open .ink-oracle-outer {
+            transform: scale(1.12) translateY(-5px);
+        }
+
+        .keeper-lore-title {
+            color: var(--primary);
+            font-family: monospace;
+            font-size: 0.62rem;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            margin-bottom: 8px;
+            text-shadow: 0 0 10px var(--primary-glow);
+        }
+
+        #keeper-lore-text {
+            font-family: Georgia, serif;
+            font-size: 0.82rem;
+            line-height: 1.48;
+            color: var(--text-main);
+            margin-bottom: 12px;
+            font-style: italic;
+        }
+
+        .keeper-lore-actions {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 7px;
+        }
+
+        .keeper-lore-actions button {
+            border: 1px solid var(--glass-border);
+            border-radius: 999px;
+            background: rgba(0,0,0,0.3);
+            color: var(--primary);
+            font-family: monospace;
+            font-size: 0.55rem;
+            letter-spacing: 1.2px;
+            text-transform: uppercase;
+            padding: 7px 5px;
+            cursor: pointer;
+        }
+
+        .keeper-lore-actions button:hover {
+            border-color: var(--accent);
+            box-shadow: 0 0 12px var(--primary-glow);
+        }
+
+        body.cloaked .keeper-lore-bubble {
+            opacity: 0 !important;
+            pointer-events: none !important;
+        }
+
+        @media (max-width: 767px) {
+            .keeper-lore-bubble {
+                right: 0;
+                bottom: 105%;
+                width: 270px;
+                max-width: 74vw;
+                font-size: 0.72rem;
+            }
+        }
+
     </style>
 
     <!-- CHRONARIUM V1.6 ASSET CHECKLIST
@@ -967,9 +1140,18 @@
 
 
     <!-- Floating Guide Widget: Librarian Oracle. Visible above every screen unless Cloak UI is active. -->
-    <div id="ink-oracle-widget" class="ink-oracle-outer" onclick="openSchedulerOracle(event)" title="Open the Chronarium Keeper">
+    <div id="ink-oracle-widget" class="ink-oracle-outer" onclick="toggleKeeperLore(event)" title="Speak with the Chronarium Keeper">
         <div class="ink-oracle-inner">
             <img src="chronarium_lorekeeper_TRUE_TRANSPARENT.png" alt="The Chronarium Keeper" class="oracle-avatar">
+        </div>
+        <div id="keeper-lore-bubble" class="keeper-lore-bubble" role="status" aria-live="polite">
+            <div class="keeper-lore-title">THE KEEPER</div>
+            <div id="keeper-lore-text">Tap the Keeper for a Chronarium initiation.</div>
+            <div class="keeper-lore-actions">
+                <button type="button" onclick="keeperLoreChoice(event, 'initiation')">Initiation</button>
+                <button type="button" onclick="keeperLoreChoice(event, 'hours')">Hours</button>
+                <button type="button" onclick="keeperLoreChoice(event, 'tick')">Tick</button>
+            </div>
         </div>
     </div>
 
@@ -1045,6 +1227,10 @@
 
     <div id="chron-pet" class="chron-pet locked" title="Tick unlocks after your first planner entry">
         <img src="tick_pet.png" alt="Tick, the clockhand moth">
+    
+        <div id="tick-lore-bubble" class="tick-lore-bubble" role="status" aria-live="polite">
+            <span id="tick-lore-text">Tick is listening to the gears.</span>
+        </div>
     </div>
 
 
@@ -1168,25 +1354,8 @@
         }
 
         function openSchedulerOracle(event) {
-            if (event) event.stopPropagation();
-            if (document.body.classList.contains('cloaked')) return;
-
-            const planner = document.getElementById('planner-modal');
-            if (planner && !planner.classList.contains('active')) {
-                planner.classList.add('active');
-            }
-            document.body.classList.add('oracle-open');
-
-            setTimeout(() => {
-                const aiPrompt = document.getElementById('ai-prompt');
-                const aiPanel = aiPrompt ? aiPrompt.closest('.panel-card') : null;
-                if (aiPanel) {
-                    aiPanel.classList.remove('oracle-focus-pulse');
-                    void aiPanel.offsetWidth;
-                    aiPanel.classList.add('oracle-focus-pulse');
-                }
-                if (aiPrompt) aiPrompt.focus({ preventScroll: true });
-            }, 120);
+            // Legacy hook preserved, but the Keeper is lore-only now.
+            toggleKeeperLore(event);
         }
 
         function updateVar(name, val) { document.documentElement.style.setProperty(name, val); }
@@ -1979,6 +2148,180 @@
 
         document.addEventListener('DOMContentLoaded', () => {
             renderChronariumGameLocks();
+        });
+
+        // --- CHRONARIUM V1.7: TICK LORE BUBBLES ---
+        const TICK_LORE_LINES = [
+            "Tick says: a tiny plan is still a spell.",
+            "The gears whisper that tomorrow is not allowed to bite you today.",
+            "Tick found a loose minute under the desk. It looked lonely.",
+            "The Chronarium prefers anchors over avalanches.",
+            "Tick says the hourglass is dramatic, but the calendar is negotiable.",
+            "One lantern at a time. That is how halls become passable.",
+            "Some tasks are dragons. Some are socks. Label accordingly.",
+            "The Keeper marks this hour as survivable.",
+            "A plan may be small and still be sacred.",
+            "Tick polished the next five minutes. They are ready when you are.",
+            "The old clocks approve of snacks and smaller lists.",
+            "If the day scatters, gather one corner first."
+        ];
+
+        let tickLoreTimer = null;
+        let tickLoreHideTimer = null;
+
+        function isTickVisibleAndUnlocked() {
+            const pet = document.getElementById('chron-pet');
+            return !!pet && !pet.classList.contains('locked');
+        }
+
+        function sayTickLore(line, hold = 5200) {
+            const pet = document.getElementById('chron-pet');
+            const text = document.getElementById('tick-lore-text');
+            if (!pet || !text || !isTickVisibleAndUnlocked()) return;
+
+            text.textContent = line || TICK_LORE_LINES[Math.floor(Math.random() * TICK_LORE_LINES.length)];
+            pet.classList.add('tick-speaking', 'tick-nudge');
+
+            clearTimeout(tickLoreHideTimer);
+            tickLoreHideTimer = setTimeout(() => {
+                pet.classList.remove('tick-speaking');
+            }, hold);
+
+            setTimeout(() => pet.classList.remove('tick-nudge'), 760);
+        }
+
+        function startTickLoreLoop() {
+            clearInterval(tickLoreTimer);
+            tickLoreTimer = setInterval(() => {
+                if (isTickVisibleAndUnlocked() && Math.random() > 0.45) {
+                    sayTickLore();
+                }
+            }, 26000);
+        }
+
+        function wireTickPetClick() {
+            const pet = document.getElementById('chron-pet');
+            if (!pet || pet.dataset.tickLoreWired === 'true') return;
+            pet.dataset.tickLoreWired = 'true';
+            pet.addEventListener('click', (event) => {
+                event.stopPropagation();
+                if (isTickVisibleAndUnlocked()) {
+                    sayTickLore();
+                    try { addChronariumXP(1); } catch(e) {}
+                }
+            });
+        }
+
+        const chronariumUnlockPetBaseV17 = window.unlockChronariumPet;
+        window.unlockChronariumPet = function() {
+            if (typeof chronariumUnlockPetBaseV17 === 'function') chronariumUnlockPetBaseV17();
+            wireTickPetClick();
+            startTickLoreLoop();
+            setTimeout(() => sayTickLore("Tick wakes with a tiny chime: the first anchor has been placed."), 450);
+        };
+
+        const chronariumRenderPetBaseV17 = window.renderChronariumPet;
+        window.renderChronariumPet = function() {
+            if (typeof chronariumRenderPetBaseV17 === 'function') chronariumRenderPetBaseV17();
+            wireTickPetClick();
+            if (isTickVisibleAndUnlocked()) startTickLoreLoop();
+        };
+
+        const chronariumAddManualEventBaseV17 = window.addManualEvent;
+        window.addManualEvent = async function() {
+            const beforeUnlocked = isTickVisibleAndUnlocked();
+            const result = await chronariumAddManualEventBaseV17();
+            if (isTickVisibleAndUnlocked()) {
+                setTimeout(() => {
+                    sayTickLore(beforeUnlocked
+                        ? "Tick pins the new anchor to the map of hours."
+                        : "Tick wakes with a tiny chime: the first anchor has been placed."
+                    );
+                }, 600);
+            }
+            return result;
+        };
+
+        document.addEventListener('DOMContentLoaded', () => {
+            wireTickPetClick();
+            startTickLoreLoop();
+        });
+
+        // --- CHRONARIUM V1.8: KEEPER LORE INITIATION ---
+        const KEEPER_LORE_LINES = {
+            initiation: [
+                "The Keeper lifts a violet hourglass: welcome to the Chronarium. You do not have to master time. You only have to meet the next minute.",
+                "Initiation begins softly: choose one anchor, light one task, leave the rest of the corridor dark until you reach it.",
+                "The first law of this chamber: the day is not a beast to defeat. It is a door to open by inches.",
+                "The Keeper marks your arrival in silver ink. Tiny plans are accepted here. Tiny plans are often the strongest magic."
+            ],
+            hours: [
+                "The hours here do not march. They orbit. Place one thing in the sky and let the rest find gravity.",
+                "A scattered day can still be charted. Start with the nearest bell.",
+                "Some hours are lanterns. Some are fog. The Chronarium keeps both without shame.",
+                "The old calendars say: a blank square is not failure. It is room."
+            ],
+            tick: [
+                "Tick is made of clock-hands, mischief, and one suspiciously brave little minute.",
+                "When Tick wakes, the games wake. This is ancient moth law and should not be questioned.",
+                "Tick steals loose seconds from under the desk and stores them in a thimble.",
+                "If Tick flutters near a task, it means the task is either important or snack-adjacent."
+            ],
+            random: [
+                "The Keeper whispers: return to the city when the room has given what it can.",
+                "A plan is a spell with handles.",
+                "The Chronarium does not demand a perfect future. It asks for one honest marker.",
+                "Your schedule is allowed to be a lantern, not a leash.",
+                "The Keeper has seen whole weeks rescued by one well-placed cup of tea.",
+                "No hour is wasted if it helped you come back to yourself."
+            ]
+        };
+
+        let keeperLoreHideTimer = null;
+
+        function pickKeeperLore(type = 'random') {
+            const pool = KEEPER_LORE_LINES[type] || KEEPER_LORE_LINES.random;
+            return pool[Math.floor(Math.random() * pool.length)];
+        }
+
+        function showKeeperLore(type = 'random', hold = 9000) {
+            const text = document.getElementById('keeper-lore-text');
+            if (!text) return;
+            text.textContent = pickKeeperLore(type);
+            document.body.classList.add('keeper-lore-open');
+            document.body.classList.add('oracle-open');
+
+            clearTimeout(keeperLoreHideTimer);
+            keeperLoreHideTimer = setTimeout(() => {
+                document.body.classList.remove('keeper-lore-open');
+                document.body.classList.remove('oracle-open');
+            }, hold);
+        }
+
+        function toggleKeeperLore(event) {
+            if (event) event.stopPropagation();
+            if (document.body.classList.contains('cloaked')) return;
+            const opening = !document.body.classList.contains('keeper-lore-open');
+            if (opening) {
+                showKeeperLore('initiation');
+                try { addChronariumXP(1); } catch(e) {}
+            } else {
+                document.body.classList.remove('keeper-lore-open');
+                document.body.classList.remove('oracle-open');
+            }
+        }
+
+        function keeperLoreChoice(event, type) {
+            if (event) event.stopPropagation();
+            showKeeperLore(type, 10000);
+            try { addChronariumXP(1); } catch(e) {}
+        }
+
+        document.addEventListener('keydown', (event) => {
+            if (event.key === 'Escape') {
+                document.body.classList.remove('keeper-lore-open');
+                document.body.classList.remove('oracle-open');
+            }
         });
 
     </script>
