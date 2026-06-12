@@ -5,10 +5,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <meta name="description" content="THE CHRONARIUM // A private, offline-first planning chamber.">
     <meta name="theme-color" content="#020204">
-    <meta name="chronarium-build" content="chronarium-v1-17-cloak-hides-tick">
+    <meta name="chronarium-build" content="chronarium-v1-18-better-game-objects">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-    <title>THE CHRONARIUM // CLOAK HIDES TICK</title>
+    <title>THE CHRONARIUM // BETTER GAME OBJECTS</title>
 <style>
         /* ============================================================
            THE CHRONARIUM — COZY CHAOS ENVIRONMENT
@@ -1294,6 +1294,83 @@
         body.cloaked .tick-speaking,
         body.cloaked .keeper-lore-open {
             opacity: 0 !important;
+        }
+
+        /* --- CHRONARIUM V1.18: BETTER MINI-GAME OBJECTS --- */
+        .mini-target {
+            width: 48px;
+            height: 48px;
+            border-radius: 18px;
+            font-size: 1.45rem;
+            font-family: Georgia, serif;
+            transition: transform 0.12s ease, filter 0.12s ease, box-shadow 0.2s ease;
+        }
+
+        .mini-target:hover {
+            transform: scale(1.12) rotate(-3deg);
+            filter: brightness(1.18);
+        }
+
+        .mini-target.game-good {
+            border-color: rgba(255, 229, 160, 0.42);
+            background:
+                radial-gradient(circle at 30% 25%, rgba(255,255,255,0.26), transparent 34%),
+                linear-gradient(135deg, rgba(117, 78, 22, 0.68), rgba(14, 10, 22, 0.62));
+            color: #ffe7a3;
+            box-shadow: 0 0 16px rgba(255, 215, 128, 0.34), inset 0 0 18px rgba(255,255,255,0.04);
+        }
+
+        .mini-target.game-bonus {
+            border-color: rgba(255, 247, 190, 0.72);
+            background:
+                radial-gradient(circle at 35% 24%, rgba(255,255,255,0.38), transparent 36%),
+                linear-gradient(135deg, rgba(214, 164, 60, 0.76), rgba(52, 32, 8, 0.68));
+            color: #fff2b8;
+            box-shadow: 0 0 24px rgba(255, 221, 114, 0.58), inset 0 0 22px rgba(255,255,255,0.07);
+            animation: rare-object-pulse 1s ease-in-out infinite alternate;
+        }
+
+        .mini-target.game-bad {
+            border-color: rgba(130, 137, 158, 0.34);
+            background:
+                radial-gradient(circle at 30% 24%, rgba(255,255,255,0.12), transparent 32%),
+                linear-gradient(135deg, rgba(23, 26, 40, 0.78), rgba(5, 5, 12, 0.74));
+            color: #8f98b8;
+            box-shadow: 0 0 12px rgba(70, 80, 130, 0.28), inset 0 0 16px rgba(255,255,255,0.025);
+        }
+
+        .mini-target[data-object="clockwork-moth"] { border-radius: 999px 999px 18px 18px; }
+        .mini-target[data-object="golden-time-key"] { border-radius: 16px 999px 999px 16px; }
+        .mini-target[data-object="hourglass-shard"] { border-radius: 8px 24px 8px 24px; }
+        .mini-target[data-object="moonphase-coin"] { border-radius: 999px; }
+        .mini-target[data-object="celestial-sigil"] { border-radius: 999px; }
+        .mini-target[data-object="gear-glyph"] { border-radius: 16px; }
+        .mini-target[data-object="tea-charm"] { border-radius: 999px 999px 18px 18px; }
+        .mini-target[data-object="storm-rune"] { border-radius: 12px 28px 12px 28px; }
+
+        @keyframes rare-object-pulse {
+            from { transform: scale(1); }
+            to { transform: scale(1.08) rotate(2deg); }
+        }
+
+        .mini-object-label {
+            position: absolute;
+            left: 50%;
+            top: calc(100% + 4px);
+            transform: translateX(-50%);
+            white-space: nowrap;
+            font-family: monospace;
+            font-size: 0.48rem;
+            letter-spacing: 1px;
+            color: rgba(255,255,255,0.72);
+            text-shadow: 0 0 8px rgba(0,0,0,0.9);
+            pointer-events: none;
+            opacity: 0;
+            transition: opacity 0.14s ease;
+        }
+
+        .mini-target:hover .mini-object-label {
+            opacity: 1;
         }
 
     </style>
@@ -3281,6 +3358,163 @@
                 showChronariumToast(document.fullscreenElement ? 'Full Screen engaged' : 'Full Screen released', 1800);
             }
         });
+
+        // --- CHRONARIUM V1.18: BETTER MINI-GAME OBJECTS ---
+        const CHRONARIUM_CATCH_OBJECTS = [
+            { key:'clockwork-moth', icon:'🦋', label:'Clockwork Moth', points:1, rarity:0.34, mood:'delighted' },
+            { key:'golden-time-key', icon:'🗝️', label:'Golden Time Key', points:3, rarity:0.14, bonus:true, mood:'delighted' },
+            { key:'hourglass-shard', icon:'⌛', label:'Hourglass Shard', points:2, rarity:0.24, mood:'inspecting' },
+            { key:'moonphase-coin', icon:'🌙', label:'Moonphase Coin', points:2, rarity:0.28, mood:'settled' }
+        ];
+
+        const CHRONARIUM_SORT_OBJECTS = [
+            { key:'celestial-sigil', icon:'☾', label:'Celestial Sigil', good:true, points:2, mood:'settled' },
+            { key:'gear-glyph', icon:'⚙', label:'Gear Glyph', good:true, points:2, mood:'inspecting' },
+            { key:'tea-charm', icon:'☕', label:'Tea Charm', good:true, points:2, mood:'delighted' },
+            { key:'storm-rune', icon:'ϟ', label:'Storm Rune', good:false, points:-2, mood:'startled' }
+        ];
+
+        function chooseChronariumObject(pool) {
+            const roll = Math.random();
+            let acc = 0;
+            for (const item of pool) {
+                acc += item.rarity || (1 / pool.length);
+                if (roll <= acc) return item;
+            }
+            return pool[pool.length - 1];
+        }
+
+        function decorateMiniTarget(target, item, kind) {
+            target.dataset.object = item.key;
+            target.dataset.label = item.label;
+            target.dataset.points = String(item.points || 1);
+            target.dataset.mood = item.mood || 'inspecting';
+            target.dataset.good = String(kind !== 'sort' ? true : !!item.good);
+            target.classList.add((item.good === false) ? 'game-bad' : (item.bonus ? 'game-bonus' : 'game-good'));
+            target.innerHTML = `<span aria-hidden="true">${item.icon}</span><span class="mini-object-label">${item.label}</span>`;
+            target.title = item.label;
+            target.setAttribute('aria-label', item.label);
+        }
+
+        function tickMiniObjectReaction(item, kind, wasGood) {
+            if (!item || !tickIsAvailableForReaction()) return;
+
+            const mood = wasGood ? (item.mood || 'delighted') : 'startled';
+            if (typeof animateTickReaction === 'function') animateTickReaction(mood);
+
+            const rareLine = item.bonus
+                ? `Tick squeaks: ${item.label}! That one still has gold time stuck to it.`
+                : null;
+
+            if (rareLine) {
+                if (typeof forceTickLore === 'function') forceTickLore(rareLine, 4300);
+                else if (typeof sayTickLore === 'function') sayTickLore(rareLine, 4300, true);
+            }
+        }
+
+        const chronariumBetterObjectsStartBaseV118 = window.startMiniGame;
+        window.startMiniGame = function(kind = 'catch') {
+            if (typeof isChronariumPetUnlocked === 'function' && !isChronariumPetUnlocked()) return;
+
+            const field = document.getElementById('mini-game-field');
+            const scoreEl = document.getElementById('mini-score');
+            const timerEl = document.getElementById('mini-timer');
+            if (!field || !scoreEl || !timerEl) return chronariumBetterObjectsStartBaseV118(kind);
+
+            window.currentMiniGameKind = kind;
+            field.classList.toggle('game-catch', kind === 'catch');
+            field.classList.toggle('game-sort', kind === 'sort');
+            field.innerHTML = '';
+            miniGameScore = 0;
+            miniGameTime = 24;
+            scoreEl.textContent = 'Score: 0';
+            timerEl.textContent = 'Time: 24';
+            if (miniGameTimer) clearInterval(miniGameTimer);
+
+            function spawnBetterWave() {
+                const count = kind === 'sort' ? 3 : 2;
+
+                for (let i = 0; i < count; i++) {
+                    const target = document.createElement('button');
+                    target.className = 'mini-target';
+                    target.type = 'button';
+
+                    let item;
+                    if (kind === 'sort') {
+                        const sortPool = CHRONARIUM_SORT_OBJECTS;
+                        item = Math.random() > 0.52
+                            ? sortPool[Math.floor(Math.random() * 3)]
+                            : sortPool[3];
+                    } else {
+                        item = chooseChronariumObject(CHRONARIUM_CATCH_OBJECTS);
+                    }
+
+                    decorateMiniTarget(target, item, kind);
+
+                    const size = item.bonus ? 50 : (kind === 'sort' ? 42 : 46);
+                    target.style.width = size + 'px';
+                    target.style.height = size + 'px';
+                    target.style.left = Math.max(4, Math.random() * (field.clientWidth - size - 6)) + 'px';
+                    target.style.top = Math.max(4, Math.random() * (field.clientHeight - size - 22)) + 'px';
+
+                    target.addEventListener('click', () => {
+                        const isGood = target.dataset.good === 'true';
+                        const points = Number(target.dataset.points || 1);
+
+                        if (kind === 'sort' && !isGood) {
+                            miniGameScore = Math.max(0, miniGameScore + points);
+                        } else {
+                            miniGameScore += Math.max(1, points);
+                            addChronariumXP(item.bonus ? 2 : 1);
+                        }
+
+                        tickMiniObjectReaction(item, kind, isGood);
+                        scoreEl.textContent = 'Score: ' + miniGameScore;
+                        target.remove();
+                    });
+
+                    field.appendChild(target);
+                    setTimeout(() => target.remove(), item.bonus ? 650 : (kind === 'sort' ? 820 : 900));
+                }
+            }
+
+            miniGameTimer = setInterval(() => {
+                miniGameTime -= 1;
+                timerEl.textContent = 'Time: ' + miniGameTime;
+                spawnBetterWave();
+
+                if (miniGameTime <= 0) {
+                    clearInterval(miniGameTimer);
+                    miniGameTimer = null;
+                    addChronariumXP(Math.max(5, Math.floor(miniGameScore / 2)));
+                    if (typeof tickReactToGameFinish === 'function') tickReactToGameFinish(kind, miniGameScore);
+                    if (typeof somniaAlert === 'function') {
+                        const label = kind === 'sort' ? 'sigils sorted' : 'time relics caught';
+                        somniaAlert('Round Complete', `The Chronarium records ${miniGameScore} ${label}.`);
+                    }
+                }
+            }, 850);
+
+            for (let i = 0; i < 4; i++) setTimeout(spawnBetterWave, i * 220);
+        };
+
+        const chronariumBetterObjectsOpenBaseV118 = window.openMiniGame;
+        window.openMiniGame = function(kind) {
+            const modal = document.getElementById('mini-game-modal');
+            const title = document.getElementById('mini-game-title');
+            const copy = document.getElementById('mini-game-copy');
+
+            if (kind === 'sort') {
+                if (title) title.textContent = 'Sort Sparks';
+                if (copy) copy.textContent = 'Tap the celestial sigils, gear glyphs, and tea charms. Let the storm runes pass.';
+            } else {
+                if (title) title.textContent = 'Catch Ticks';
+                if (copy) copy.textContent = 'Catch clockwork moths, golden time keys, hourglass shards, and moonphase coins before they vanish.';
+            }
+
+            if (modal) modal.classList.add('active');
+            window.startMiniGame(kind);
+        };
 
     </script>
 </body>
