@@ -5,10 +5,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <meta name="description" content="THE CHRONARIUM // A private, offline-first planning chamber.">
     <meta name="theme-color" content="#020204">
-    <meta name="chronarium-build" content="chronarium-v1-16-fullscreen-tick-atmosphere-lore">
+    <meta name="chronarium-build" content="chronarium-v1-17-cloak-hides-tick">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-    <title>THE CHRONARIUM // FULL SCREEN + TICK LORE</title>
+    <title>THE CHRONARIUM // CLOAK HIDES TICK</title>
 <style>
         /* ============================================================
            THE CHRONARIUM — COZY CHAOS ENVIRONMENT
@@ -1275,6 +1275,27 @@
             bottom: 34px;
         }
 
+        /* --- CHRONARIUM V1.17: CLOAK HIDES TICK TOO --- */
+        body.cloaked .chron-pet,
+        body.cloaked #chron-pet,
+        body.cloaked .tick-lore-bubble,
+        body.cloaked #tick-lore-bubble,
+        body.cloaked .tick-reaction-spark,
+        body.cloaked .chronarium-toast {
+            opacity: 0 !important;
+            pointer-events: none !important;
+            visibility: hidden !important;
+        }
+
+        body.cloaked #chron-pet {
+            display: none !important;
+        }
+
+        body.cloaked .tick-speaking,
+        body.cloaked .keeper-lore-open {
+            opacity: 0 !important;
+        }
+
     </style>
 
     <!-- CHRONARIUM V1.10 NOTE: folded editor keeps tabs visible; tab click unfolds selected panel. -->
@@ -1676,7 +1697,19 @@
             document.getElementById(tabId).classList.add('active');
         }
 
-        function toggleCloak() { document.body.classList.toggle('cloaked'); }
+        function toggleCloak() {
+            document.body.classList.toggle('cloaked');
+            if (document.body.classList.contains('cloaked')) {
+                const pet = document.getElementById('chron-pet');
+                if (pet) {
+                    pet.classList.remove('tick-speaking', 'tick-arriving', 'tick-click-react', 'tick-startled', 'tick-delighted', 'tick-inspecting', 'tick-settled');
+                }
+                document.body.classList.remove('keeper-lore-open', 'oracle-open');
+                document.querySelectorAll('.tick-reaction-spark').forEach(spark => spark.remove());
+                const toast = document.getElementById('chronarium-toast');
+                if (toast) toast.classList.remove('show');
+            }
+        }
         function restoreUI() { document.body.classList.remove('cloaked'); }
         function toggleModal(modalId) {
             const modal = document.getElementById(modalId);
