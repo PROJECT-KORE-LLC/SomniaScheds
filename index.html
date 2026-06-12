@@ -5,10 +5,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <meta name="description" content="THE CHRONARIUM // A private, offline-first planning chamber.">
     <meta name="theme-color" content="#020204">
-    <meta name="chronarium-build" content="chronarium-v1-14-tick-reactive-presets">
+    <meta name="chronarium-build" content="chronarium-v1-15-tick-responsive-presets-games">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-    <title>THE CHRONARIUM // TICK REACTIVE PRESETS</title>
+    <title>THE CHRONARIUM // TICK RESPONSIVE PRESETS GAMES</title>
 <style>
         /* ============================================================
            THE CHRONARIUM — COZY CHAOS ENVIRONMENT
@@ -1227,6 +1227,41 @@
             }
         }
 
+        /* --- CHRONARIUM V1.15: TICK RESPONSIVE + PRESET/GAME TOASTS --- */
+        .chronarium-toast {
+            position: fixed;
+            left: 50%;
+            bottom: 28px;
+            transform: translateX(-50%) translateY(14px);
+            z-index: 9800;
+            min-width: min(420px, 88vw);
+            max-width: min(620px, 92vw);
+            padding: 14px 18px;
+            border: 1px solid var(--glass-border);
+            border-radius: 999px;
+            background: rgba(8, 10, 18, 0.76);
+            backdrop-filter: blur(18px);
+            color: var(--primary);
+            font-family: monospace;
+            font-size: 0.72rem;
+            letter-spacing: 1.8px;
+            text-transform: uppercase;
+            text-align: center;
+            box-shadow: 0 18px 46px rgba(0,0,0,0.5), 0 0 18px var(--primary-glow);
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.32s ease, transform 0.32s ease;
+        }
+
+        .chronarium-toast.show {
+            opacity: 1;
+            transform: translateX(-50%) translateY(0);
+        }
+
+        .chron-pet.tick-click-react img {
+            animation: tick-click-react 0.72s ease both !important;
+        }
+
     </style>
 
     <!-- CHRONARIUM V1.10 NOTE: folded editor keeps tabs visible; tab click unfolds selected panel. -->
@@ -1274,6 +1309,7 @@
     <div id="bg-anchor"></div>
     <div id="glow-layer" class="glow-pulse"></div>
     <canvas id="particleCanvas"></canvas>
+    <div id="chronarium-toast" class="chronarium-toast" role="status" aria-live="polite"></div>
 
     <div id="ui-wrapper">
         <div class="nav-logo">THE CHRONARIUM</div>
@@ -2205,14 +2241,14 @@
         }
 
         const CHRONARIUM_PRESETS = [
-            { name:'Dawn Ledger', file:'scheds1.png', mode:'vellum-mode', glow:'glow-breathe' , reaction:'delighted', tickLine:'Tick warms her wings in the dawn ledger light.'},
-            { name:'Rainy Agenda', file:'scheds2.png', mode:'lunar-mode', glow:'glow-pulse' , reaction:'settled', tickLine:'Tick taps the glass: rain makes the hours easier to stack.'},
-            { name:'Moon Calendar', file:'scheds3.png', mode:'twilight-mode', glow:'glow-halo' , reaction:'inspecting', tickLine:'Tick consults the moon and pretends this was her idea.'},
-            { name:'Tea & Tasks', file:'scheds4.png', mode:'library-mode', glow:'glow-flicker' , reaction:'delighted', tickLine:'Tick approves of tea-adjacent planning. Strongly.'},
-            { name:'Storm Desk', file:'scheds5.png', mode:'obsidian-mode', glow:'glow-scanner' , reaction:'startled', tickLine:'Tick jumps at the thunder, then bravely supervises.'},
-            { name:'Velvet Week', file:'acheds6.png', fallback: 'scheds6.png', mode:'amethyst-mode', glow:'glow-nebula' , reaction:'settled', tickLine:'Tick settles into the velvet hush between appointments.'},
-            { name:'Clockwork Garden', file:'scheds7.png', mode:'emerald-mode', glow:'glow-ripple' , reaction:'inspecting', tickLine:'Tick inspects the clockwork garden like a tiny foreman.'},
-            { name:'Quiet Midnight', file:'scheds8.png', mode:'void-mode', glow:'glow-phantom' , reaction:'settled', tickLine:'Tick dims her lantern and walks softly through midnight.'},
+            { name:'Dawn Ledger', file:'scheds1.png', mode:'vellum-mode', glow:'glow-breathe', reaction:'delighted', tickLine:'Tick warms her wings in the dawn ledger light.' },
+            { name:'Quiet Midnight', file:'scheds2.png', mode:'void-mode', glow:'glow-phantom', reaction:'settled', tickLine:'Tick dims her lantern and walks softly through midnight.' },
+            { name:'Clockwork Garden', file:'scheds3.png', mode:'emerald-mode', glow:'glow-ripple', reaction:'inspecting', tickLine:'Tick inspects the clockwork garden like a tiny foreman.' },
+            { name:'Velvet Week', file:'scheds4.png', mode:'amethyst-mode', glow:'glow-nebula', reaction:'settled', tickLine:'Tick settles into the velvet hush between appointments.' },
+            { name:'Storm Desk', file:'scheds5.png', mode:'obsidian-mode', glow:'glow-scanner', reaction:'startled', tickLine:'Tick jumps at the thunder, then bravely supervises.' },
+            { name:'Tea and Tasks', file:'acheds6.png', fallback: 'scheds6.png', mode:'library-mode', glow:'glow-flicker', reaction:'delighted', tickLine:'Tick approves of tea-adjacent planning. Strongly.' },
+            { name:'Moon Calendar', file:'scheds7.png', mode:'twilight-mode', glow:'glow-halo', reaction:'inspecting', tickLine:'Tick consults the moon and pretends this was her idea.' },
+            { name:'Rainy Agenda', file:'scheds8.png', mode:'lunar-mode', glow:'glow-pulse', reaction:'settled', tickLine:'Tick taps the glass: rain makes the hours easier to stack.' },
         ];
 
         function renderChronariumPresets() {
@@ -2238,6 +2274,7 @@
                     applyMode(preset.mode);
                     applyGlow(preset.glow);
                     addChronariumXP(3);
+                    showChronariumToast(`Preset changed: ${preset.name}`);
                     reactTickToPreset(preset);
                     saveCurrentState();
                 });
@@ -2491,13 +2528,7 @@
             pet.addEventListener('click', (event) => {
                 event.stopPropagation();
                 if (isTickVisibleAndUnlocked()) {
-                    sayTickLore();
-                    try {
-                        if (!window.__tickClickXpAt || Date.now() - window.__tickClickXpAt > 30000) {
-                            window.__tickClickXpAt = Date.now();
-                            addChronariumXP(1);
-                        }
-                    } catch(e) {}
+                    // v1.15 handles visible click reaction, speech, XP, and movement in the capture listener.
                 }
             });
         }
@@ -3021,6 +3052,126 @@
                     animateTickReaction('click');
                 }
             }, true);
+        };
+
+        document.addEventListener('DOMContentLoaded', () => {
+            if (typeof wireTickPetClick === 'function') wireTickPetClick();
+        });
+
+        // --- CHRONARIUM V1.15: TICK CLICK MOVES + PRESET/GAME REACTIONS ---
+        function showChronariumToast(message, hold = 2700) {
+            const toast = document.getElementById('chronarium-toast');
+            if (!toast) return;
+            toast.textContent = message;
+            toast.classList.add('show');
+            clearTimeout(window.__chronariumToastTimer);
+            window.__chronariumToastTimer = setTimeout(() => toast.classList.remove('show'), hold);
+        }
+
+        function moveTickAwayFromWork() {
+            if (!tickIsAvailableForReaction()) return;
+            if (typeof moveTickAroundPage === 'function') {
+                moveTickAroundPage(true);
+            } else if (typeof randomTickPosition === 'function') {
+                randomTickPosition();
+            }
+        }
+
+        const tickClickMoveLines = [
+            "Tick scoots aside. Productivity may pass.",
+            "Tick flutters out of the way with suspicious dignity.",
+            "Tick says: clear path, tiny mortal.",
+            "Tick relocates the moth department immediately.",
+            "Tick moves. The schedule is now unobstructed.",
+            "Tick heard productivity approaching and fled politely."
+        ];
+
+        function tickClickMoveAndSpeak() {
+            if (!tickIsAvailableForReaction()) return;
+
+            animateTickReaction('click');
+            moveTickAwayFromWork();
+
+            const line = tickClickMoveLines[Math.floor(Math.random() * tickClickMoveLines.length)];
+            if (typeof forceTickLore === 'function') forceTickLore(line, 4400);
+            else if (typeof sayTickLore === 'function') sayTickLore(line, 4400, true);
+
+            try {
+                if (!window.__tickClickXpAt || Date.now() - window.__tickClickXpAt > 30000) {
+                    window.__tickClickXpAt = Date.now();
+                    addChronariumXP(1);
+                }
+            } catch(e) {}
+        }
+
+        // Override the existing click wiring so one click = visible reaction + speech + relocation.
+        const tickClickMoveWireBaseV115 = window.wireTickPetClick;
+        window.wireTickPetClick = function() {
+            if (typeof tickClickMoveWireBaseV115 === 'function') tickClickMoveWireBaseV115();
+
+            const pet = document.getElementById('chron-pet');
+            if (!pet || pet.dataset.tickClickMoveWired === 'true') return;
+            pet.dataset.tickClickMoveWired = 'true';
+
+            pet.addEventListener('click', (event) => {
+                event.stopPropagation();
+                if (!tickIsAvailableForReaction()) return;
+                tickClickMoveAndSpeak();
+            }, true);
+        };
+
+        // Stronger preset reaction: toast + animation + movement + forced line.
+        const reactTickToPresetBaseV115 = window.reactTickToPreset;
+        window.reactTickToPreset = function(preset) {
+            if (!preset) return;
+
+            showChronariumToast(`Preset changed: ${preset.name}`);
+
+            if (!tickIsAvailableForReaction()) return;
+
+            const reaction = preset.reaction || 'settled';
+            animateTickReaction(reaction);
+
+            setTimeout(() => moveTickAwayFromWork(), 360);
+
+            const line = preset.tickLine || `Tick tastes the air. ${preset.name} has taken hold.`;
+            setTimeout(() => {
+                if (typeof forceTickLore === 'function') forceTickLore(line, 5600);
+                else if (typeof sayTickLore === 'function') sayTickLore(line, 5600, true);
+            }, 650);
+        };
+
+        // Game reactions: Tick responds when games open and when rounds finish.
+        const tickGameOpenBaseV115 = window.openMiniGame;
+        window.openMiniGame = function(kind) {
+            const wasUnlocked = typeof isChronariumPetUnlocked === 'function' ? isChronariumPetUnlocked() : tickIsAvailableForReaction();
+            const result = tickGameOpenBaseV115(kind);
+
+            if (wasUnlocked && tickIsAvailableForReaction()) {
+                const gameName = kind === 'sort' ? 'Sort Sparks' : 'Catch Ticks';
+                showChronariumToast(`${gameName} awakened`);
+
+                const line = kind === 'sort'
+                    ? "Tick sharpens her tiny spectacles. Sparks require judgment."
+                    : "Tick stretches all six imaginary ankles. The chase begins.";
+
+                animateTickReaction(kind === 'sort' ? 'inspecting' : 'delighted');
+                setTimeout(() => {
+                    if (typeof forceTickLore === 'function') forceTickLore(line, 5000);
+                    else if (typeof sayTickLore === 'function') sayTickLore(line, 5000, true);
+                }, 420);
+            }
+
+            return result;
+        };
+
+        const tickGameStartBaseV115 = window.startMiniGame;
+        window.startMiniGame = function(kind = 'catch') {
+            if (tickIsAvailableForReaction()) {
+                animateTickReaction(kind === 'sort' ? 'inspecting' : 'delighted');
+                moveTickAwayFromWork();
+            }
+            return tickGameStartBaseV115(kind);
         };
 
         document.addEventListener('DOMContentLoaded', () => {
