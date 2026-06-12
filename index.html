@@ -5,10 +5,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <meta name="description" content="THE CHRONARIUM // A private, offline-first planning chamber.">
     <meta name="theme-color" content="#020204">
-    <meta name="chronarium-build" content="chronarium-v1-10-folded-tabs-visible">
+    <meta name="chronarium-build" content="chronarium-v1-11-tick-roams-page">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-    <title>THE CHRONARIUM // FOLDED TABS VISIBLE</title>
+    <title>THE CHRONARIUM // TICK ROAMS PAGE</title>
 <style>
         /* ============================================================
            THE CHRONARIUM — COZY CHAOS ENVIRONMENT
@@ -1032,6 +1032,64 @@
 
         #maker-panel.editor-collapsed #editor-collapse-toggle {
             margin-bottom: 12px !important;
+        }
+
+        /* --- CHRONARIUM V1.11: TICK ROAMS THE WHOLE PAGE --- */
+        .chron-pet {
+            left: var(--tick-left, 42vw) !important;
+            top: var(--tick-top, auto) !important;
+            bottom: auto !important;
+            transform: translate3d(0,0,0);
+            transition:
+                left 2.2s cubic-bezier(0.25, 1, 0.5, 1),
+                top 2.2s cubic-bezier(0.25, 1, 0.5, 1),
+                opacity 0.75s ease,
+                filter 0.4s ease !important;
+            will-change: left, top, opacity, filter, transform;
+        }
+
+        .chron-pet.unlocked {
+            animation: tick-page-hover 4.8s ease-in-out infinite alternate, tick-wing-shimmer 1.25s ease-in-out infinite !important;
+        }
+
+        .chron-pet.tick-crossing img {
+            animation: tick-crossing-flutter 1.25s ease both !important;
+        }
+
+        @keyframes tick-page-hover {
+            0% { transform: translate3d(0,0,0) rotate(-1deg); }
+            100% { transform: translate3d(0,-16px,0) rotate(1.5deg); }
+        }
+
+        @keyframes tick-crossing-flutter {
+            0%, 100% { transform: translateY(0) rotate(0deg) scale(1); }
+            16% { transform: translateY(-17px) rotate(-10deg) scale(1.05); }
+            32% { transform: translateY(6px) rotate(8deg) scale(0.98); }
+            52% { transform: translateY(-13px) rotate(-6deg) scale(1.04); }
+            74% { transform: translateY(4px) rotate(5deg) scale(1); }
+        }
+
+        .chron-pet.tick-vanished {
+            opacity: 0 !important;
+            pointer-events: none !important;
+            filter: blur(2px) drop-shadow(0 0 4px var(--primary-glow)) !important;
+        }
+
+        @media (max-width: 767px) {
+            .chron-pet {
+                width: 82px !important;
+                height: 82px !important;
+            }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            .chron-pet {
+                transition: opacity 0.35s ease !important;
+            }
+            .chron-pet.unlocked,
+            .chron-pet.tick-crossing img {
+                animation: none !important;
+            }
         }
 
     </style>
@@ -2535,6 +2593,131 @@
                 setTimeout(randomTickPosition, 1000);
                 startTickFlutterLoop();
             }
+        });
+
+        // --- CHRONARIUM V1.11: TICK ROAMS THE WHOLE PAGE ---
+        let tickRoamTimer = null;
+        let tickRoamVanishTimer = null;
+
+        function tickCanRoamPage() {
+            const pet = document.getElementById('chron-pet');
+            return !!pet && pet.classList.contains('unlocked') && !pet.classList.contains('locked');
+        }
+
+        function getRoamPoint() {
+            const vw = Math.max(document.documentElement.clientWidth || 0, window.innerWidth || 0);
+            const vh = Math.max(document.documentElement.clientHeight || 0, window.innerHeight || 0);
+            const pet = document.getElementById('chron-pet');
+            const petW = pet ? (pet.offsetWidth || 98) : 98;
+            const petH = pet ? (pet.offsetHeight || 98) : 98;
+
+            // Page-wide flight lanes. These keep Tick away from the very edge but let him roam high, low, left, right.
+            const lanes = [
+                { xMin: 22, xMax: vw - petW - 26, yMin: 92, yMax: Math.max(120, vh * 0.34) },
+                { xMin: 22, xMax: vw - petW - 26, yMin: Math.max(110, vh * 0.34), yMax: Math.max(150, vh * 0.62) },
+                { xMin: 22, xMax: vw - petW - 26, yMin: Math.max(160, vh * 0.62), yMax: vh - petH - 32 }
+            ];
+
+            const lane = lanes[Math.floor(Math.random() * lanes.length)];
+            const xMin = Math.max(16, lane.xMin);
+            const xMax = Math.max(xMin, lane.xMax);
+            const yMin = Math.max(72, lane.yMin);
+            const yMax = Math.max(yMin, lane.yMax);
+
+            return {
+                x: Math.round(xMin + Math.random() * (xMax - xMin)),
+                y: Math.round(yMin + Math.random() * (yMax - yMin))
+            };
+        }
+
+        function moveTickAroundPage(withHop = true) {
+            const pet = document.getElementById('chron-pet');
+            if (!pet || !tickCanRoamPage()) return;
+
+            const point = getRoamPoint();
+            pet.style.setProperty('--tick-left', `${point.x}px`);
+            pet.style.setProperty('--tick-top', `${point.y}px`);
+            pet.style.removeProperty('--tick-bottom');
+
+            if (withHop) {
+                pet.classList.remove('tick-crossing', 'tick-flutter-hop');
+                void pet.offsetWidth;
+                pet.classList.add('tick-crossing');
+                setTimeout(() => pet.classList.remove('tick-crossing'), 1350);
+            }
+        }
+
+        function vanishTickThenRoamBack() {
+            const pet = document.getElementById('chron-pet');
+            if (!pet || !tickCanRoamPage()) return;
+
+            pet.classList.add('tick-vanished');
+            pet.classList.remove('tick-speaking');
+
+            clearTimeout(tickRoamVanishTimer);
+            tickRoamVanishTimer = setTimeout(() => {
+                moveTickAroundPage(false);
+                pet.classList.remove('tick-vanished');
+                pet.classList.add('tick-arriving');
+                setTimeout(() => pet.classList.remove('tick-arriving'), 900);
+
+                const lines = [
+                    "Tick reappears from the margin of the hour.",
+                    "Tick zipped behind the calendar and came back smug.",
+                    "A clockhand moth should never be trusted with shortcuts.",
+                    "Tick returns with lint, lore, and a suspicious minute."
+                ];
+                setTimeout(() => sayTickLore(lines[Math.floor(Math.random() * lines.length)], 4300), 650);
+            }, 1600 + Math.random() * 2100);
+        }
+
+        function startTickPageRoam() {
+            clearInterval(tickRoamTimer);
+            if (!tickCanRoamPage()) return;
+
+            moveTickAroundPage(false);
+
+            tickRoamTimer = setInterval(() => {
+                if (!tickCanRoamPage()) return;
+
+                if (Math.random() < 0.28) {
+                    vanishTickThenRoamBack();
+                } else {
+                    moveTickAroundPage(true);
+                    if (Math.random() < 0.34) {
+                        setTimeout(() => sayTickLore(), 900);
+                    }
+                }
+            }, 6500);
+        }
+
+        const tickRoamUnlockBaseV111 = window.unlockChronariumPet;
+        window.unlockChronariumPet = function() {
+            if (typeof tickRoamUnlockBaseV111 === 'function') tickRoamUnlockBaseV111();
+            setTimeout(() => {
+                startTickPageRoam();
+                sayTickLore("Tick is loose in the Chronarium. The margins are no longer safe.", 5200);
+            }, 950);
+        };
+
+        const tickRoamRenderBaseV111 = window.renderChronariumPet;
+        window.renderChronariumPet = function() {
+            if (typeof tickRoamRenderBaseV111 === 'function') tickRoamRenderBaseV111();
+            const pet = document.getElementById('chron-pet');
+            if (pet && tickCanRoamPage()) {
+                pet.classList.remove('tick-vanished');
+                startTickPageRoam();
+            }
+        };
+
+        window.addEventListener('resize', () => {
+            if (tickCanRoamPage()) moveTickAroundPage(false);
+        });
+
+        document.addEventListener('DOMContentLoaded', () => {
+            setTimeout(() => {
+                if (tickCanRoamPage()) startTickPageRoam();
+            }, 900);
         });
 
     </script>
