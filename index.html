@@ -5,10 +5,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <meta name="description" content="THE CHRONARIUM // A private, offline-first planning chamber.">
     <meta name="theme-color" content="#020204">
-    <meta name="chronarium-build" content="chronarium-v1-19-game-objects-fixed">
+    <meta name="chronarium-build" content="chronarium-v1-23-games-hard-fix">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-    <title>THE CHRONARIUM // GAME OBJECTS FIXED</title>
+    <title>THE CHRONARIUM // GAMES HARD FIX</title>
 <style>
         /* ============================================================
            THE CHRONARIUM — COZY CHAOS ENVIRONMENT
@@ -1380,6 +1380,28 @@
 
         .mini-target:hover .mini-object-label {
             opacity: 1;
+        }
+
+        /* --- CHRONARIUM V1.23: GAMES HARD FIX --- */
+        #tab-vault .vault-game-card.locked-game,
+        #tab-vault .vault-game-card.unlocked-game {
+            opacity: 1 !important;
+            filter: none !important;
+            cursor: pointer !important;
+            pointer-events: auto !important;
+        }
+
+        #tab-vault .vault-game-card .lock-icon {
+            opacity: 0.75;
+        }
+
+        .mini-target {
+            pointer-events: auto !important;
+            z-index: 50 !important;
+        }
+
+        #mini-game-field .mini-target {
+            position: absolute !important;
         }
 
     </style>
@@ -3449,5 +3471,238 @@
         });
 
     </script>
+
+<script>
+/* === CHRONARIUM V1.23: GAMES HARD FIX / NO SILENT LOCK FAIL === */
+(function () {
+    const GAME_UNLOCK_FORCE_KEY = 'chronarium_pet_unlocked';
+
+    function forceUnlockChronariumGames() {
+        try { localStorage.setItem(GAME_UNLOCK_FORCE_KEY, '1'); } catch(e) {}
+        try { window[GAME_UNLOCK_FORCE_KEY] = '1'; } catch(e) {}
+
+        document.querySelectorAll('[data-game-lock="true"]').forEach(btn => {
+            btn.classList.remove('locked-game');
+            btn.classList.add('unlocked-game');
+            btn.title = 'Play Chronarium game';
+            const icon = btn.querySelector('.lock-icon');
+            if (icon) icon.textContent = '🔓';
+        });
+
+        const pet = document.getElementById('chron-pet');
+        if (pet) {
+            pet.classList.remove('locked');
+            pet.classList.add('unlocked');
+        }
+    }
+
+    function getChronariumGameEls() {
+        return {
+            modal: document.getElementById('mini-game-modal'),
+            title: document.getElementById('mini-game-title'),
+            copy: document.getElementById('mini-game-copy'),
+            field: document.getElementById('mini-game-field'),
+            score: document.getElementById('mini-score'),
+            timer: document.getElementById('mini-timer')
+        };
+    }
+
+    function clearChronariumGameTimer() {
+        if (window.miniGameTimer) {
+            clearInterval(window.miniGameTimer);
+            window.miniGameTimer = null;
+        }
+
+        // Also clear closure timer if the original code used a local variable exposed by old handlers.
+        try {
+            if (typeof miniGameTimer !== 'undefined' && miniGameTimer) {
+                clearInterval(miniGameTimer);
+                miniGameTimer = null;
+            }
+        } catch(e) {}
+    }
+
+    const CATCH_OBJECTS_SAFE = [
+        { icon: '🦋', label: 'Clockwork Moth', points: 1, cls: 'game-good' },
+        { icon: '🗝️', label: 'Golden Time Key', points: 3, cls: 'game-bonus', rare: true },
+        { icon: '⌛', label: 'Hourglass Shard', points: 2, cls: 'game-good' },
+        { icon: '🌙', label: 'Moonphase Coin', points: 2, cls: 'game-good' }
+    ];
+
+    const SORT_OBJECTS_SAFE = [
+        { icon: '☾', label: 'Celestial Sigil', points: 2, good: true, cls: 'game-good' },
+        { icon: '⚙', label: 'Gear Glyph', points: 2, good: true, cls: 'game-good' },
+        { icon: '☕', label: 'Tea Charm', points: 2, good: true, cls: 'game-good' },
+        { icon: 'ϟ', label: 'Storm Rune', points: -2, good: false, cls: 'game-bad' }
+    ];
+
+    function pickChronariumGameObject(kind) {
+        if (kind === 'sort') {
+            if (Math.random() < 0.48) return SORT_OBJECTS_SAFE[3];
+            return SORT_OBJECTS_SAFE[Math.floor(Math.random() * 3)];
+        }
+
+        const roll = Math.random();
+        if (roll < 0.14) return CATCH_OBJECTS_SAFE[1];
+        if (roll < 0.38) return CATCH_OBJECTS_SAFE[2];
+        if (roll < 0.66) return CATCH_OBJECTS_SAFE[3];
+        return CATCH_OBJECTS_SAFE[0];
+    }
+
+    function makeChronariumTarget(item, kind, field, scoreRef) {
+        const target = document.createElement('button');
+        target.type = 'button';
+        target.className = `mini-target ${item.cls || 'game-good'}`;
+        target.dataset.good = String(kind !== 'sort' ? true : !!item.good);
+        target.dataset.points = String(item.points || 1);
+        target.dataset.label = item.label;
+        target.innerHTML = `<span aria-hidden="true">${item.icon}</span><span class="mini-object-label">${item.label}</span>`;
+        target.title = item.label;
+        target.setAttribute('aria-label', item.label);
+
+        const size = item.rare ? 52 : 46;
+        target.style.width = size + 'px';
+        target.style.height = size + 'px';
+        target.style.left = Math.max(5, Math.random() * Math.max(30, field.clientWidth - size - 10)) + 'px';
+        target.style.top = Math.max(5, Math.random() * Math.max(30, field.clientHeight - size - 10)) + 'px';
+
+        target.addEventListener('click', event => {
+            event.preventDefault();
+            event.stopPropagation();
+
+            const good = target.dataset.good === 'true';
+            const points = Number(target.dataset.points || 1);
+
+            if (kind === 'sort' && !good) {
+                scoreRef.value = Math.max(0, scoreRef.value + points);
+                if (typeof showChronariumToast === 'function') showChronariumToast('Storm rune fizzed.', 900);
+            } else {
+                scoreRef.value += Math.max(1, points);
+                try { if (typeof addChronariumXP === 'function') addChronariumXP(item.rare ? 2 : 1); } catch(e) {}
+                if (item.rare && typeof showChronariumToast === 'function') showChronariumToast('Golden time key!', 1000);
+            }
+
+            const scoreEl = document.getElementById('mini-score');
+            if (scoreEl) scoreEl.textContent = 'Score: ' + scoreRef.value;
+
+            try {
+                if (typeof animateTickReaction === 'function') animateTickReaction(good ? 'delighted' : 'startled');
+            } catch(e) {}
+
+            target.remove();
+        }, { once: true });
+
+        field.appendChild(target);
+        setTimeout(() => target.remove(), kind === 'sort' ? 950 : 1050);
+    }
+
+    function hardStartChronariumGame(kind = 'catch') {
+        forceUnlockChronariumGames();
+
+        const els = getChronariumGameEls();
+        if (!els.field || !els.score || !els.timer) {
+            console.warn('[Chronarium] Game hard start failed: missing field/score/timer.');
+            return;
+        }
+
+        clearChronariumGameTimer();
+
+        window.currentMiniGame = kind;
+        window.currentMiniGameKind = kind;
+
+        els.field.classList.toggle('game-catch', kind === 'catch');
+        els.field.classList.toggle('game-sort', kind === 'sort');
+        els.field.innerHTML = '';
+
+        const scoreRef = { value: 0 };
+        let timeLeft = 24;
+
+        els.score.textContent = 'Score: 0';
+        els.timer.textContent = 'Time: ' + timeLeft;
+
+        function spawnWave() {
+            const count = kind === 'sort' ? 3 : 2;
+            for (let i = 0; i < count; i++) {
+                makeChronariumTarget(pickChronariumGameObject(kind), kind, els.field, scoreRef);
+            }
+        }
+
+        for (let i = 0; i < 4; i++) setTimeout(spawnWave, i * 220);
+
+        const timer = setInterval(() => {
+            timeLeft -= 1;
+            els.timer.textContent = 'Time: ' + timeLeft;
+            spawnWave();
+
+            if (timeLeft <= 0) {
+                clearInterval(timer);
+                window.miniGameTimer = null;
+
+                try { if (typeof addChronariumXP === 'function') addChronariumXP(Math.max(5, Math.floor(scoreRef.value / 2))); } catch(e) {}
+
+                if (typeof showChronariumToast === 'function') {
+                    showChronariumToast(`Round complete · Score ${scoreRef.value}`, 2200);
+                }
+
+                if (typeof somniaAlert === 'function') {
+                    somniaAlert('Round Complete', `The Chronarium records ${scoreRef.value} tiny victories.`);
+                }
+            }
+        }, 850);
+
+        window.miniGameTimer = timer;
+
+        // Keep the old closure variable in sync when possible.
+        try { miniGameTimer = timer; } catch(e) {}
+    }
+
+    function hardOpenChronariumGame(kind = 'catch') {
+        forceUnlockChronariumGames();
+
+        const els = getChronariumGameEls();
+        if (!els.modal) {
+            console.warn('[Chronarium] Game hard open failed: missing modal.');
+            return;
+        }
+
+        if (els.title) els.title.textContent = kind === 'sort' ? 'Sort Sparks' : 'Catch Ticks';
+        if (els.copy) {
+            els.copy.textContent = kind === 'sort'
+                ? 'Tap celestial sigils, gear glyphs, and tea charms. Let storm runes pass.'
+                : 'Catch clockwork moths, golden time keys, hourglass shards, and moonphase coins.';
+        }
+
+        els.modal.classList.add('active');
+        hardStartChronariumGame(kind);
+    }
+
+    window.hardOpenChronariumGame = hardOpenChronariumGame;
+    window.hardStartChronariumGame = hardStartChronariumGame;
+    window.openMiniGame = hardOpenChronariumGame;
+    window.startMiniGame = hardStartChronariumGame;
+
+    document.addEventListener('DOMContentLoaded', () => {
+        forceUnlockChronariumGames();
+
+        document.querySelectorAll('[data-game]').forEach(btn => {
+            btn.onclick = function (event) {
+                event.preventDefault();
+                event.stopPropagation();
+                hardOpenChronariumGame(btn.dataset.game || 'catch');
+            };
+        });
+
+        const startButton = document.querySelector('#mini-game-modal .artifact-btn');
+        if (startButton) {
+            startButton.onclick = function(event) {
+                event.preventDefault();
+                event.stopPropagation();
+                hardStartChronariumGame(window.currentMiniGameKind || window.currentMiniGame || 'catch');
+            };
+        }
+    });
+})();
+</script>
+
 </body>
 </html>
