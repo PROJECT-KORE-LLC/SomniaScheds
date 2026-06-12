@@ -5,10 +5,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <meta name="description" content="THE CHRONARIUM // A private, offline-first planning chamber.">
     <meta name="theme-color" content="#020204">
-    <meta name="chronarium-build" content="chronarium-v1-5-game-buttons-clean">
+    <meta name="chronarium-build" content="chronarium-v1-6-assets-wired">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-    <title>THE CHRONARIUM // GAME BUTTONS CLEAN</title>
+    <title>THE CHRONARIUM // ASSETS WIRED</title>
 <style>
         /* ============================================================
            THE CHRONARIUM — COZY CHAOS ENVIRONMENT
@@ -514,7 +514,7 @@
         .mini-game-bubble { width:min(720px,94vw); max-height:86dvh; border:1px solid var(--glass-border); border-radius:34px; background:var(--glass); backdrop-filter:blur(35px); padding:26px; box-shadow:0 30px 80px rgba(0,0,0,.78); position:relative; text-align:center; }
         .mini-close { position:absolute; top:14px; right:16px; width:34px; height:34px; border-radius:999px; border:1px solid var(--glass-border); background:rgba(0,0,0,.35); color:var(--primary); cursor:pointer; font-size:1.2rem; }
         .mini-game-bubble h2 { color:var(--primary); letter-spacing:5px; text-transform:uppercase; font-family:'Times New Roman',serif; margin:0 0 8px; }
-        .mini-game-field { height:300px; border:1px solid var(--glass-border); border-radius:24px; background:linear-gradient(rgba(0,0,0,.25),rgba(0,0,0,.45)),url('chronarium_game.png'); background-size:cover; background-position:center; position:relative; overflow:hidden; margin:18px 0 12px; }
+        .mini-game-field { height:300px; border:1px solid var(--glass-border); border-radius:24px; background:linear-gradient(rgba(0,0,0,.25),rgba(0,0,0,.45)),url('schedsgame1.png'); background-size:cover; background-position:center; position:relative; overflow:hidden; margin:18px 0 12px; }
         .mini-target { position:absolute; width:46px; height:46px; border-radius:50%; display:flex; align-items:center; justify-content:center; border:1px solid var(--glass-border); background:rgba(0,0,0,.42); color:var(--primary); cursor:pointer; font-size:1.35rem; box-shadow:0 0 16px var(--primary-glow); user-select:none; }
         .mini-score-row { display:flex; justify-content:space-between; font-family:monospace; color:var(--text-muted); letter-spacing:2px; font-size:.75rem; margin-bottom:14px; }
 
@@ -756,7 +756,39 @@
             }
         }
 
+        /* --- CHRONARIUM V1.6: WIRED ASSET BACKGROUNDS --- */
+        .mini-game-field.game-catch {
+            background:
+                linear-gradient(rgba(0,0,0,.25), rgba(0,0,0,.45)),
+                url('schedsgame1.png') !important;
+            background-size: cover !important;
+            background-position: center !important;
+        }
+
+        .mini-game-field.game-sort {
+            background:
+                linear-gradient(rgba(0,0,0,.25), rgba(0,0,0,.45)),
+                url('schedsgame2.png') !important;
+            background-size: cover !important;
+            background-position: center !important;
+        }
+
+        .oracle-avatar {
+            object-fit: contain !important;
+        }
+
+        .chron-pet img {
+            object-fit: contain !important;
+        }
+
     </style>
+
+    <!-- CHRONARIUM V1.6 ASSET CHECKLIST
+         Avatar: chronarium_lorekeeper_TRUE_TRANSPARENT.png
+         Pet: tick_pet.png
+         Presets: scheds1.png, scheds2.png, scheds3.png, scheds4.png, scheds5.png, acheds6.png (fallback scheds6.png), scheds7.png, scheds8.png
+         Game backgrounds: schedsgame1.png, schedsgame2.png
+    -->
 </head>
 <body id="os-body" onclick="restoreUI()">
 
@@ -937,7 +969,7 @@
     <!-- Floating Guide Widget: Librarian Oracle. Visible above every screen unless Cloak UI is active. -->
     <div id="ink-oracle-widget" class="ink-oracle-outer" onclick="openSchedulerOracle(event)" title="Open the Chronarium Keeper">
         <div class="ink-oracle-inner">
-            <img src="chronarium_keeper.png" alt="The Chronarium Keeper" class="oracle-avatar">
+            <img src="chronarium_lorekeeper_TRUE_TRANSPARENT.png" alt="The Chronarium Keeper" class="oracle-avatar">
         </div>
     </div>
 
@@ -1012,7 +1044,7 @@
     </div>
 
     <div id="chron-pet" class="chron-pet locked" title="Tick unlocks after your first planner entry">
-        <img src="tick_pet.png" alt="Tick, the calendar moth">
+        <img src="tick_pet.png" alt="Tick, the clockhand moth">
     </div>
 
 
@@ -1720,21 +1752,41 @@
         }
 
         const CHRONARIUM_PRESETS = [
-            { name:'Dawn Ledger', file:'preset_dawn_ledger.png', mode:'vellum-mode', glow:'glow-breathe' },
-            { name:'Rainy Agenda', file:'preset_rainy_agenda.png', mode:'lunar-mode', glow:'glow-pulse' },
-            { name:'Moon Calendar', file:'preset_moon_calendar.png', mode:'twilight-mode', glow:'glow-halo' },
-            { name:'Tea & Tasks', file:'preset_tea_tasks.png', mode:'library-mode', glow:'glow-flicker' },
-            { name:'Storm Desk', file:'preset_storm_desk.png', mode:'obsidian-mode', glow:'glow-scanner' },
-            { name:'Velvet Week', file:'preset_velvet_week.png', mode:'amethyst-mode', glow:'glow-nebula' },
-            { name:'Clockwork Garden', file:'preset_clockwork_garden.png', mode:'emerald-mode', glow:'glow-ripple' },
-            { name:'Quiet Midnight', file:'preset_quiet_midnight.png', mode:'void-mode', glow:'glow-phantom' }
+            { name:'Dawn Ledger', file:'scheds1.png', mode:'vellum-mode', glow:'glow-breathe' },
+            { name:'Rainy Agenda', file:'scheds2.png', mode:'lunar-mode', glow:'glow-pulse' },
+            { name:'Moon Calendar', file:'scheds3.png', mode:'twilight-mode', glow:'glow-halo' },
+            { name:'Tea & Tasks', file:'scheds4.png', mode:'library-mode', glow:'glow-flicker' },
+            { name:'Storm Desk', file:'scheds5.png', mode:'obsidian-mode', glow:'glow-scanner' },
+            { name:'Velvet Week', file:'acheds6.png', fallback: 'scheds6.png', mode:'amethyst-mode', glow:'glow-nebula' },
+            { name:'Clockwork Garden', file:'scheds7.png', mode:'emerald-mode', glow:'glow-ripple' },
+            { name:'Quiet Midnight', file:'scheds8.png', mode:'void-mode', glow:'glow-phantom' },
         ];
 
         function renderChronariumPresets() {
             const grid=document.getElementById('preset-card-grid'); if(!grid) return; grid.innerHTML='';
             CHRONARIUM_PRESETS.forEach((preset)=>{
-                const card=document.createElement('button'); card.className='preset-card'; card.type='button'; card.style.backgroundImage=`url('${preset.file}')`; card.innerHTML=`<span>${preset.name}</span>`;
-                card.addEventListener('click', ()=>{ document.getElementById('bg-anchor').style.backgroundImage=`url('${preset.file}')`; applyMode(preset.mode); applyGlow(preset.glow); addChronariumXP(3); saveCurrentState(); });
+                const card=document.createElement('button');
+                card.className='preset-card';
+                card.type='button';
+                card.style.backgroundImage=`url('${preset.file}')`;
+                card.innerHTML=`<span>${preset.name}</span>`;
+
+                const testImg = new Image();
+                testImg.onerror = () => {
+                    if (preset.fallback) {
+                        card.style.backgroundImage = `url('${preset.fallback}')`;
+                    }
+                };
+                testImg.src = preset.file;
+
+                card.addEventListener('click', ()=>{
+                    const selectedFile = card.style.backgroundImage.includes(preset.fallback || '___nope___') && preset.fallback ? preset.fallback : preset.file;
+                    document.getElementById('bg-anchor').style.backgroundImage=`url('${selectedFile}')`;
+                    applyMode(preset.mode);
+                    applyGlow(preset.glow);
+                    addChronariumXP(3);
+                    saveCurrentState();
+                });
                 grid.appendChild(card);
             });
         }
@@ -1748,7 +1800,7 @@
         function closeMiniGame(){ const modal=document.getElementById('mini-game-modal'); if(modal) modal.classList.remove('active'); if(miniGameTimer) clearInterval(miniGameTimer); miniGameTimer=null; }
         function startMiniGame(kind='catch') {
             const field=document.getElementById('mini-game-field'), scoreEl=document.getElementById('mini-score'), timerEl=document.getElementById('mini-timer'); if(!field||!scoreEl||!timerEl) return;
-            field.innerHTML=''; miniGameScore=0; miniGameTime=30; scoreEl.textContent='Score: 0'; timerEl.textContent='Time: 30'; if(miniGameTimer) clearInterval(miniGameTimer);
+            field.classList.toggle('game-catch', kind === 'catch'); field.classList.toggle('game-sort', kind === 'sort'); field.innerHTML=''; miniGameScore=0; miniGameTime=30; scoreEl.textContent='Score: 0'; timerEl.textContent='Time: 30'; if(miniGameTimer) clearInterval(miniGameTimer);
             function spawn(){ const target=document.createElement('button'); target.className='mini-target'; target.type='button'; const good=kind!=='sort'||Math.random()>.32; target.textContent=kind==='sort'?(good?'✦':'✧'):'⏱'; target.dataset.good=String(good); target.style.left=Math.max(4,Math.random()*(field.clientWidth-54))+'px'; target.style.top=Math.max(4,Math.random()*(field.clientHeight-54))+'px'; target.addEventListener('click',()=>{ if(kind==='sort'&&target.dataset.good!=='true') miniGameScore=Math.max(0,miniGameScore-1); else { miniGameScore++; addChronariumXP(1); } scoreEl.textContent='Score: '+miniGameScore; target.remove(); }); field.appendChild(target); setTimeout(()=>target.remove(), kind==='sort'?1350:1150); }
             miniGameTimer=setInterval(()=>{ miniGameTime--; timerEl.textContent='Time: '+miniGameTime; spawn(); if(miniGameTime<=0){ clearInterval(miniGameTimer); miniGameTimer=null; addChronariumXP(Math.max(3,Math.floor(miniGameScore/2))); if(typeof somniaAlert==='function') somniaAlert('Round Complete', `The Chronarium records ${miniGameScore} tiny victories.`); } },1000);
             for(let i=0;i<3;i++) setTimeout(spawn, i*300);
@@ -1859,6 +1911,8 @@
             const timerEl = document.getElementById('mini-timer');
             if (!field || !scoreEl || !timerEl) return chronariumStartMiniGameBase(kind);
 
+            field.classList.toggle('game-catch', kind === 'catch');
+            field.classList.toggle('game-sort', kind === 'sort');
             field.innerHTML = '';
             miniGameScore = 0;
             miniGameTime = 24;
