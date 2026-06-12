@@ -5,10 +5,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <meta name="description" content="THE CHRONARIUM // A private, offline-first planning chamber.">
     <meta name="theme-color" content="#020204">
-    <meta name="chronarium-build" content="chronarium-v1-8-keeper-lore-initiation">
+    <meta name="chronarium-build" content="chronarium-v1-10-folded-tabs-visible">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-    <title>THE CHRONARIUM // KEEPER LORE INITIATION</title>
+    <title>THE CHRONARIUM // FOLDED TABS VISIBLE</title>
 <style>
         /* ============================================================
            THE CHRONARIUM — COZY CHAOS ENVIRONMENT
@@ -503,7 +503,7 @@
         @media (min-width:950px) { #maker-panel { top:118px !important; } }
         .editor-collapse-toggle { margin:12px 14px 0; border:1px solid var(--glass-border); background:rgba(0,0,0,.26); color:var(--primary); border-radius:999px; padding:10px 12px; font-family:monospace; font-size:.66rem; letter-spacing:2px; text-transform:uppercase; cursor:pointer; }
         #maker-panel.editor-collapsed { bottom:auto !important; height:auto !important; max-height:none !important; }
-        #maker-panel.editor-collapsed .tab-content, #maker-panel.editor-collapsed .tab-bar { display:none !important; }
+        #maker-panel.editor-collapsed .tab-content { display:none !important; }
         .preset-card-grid { display:grid; grid-template-columns:1fr; gap:12px; }
         .preset-card { min-height:86px; border:1px solid var(--glass-border); border-radius:20px; background-size:cover; background-position:center; position:relative; overflow:hidden; cursor:pointer; box-shadow:0 12px 28px rgba(0,0,0,.35); }
         .preset-card::before { content:""; position:absolute; inset:0; background:linear-gradient(90deg,rgba(0,0,0,.72),rgba(0,0,0,.22)); }
@@ -954,8 +954,89 @@
             }
         }
 
+        /* --- CHRONARIUM V1.9: TICK FLUTTER / APPEAR / DISAPPEAR --- */
+        .chron-pet {
+            left: var(--tick-left, 42%) !important;
+            bottom: var(--tick-bottom, 28px) !important;
+            transition:
+                left 1.9s cubic-bezier(0.25, 1, 0.5, 1),
+                bottom 1.9s cubic-bezier(0.25, 1, 0.5, 1),
+                opacity 0.75s ease,
+                filter 0.4s ease !important;
+            will-change: left, bottom, opacity, filter;
+        }
+
+        .chron-pet.unlocked {
+            animation: chron-pet-float 5s ease-in-out infinite alternate, tick-wing-shimmer 1.4s ease-in-out infinite !important;
+        }
+
+        .chron-pet.tick-vanished {
+            opacity: 0 !important;
+            pointer-events: none !important;
+            filter: blur(2px) drop-shadow(0 0 4px var(--primary-glow)) !important;
+        }
+
+        .chron-pet.tick-arriving img {
+            animation: tick-arrive-pop 0.82s ease both !important;
+        }
+
+        .chron-pet.tick-flutter-hop img {
+            animation: tick-flutter-hop 0.95s ease both !important;
+        }
+
+        @keyframes tick-wing-shimmer {
+            0%, 100% { filter: drop-shadow(0 0 12px var(--primary-glow)); }
+            50% { filter: drop-shadow(0 0 22px var(--primary-glow)); }
+        }
+
+        @keyframes tick-arrive-pop {
+            0% { transform: scale(0.72) rotate(-10deg); opacity: 0; }
+            50% { transform: scale(1.12) rotate(6deg); opacity: 1; }
+            100% { transform: scale(1) rotate(0deg); opacity: 1; }
+        }
+
+        @keyframes tick-flutter-hop {
+            0%, 100% { transform: translateY(0) rotate(0deg) scale(1); }
+            18% { transform: translateY(-13px) rotate(-8deg) scale(1.04); }
+            36% { transform: translateY(5px) rotate(7deg) scale(0.99); }
+            58% { transform: translateY(-9px) rotate(-5deg) scale(1.03); }
+            78% { transform: translateY(3px) rotate(4deg) scale(1); }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            .chron-pet {
+                transition: opacity 0.35s ease !important;
+            }
+            .chron-pet.unlocked,
+            .chron-pet.tick-arriving img,
+            .chron-pet.tick-flutter-hop img {
+                animation: none !important;
+            }
+        }
+
+        /* --- CHRONARIUM V1.10: FOLDED EDITOR KEEPS TABS VISIBLE --- */
+        #maker-panel.editor-collapsed .tab-bar {
+            display: flex !important;
+            border-bottom: 1px solid var(--glass-border) !important;
+            opacity: 1 !important;
+            pointer-events: auto !important;
+        }
+
+        #maker-panel.editor-collapsed .tab-btn {
+            pointer-events: auto !important;
+        }
+
+        #maker-panel.editor-collapsed {
+            overflow: visible !important;
+        }
+
+        #maker-panel.editor-collapsed #editor-collapse-toggle {
+            margin-bottom: 12px !important;
+        }
+
     </style>
 
+    <!-- CHRONARIUM V1.10 NOTE: folded editor keeps tabs visible; tab click unfolds selected panel. -->
     <!-- CHRONARIUM V1.6 ASSET CHECKLIST
          Avatar: chronarium_lorekeeper_TRUE_TRANSPARENT.png
          Pet: tick_pet.png
@@ -1336,6 +1417,16 @@
 
         // === 2. GLOBAL UI ===
         function switchTab(tabId, btn) {
+            const panel = document.getElementById('maker-panel');
+            if (panel && panel.classList.contains('editor-collapsed')) {
+                panel.classList.remove('editor-collapsed');
+                const toggle = document.getElementById('editor-collapse-toggle');
+                if (toggle) {
+                    toggle.textContent = 'Fold Editor ▴';
+                    toggle.setAttribute('aria-expanded', 'true');
+                }
+            }
+
             document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
             btn.classList.add('active');
             document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
@@ -2321,6 +2412,128 @@
             if (event.key === 'Escape') {
                 document.body.classList.remove('keeper-lore-open');
                 document.body.classList.remove('oracle-open');
+            }
+        });
+
+        // --- CHRONARIUM V1.9: TICK FLUTTER / APPEAR / DISAPPEAR ---
+        let tickFlutterTimer = null;
+        let tickVanishTimer = null;
+
+        function isTickUnlockedForFlutter() {
+            const pet = document.getElementById('chron-pet');
+            return !!pet && pet.classList.contains('unlocked') && !pet.classList.contains('locked');
+        }
+
+        function randomTickPosition() {
+            const pet = document.getElementById('chron-pet');
+            if (!pet) return;
+
+            const vw = Math.max(document.documentElement.clientWidth || 0, window.innerWidth || 0);
+            const vh = Math.max(document.documentElement.clientHeight || 0, window.innerHeight || 0);
+
+            const petW = pet.offsetWidth || 98;
+            const petH = pet.offsetHeight || 98;
+
+            const safeLeftMin = 22;
+            const safeLeftMax = Math.max(safeLeftMin, vw - petW - 28);
+            const safeBottomMin = 22;
+            const safeBottomMax = Math.max(safeBottomMin, Math.min(vh - petH - 80, vh * 0.58));
+
+            const left = Math.round(safeLeftMin + Math.random() * (safeLeftMax - safeLeftMin));
+            const bottom = Math.round(safeBottomMin + Math.random() * (safeBottomMax - safeBottomMin));
+
+            pet.style.setProperty('--tick-left', `${left}px`);
+            pet.style.setProperty('--tick-bottom', `${bottom}px`);
+
+            pet.classList.remove('tick-flutter-hop');
+            void pet.offsetWidth;
+            pet.classList.add('tick-flutter-hop');
+            setTimeout(() => pet.classList.remove('tick-flutter-hop'), 1050);
+        }
+
+        function tickAppearSomewhere(line) {
+            const pet = document.getElementById('chron-pet');
+            if (!pet || !isTickUnlockedForFlutter()) return;
+
+            randomTickPosition();
+            pet.classList.remove('tick-vanished');
+            pet.classList.add('tick-arriving');
+
+            setTimeout(() => pet.classList.remove('tick-arriving'), 900);
+
+            if (line) {
+                setTimeout(() => sayTickLore(line, 4300), 650);
+            }
+        }
+
+        function tickVanishAndReappear() {
+            const pet = document.getElementById('chron-pet');
+            if (!pet || !isTickUnlockedForFlutter()) return;
+
+            pet.classList.add('tick-vanished');
+            pet.classList.remove('tick-speaking');
+
+            clearTimeout(tickVanishTimer);
+            tickVanishTimer = setTimeout(() => {
+                const lines = [
+                    "Tick reappears with a stolen second and no explanation.",
+                    "Tick blinks back into the room smelling faintly of brass.",
+                    "A tiny wingbeat returns from the clockwork rafters.",
+                    "Tick found a hidden minute. It was dramatic."
+                ];
+                tickAppearSomewhere(lines[Math.floor(Math.random() * lines.length)]);
+            }, 2400 + Math.random() * 2600);
+        }
+
+        function startTickFlutterLoop() {
+            clearInterval(tickFlutterTimer);
+
+            const pet = document.getElementById('chron-pet');
+            if (!pet) return;
+
+            tickFlutterTimer = setInterval(() => {
+                if (!isTickUnlockedForFlutter()) return;
+
+                const roll = Math.random();
+
+                if (roll < 0.34) {
+                    tickVanishAndReappear();
+                } else {
+                    randomTickPosition();
+                    if (roll > 0.72) {
+                        setTimeout(() => sayTickLore(), 900);
+                    }
+                }
+            }, 11500);
+        }
+
+        const tickFlutterUnlockBaseV19 = window.unlockChronariumPet;
+        window.unlockChronariumPet = function() {
+            if (typeof tickFlutterUnlockBaseV19 === 'function') tickFlutterUnlockBaseV19();
+            setTimeout(() => {
+                tickAppearSomewhere("Tick flutters free: the Chronarium has accepted its first anchor.");
+                startTickFlutterLoop();
+            }, 800);
+        };
+
+        const tickFlutterRenderBaseV19 = window.renderChronariumPet;
+        window.renderChronariumPet = function() {
+            if (typeof tickFlutterRenderBaseV19 === 'function') tickFlutterRenderBaseV19();
+            const pet = document.getElementById('chron-pet');
+            if (pet && isTickUnlockedForFlutter()) {
+                pet.classList.remove('tick-vanished');
+                startTickFlutterLoop();
+            }
+        };
+
+        window.addEventListener('resize', () => {
+            if (isTickUnlockedForFlutter()) randomTickPosition();
+        });
+
+        document.addEventListener('DOMContentLoaded', () => {
+            if (isTickUnlockedForFlutter()) {
+                setTimeout(randomTickPosition, 1000);
+                startTickFlutterLoop();
             }
         });
 
