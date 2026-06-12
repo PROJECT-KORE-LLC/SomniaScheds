@@ -5,10 +5,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <meta name="description" content="THE CHRONARIUM // A private, offline-first planning chamber.">
     <meta name="theme-color" content="#020204">
-    <meta name="chronarium-build" content="chronarium-v1-15-tick-responsive-presets-games">
+    <meta name="chronarium-build" content="chronarium-v1-16-fullscreen-tick-atmosphere-lore">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-    <title>THE CHRONARIUM // TICK RESPONSIVE PRESETS GAMES</title>
+    <title>THE CHRONARIUM // FULL SCREEN + TICK LORE</title>
 <style>
         /* ============================================================
            THE CHRONARIUM — COZY CHAOS ENVIRONMENT
@@ -1262,6 +1262,19 @@
             animation: tick-click-react 0.72s ease both !important;
         }
 
+        /* --- CHRONARIUM V1.16: FULL SCREEN BUTTON + TICK ATMOSPHERE LORE --- */
+        body:fullscreen #ui-wrapper {
+            min-height: 100dvh;
+        }
+
+        body:fullscreen .artifact-btn {
+            backdrop-filter: blur(18px);
+        }
+
+        .chronarium-toast {
+            bottom: 34px;
+        }
+
     </style>
 
     <!-- CHRONARIUM V1.10 NOTE: folded editor keeps tabs visible; tab click unfolds selected panel. -->
@@ -1321,6 +1334,7 @@
 
         
         <div id="top-nav" onclick="event.stopPropagation()">
+            <button class="artifact-btn" onclick="toggleFullscreen()">Full Screen</button>
             <button class="artifact-btn" onclick="toggleCloak()">Cloak UI</button>
             <button class="artifact-btn" onclick="toggleModal('planner-modal')">Planner</button>
             <button class="artifact-btn btn-drop" onclick="returnToCity()">Return to City</button>
@@ -1681,9 +1695,13 @@
         function updateVar(name, val) { document.documentElement.style.setProperty(name, val); }
 
         function toggleFullscreen() {
-            if (!document.fullscreenElement) document.documentElement.requestFullscreen().catch(e => console.log(e));
-            else document.exitFullscreen();
-            document.getElementById('cast-modal').classList.remove('active');
+            if (!document.fullscreenElement) {
+                document.documentElement.requestFullscreen().catch(e => console.log(e));
+            } else {
+                document.exitFullscreen().catch(e => console.log(e));
+            }
+            const castModal = document.getElementById('cast-modal');
+            if (castModal) castModal.classList.remove('active');
         }
 
         // === 3. BACKGROUNDS ===
@@ -2241,14 +2259,14 @@
         }
 
         const CHRONARIUM_PRESETS = [
-            { name:'Dawn Ledger', file:'scheds1.png', mode:'vellum-mode', glow:'glow-breathe', reaction:'delighted', tickLine:'Tick warms her wings in the dawn ledger light.' },
-            { name:'Quiet Midnight', file:'scheds2.png', mode:'void-mode', glow:'glow-phantom', reaction:'settled', tickLine:'Tick dims her lantern and walks softly through midnight.' },
-            { name:'Clockwork Garden', file:'scheds3.png', mode:'emerald-mode', glow:'glow-ripple', reaction:'inspecting', tickLine:'Tick inspects the clockwork garden like a tiny foreman.' },
-            { name:'Velvet Week', file:'scheds4.png', mode:'amethyst-mode', glow:'glow-nebula', reaction:'settled', tickLine:'Tick settles into the velvet hush between appointments.' },
-            { name:'Storm Desk', file:'scheds5.png', mode:'obsidian-mode', glow:'glow-scanner', reaction:'startled', tickLine:'Tick jumps at the thunder, then bravely supervises.' },
-            { name:'Tea and Tasks', file:'acheds6.png', fallback: 'scheds6.png', mode:'library-mode', glow:'glow-flicker', reaction:'delighted', tickLine:'Tick approves of tea-adjacent planning. Strongly.' },
-            { name:'Moon Calendar', file:'scheds7.png', mode:'twilight-mode', glow:'glow-halo', reaction:'inspecting', tickLine:'Tick consults the moon and pretends this was her idea.' },
-            { name:'Rainy Agenda', file:'scheds8.png', mode:'lunar-mode', glow:'glow-pulse', reaction:'settled', tickLine:'Tick taps the glass: rain makes the hours easier to stack.' },
+            { name:'Dawn Ledger', file:'scheds1.png', mode:'vellum-mode', glow:'glow-breathe', reaction:'delighted', tickLine:'Tick warms her brass wings in the ledger dawn. First light makes even stubborn tasks look negotiable.' },
+            { name:'Quiet Midnight', file:'scheds2.png', mode:'void-mode', glow:'glow-phantom', reaction:'settled', tickLine:'Tick lowers her lantern. Quiet Midnight is for soft-footed plans and promises kept in whispers.' },
+            { name:'Clockwork Garden', file:'scheds3.png', mode:'emerald-mode', glow:'glow-ripple', reaction:'inspecting', tickLine:'Tick inspects the Clockwork Garden row by row. Every gear-bloom appears to be on schedule.' },
+            { name:'Velvet Week', file:'scheds4.png', mode:'amethyst-mode', glow:'glow-nebula', reaction:'settled', tickLine:'Tick nestles into the Velvet Week. The hours feel padded now, like they might stop shouting.' },
+            { name:'Storm Desk', file:'scheds5.png', mode:'obsidian-mode', glow:'glow-scanner', reaction:'startled', tickLine:'Tick startles at the Storm Desk thunder, then salutes it. Some plans need weather with teeth.' },
+            { name:'Tea and Tasks', file:'acheds6.png', fallback: 'scheds6.png', mode:'library-mode', glow:'glow-flicker', reaction:'delighted', tickLine:'Tick approves of Tea and Tasks. Steam, lists, and tiny courage are an ancient combination.' },
+            { name:'Moon Calendar', file:'scheds7.png', mode:'twilight-mode', glow:'glow-halo', reaction:'inspecting', tickLine:'Tick consults the Moon Calendar and squints wisely. The night has filed its recommendations.' },
+            { name:'Rainy Agenda', file:'scheds8.png', mode:'lunar-mode', glow:'glow-pulse', reaction:'settled', tickLine:'Tick taps the Rainy Agenda glass. Rain makes the hours stack neatly and smell like old paper.' },
         ];
 
         function renderChronariumPresets() {
@@ -2274,7 +2292,6 @@
                     applyMode(preset.mode);
                     applyGlow(preset.glow);
                     addChronariumXP(3);
-                    showChronariumToast(`Preset changed: ${preset.name}`);
                     reactTickToPreset(preset);
                     saveCurrentState();
                 });
@@ -2385,13 +2402,25 @@
 
         const chronariumOpenMiniGameBase = window.openMiniGame;
         window.openMiniGame = function(kind) {
-            if (!isChronariumPetUnlocked()) {
-                if (typeof somniaAlert === 'function') {
-                    somniaAlert('Tick Is Still Sleeping', 'Add your first planner entry to wake Tick and unlock the Chronarium games.');
-                }
-                return;
+            const wasUnlocked = typeof isChronariumPetUnlocked === 'function' ? isChronariumPetUnlocked() : tickIsAvailableForReaction();
+            const result = tickGameOpenBaseV115(kind);
+
+            if (wasUnlocked && tickIsAvailableForReaction()) {
+                const gameName = kind === 'sort' ? 'Sort Sparks' : 'Catch Ticks';
+                showChronariumToast(`${gameName} awakened`, 2800);
+
+                const line = kind === 'sort'
+                    ? "Tick sharpens her tiny spectacles. Sparks are just thoughts with too much caffeine."
+                    : "Tick stretches all six imaginary ankles. The chase is ceremonial, probably.";
+
+                animateTickReaction(kind === 'sort' ? 'inspecting' : 'delighted');
+                setTimeout(() => {
+                    if (typeof forceTickLore === 'function') forceTickLore(line, 5600);
+                    else if (typeof sayTickLore === 'function') sayTickLore(line, 5600, true);
+                }, 420);
             }
-            return chronariumOpenMiniGameBase(kind);
+
+            return result;
         };
 
         const chronariumStartMiniGameBase = window.startMiniGame;
@@ -3078,12 +3107,16 @@
         }
 
         const tickClickMoveLines = [
-            "Tick scoots aside. Productivity may pass.",
-            "Tick flutters out of the way with suspicious dignity.",
-            "Tick says: clear path, tiny mortal.",
-            "Tick relocates the moth department immediately.",
-            "Tick moves. The schedule is now unobstructed.",
-            "Tick heard productivity approaching and fled politely."
+            "Tick clicks her tiny gears twice: the hour has opinions.",
+            "Tick flutters aside and whispers, one minute at a time.",
+            "Tick relocates with dramatic moth authority.",
+            "Tick says the margins are safer, but less interesting.",
+            "Tick found a loose second and refuses to explain where.",
+            "Tick circles once: the room has accepted your attention.",
+            "Tick says: schedules are spells wearing boots.",
+            "Tick vanishes a thumb-width to the left of responsibility.",
+            "Tick moves, but only because the clockwork demanded it.",
+            "Tick reports that the next minute is suspiciously available."
         ];
 
         function tickClickMoveAndSpeak() {
@@ -3125,7 +3158,7 @@
         window.reactTickToPreset = function(preset) {
             if (!preset) return;
 
-            showChronariumToast(`Preset changed: ${preset.name}`);
+            showChronariumToast(`Preset changed: ${preset.name}`, 3200);
 
             if (!tickIsAvailableForReaction()) return;
 
@@ -3136,8 +3169,8 @@
 
             const line = preset.tickLine || `Tick tastes the air. ${preset.name} has taken hold.`;
             setTimeout(() => {
-                if (typeof forceTickLore === 'function') forceTickLore(line, 5600);
-                else if (typeof sayTickLore === 'function') sayTickLore(line, 5600, true);
+                if (typeof forceTickLore === 'function') forceTickLore(line, 6400);
+                else if (typeof sayTickLore === 'function') sayTickLore(line, 6400, true);
             }, 650);
         };
 
@@ -3176,6 +3209,44 @@
 
         document.addEventListener('DOMContentLoaded', () => {
             if (typeof wireTickPetClick === 'function') wireTickPetClick();
+        });
+
+        // --- CHRONARIUM V1.16: GAME FINISH REACTIONS + FULLSCREEN TOAST ---
+        function tickReactToGameFinish(kind, score) {
+            if (!tickIsAvailableForReaction()) return;
+
+            const isSort = kind === 'sort';
+            const line = isSort
+                ? `Tick counts ${score || 0} sorted sparks and declares the chaos mostly domesticated.`
+                : `Tick records ${score || 0} catches in the brass ledger. Very official.`;
+
+            animateTickReaction(score > 0 ? 'delighted' : 'inspecting');
+            showChronariumToast(isSort ? 'Sort Sparks settled' : 'Catch Ticks settled', 2800);
+
+            setTimeout(() => {
+                if (typeof forceTickLore === 'function') forceTickLore(line, 5600);
+                else if (typeof sayTickLore === 'function') sayTickLore(line, 5600, true);
+            }, 450);
+        }
+
+        const tickGameFinishBaseV116 = window.finishMiniGame || window.endMiniGame || null;
+        if (tickGameFinishBaseV116) {
+            const wrappedGameFinishV116 = function(...args) {
+                const title = document.getElementById('mini-game-title')?.textContent || '';
+                const kind = window.currentMiniGameKind || window.miniGameKind || (title.toLowerCase().includes('spark') ? 'sort' : 'catch');
+                const score = window.miniGameScore || 0;
+                const result = tickGameFinishBaseV116.apply(this, args);
+                setTimeout(() => tickReactToGameFinish(kind, score), 250);
+                return result;
+            };
+            if (window.finishMiniGame) window.finishMiniGame = wrappedGameFinishV116;
+            if (window.endMiniGame) window.endMiniGame = wrappedGameFinishV116;
+        }
+
+        document.addEventListener('fullscreenchange', () => {
+            if (typeof showChronariumToast === 'function') {
+                showChronariumToast(document.fullscreenElement ? 'Full Screen engaged' : 'Full Screen released', 1800);
+            }
         });
 
     </script>
